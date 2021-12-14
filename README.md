@@ -1,3 +1,21 @@
+# Home K3s Cluster
+
+## Installation von pre-commit
+### Probleme mit apt install in wsl2
+
+1. Installation von wsl-vpnkit da sonst kein Internet geht
+ - https://superuser.com/questions/1582623/why-is-there-no-network-connectivity-in-ubuntu-using-wsl-2-behind-vpn
+
+2. snapd installieren
+- https://answers.microsoft.com/en-us/windows/forum/all/wsl2-ubuntu-2004-all-mapplications-installed-via/dd3bb591-5122-46f5-9488-77a1fb9b1436
+
+
+## https://medium.com/@ssnetanel/build-a-kubernetes-cluster-using-k3s-on-proxmox-via-ansible-and-terraform-c97c7974d4a5
+## https://github.com/pawalt/proxmox-k3s
+## https://canthonyscott.com/setting-up-a-k3s-kubernetes-cluster-within-proxmox/
+## https://github.com/toboshii/home-cluster
+
+
 # Template for deploying k3s backed by Flux
 
 Highly opinionated template for deploying a single [k3s](https://k3s.io) cluster with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
