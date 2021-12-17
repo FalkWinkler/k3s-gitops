@@ -2,8 +2,7 @@ variable "username" {
   description = "The username for the DB master user"
   type        = string
   sensitive = false
-  default = ""
-  
+  default = "terraform-pro@pvev"  
 }
 variable "password" {
   description = "The password for the DB master user"
@@ -19,8 +18,21 @@ variable "proxmox-host" {
   
 }
 
+variable "nameserver" {
+  type = string
+  description = "die Ip Adresse des Nameserver"
+  default ="192.168.178.1"
+}
+
+
+variable "search_domain" {
+  type = string
+  description = "die Such Domain"
+  default ="fritz.box"
+}
+
 variable "pvt_key" {
-  default = "~/.ssh/proxk3s"
+  default = "~/.ssh/id_rsa"
 }
 
 variable "num_k3s_masters" {
@@ -32,7 +44,7 @@ variable "num_k3s_masters_mem" {
 }
 
 variable "num_k3s_nodes" {
- default = 4
+ default = 2
 }
 
 variable "num_k3s_nodes_mem" {
@@ -45,4 +57,17 @@ variable "tamplate_vm_name" {
 
 variable "server_node" {
   default = "server"  
+}
+
+variable "sshkeys" {
+  description = "ssh keys to drop onto each vm"
+  type = string
+  default = <<EOF
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDMXKFyFnq8vT0dbNScEehy11KQ/h1g1cebPAM6pxpRZhBDRTbYjcAhKcJLXvTDAx4SnhQwAWUMob3HWoHRrJoX3y0yuoG473EwQCAPe/z1OJ8E2BYqsZfVmEx52Dmj2zScJPU+jh53dPmlhzCn0aKsOrEtKSq5Xr2F+7zIlOCi6v8xXDm3zu76NjCw9S4jRYvauvQwGvEBrNhDnxc1mqOO3rMVCYgNZqCdv/5IO0bIkClitsNZyanxOj3i02E52b7n4zy4v5+HHV9hV9cY1moUdIN693LgQr5HYCg1IUdzzqx8g3brzA/FMPLP97X7suzxa9MLfh4SZdBD7UZoJYy3cE9AwSrcZHHVYnXUdyKlghcPiua63C6ulsedr/igs3iXSTHJ7hS7K2G/qq4Vh/x2XgCf03VnDTls7W5bw4mOMD994SmzCrZJLies4YrTNnd47Iw78n8wWlp5Z5+Lx1eyJu2DjbWnBuFjiVIvlbbcep+5FlT0T/f1vPUNCtHCGs8= falk@ubuntu-falk
+  EOF
+}
+variable "ssh_user" {
+  description = "user to put ssh keys under"
+  type = string
+  default = "ubuntu"
 }

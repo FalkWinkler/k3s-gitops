@@ -1,9 +1,16 @@
-[master]
-${k3s_master_ip}
-
-[node]
-${k3s_node_ip}
-
-[k3s_cluster:children]
-master
-node
+all:
+  children:
+    master:
+      hosts:
+%{ for hostname, ip in k3s_masters ~}
+        ${hostname}:
+          ansible_host: ${ip}
+          ansible_ssh_private_key_file: ${ansible_ssh_private_key_file} 
+%{ endfor ~}
+    worker:
+      hosts:
+%{~ for hostname, ip in k3s_workers }
+        ${hostname}:
+          ansible_host: ${ip}
+          ansible_ssh_private_key_file: ${ansible_ssh_private_key_file}
+%{~ endfor ~}

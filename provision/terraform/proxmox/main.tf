@@ -27,13 +27,19 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
   name        = "k3s-master-${count.index}"
   target_node = var.server_node
   clone       = var.tamplate_vm_name
+  ssh_user    = var.ssh_user
   os_type     = "cloud-init"
   agent       = 1
   memory      = var.num_k3s_masters_mem
   cores       = 4
-
+ 
+    
   ipconfig0 = "ip=192.168.178.8${count.index + 1}/24,gw=192.168.178.1"
 
+  searchdomain = var.search_domain
+  nameserver   = var.nameserver
+  sshkeys      = var.sshkeys
+  #sshkeys      = data.sops_file.secrets.data["k8s.ssh_key"]
 }
 
 resource "proxmox_vm_qemu" "proxmox_vm_workers" {
@@ -41,33 +47,35 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
   name        = "k3s-worker-${count.index}"
   target_node = var.server_node
   clone       = var.tamplate_vm_name
+  ssh_user    = var.ssh_user
   os_type     = "cloud-init"
   agent       = 1
   memory      = var.num_k3s_nodes_mem
   cores       = 4
 
   ipconfig0 = "ip=192.168.178.9${count.index + 1}/24,gw=192.168.178.1"
+  sshkeys   =  var.sshkeys
 
 }
 
-data "template_file" "k8s" {
-  template = file("./templates/k8s.tpl")
-  vars = {
-    k3s_master_ip = "${join("\n", [for instance in proxmox_vm_qemu.proxmox_vm_master : join("", [instance.default_ipv4_address, " ansible_ssh_private_key_file=", var.pvt_key])])}"
-    k3s_node_ip   = "${join("\n", [for instance in proxmox_vm_qemu.proxmox_vm_workers : join("", [instance.default_ipv4_address, " ansible_ssh_private_key_file=", var.pvt_key])])}"
-  }
+resource "local_file" "k3s_file" {
+  content = templatefile("./templates/k8s.tpl", {
+    k3s_masters = tomap({
+      for instance in proxmox_vm_qemu.proxmox_vm_master:
+      instance.name => instance.default_ipv4_address
+     }),
+    k3s_workers = tomap({
+    for instance in proxmox_vm_qemu.proxmox_vm_workers:
+    instance.name => instance.default_ipv4_address
+    }),
+    ansible_ssh_private_key_file = var.pvt_key
+    })
+    filename = "../../ansible/inventory/hosts.yml"
 }
 
-# resource "local_file" "k8s_file" {
-#   content  = data.template_file.k8s.rendered
-#   filename = "../inventory/my-cluster/hosts.ini"
-# }
-
-
-# provider "sops" {}
-
-
-# data "sops_file" "secrets" {
-#   source_file = "secrets.enc.json"
-# }
-
+output "Master-IPS" {
+  value = ["${proxmox_vm_qemu.proxmox_vm_master.*.default_ipv4_address}"]
+}
+output "Worker-IPS" {
+  value = ["${proxmox_vm_qemu.proxmox_vm_workers.*.default_ipv4_address}"]
+}
