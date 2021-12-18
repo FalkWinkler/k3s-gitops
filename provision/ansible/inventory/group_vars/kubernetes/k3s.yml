@@ -16,14 +16,14 @@ k3s_become_for_all: true
 # (bool) Enable debug logging on the k3s service
 k3s_debug: false
 
-# (bool) Enable etcd embedded datastore
-k3s_etcd_datastore: true
-
 # (bool) Allow the use of unsupported configurations in k3s
 k3s_use_unsupported_config: false
 
-# (string) Control Plane registration address
+
+# HA settings
+k3s_etcd_datastore: false
 k3s_registration_address: "{{ kubevip_address }}"
+k3s_registration_domain: "k3s.{{ kubevip_address }}.nip.io"
 
 # (list) A list of URLs to deploy on the primary control plane. Read notes below.
 k3s_server_manifests_urls:

@@ -9,3 +9,5 @@ collections:
 roles:
   - src: xanmanning.k3s
     version: v2.11.1
+  - src: gantsign.keyboard
+    version: 1.5.0

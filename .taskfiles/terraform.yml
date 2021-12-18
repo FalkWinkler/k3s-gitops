@@ -3,20 +3,20 @@ version: "3"
 
 tasks:
 
-  init:cloudflare:
+  init:proxmox:
     desc: Initialize terraform
-    dir: provision/terraform/cloudflare
+    dir: provision/terraform/proxmox
     cmds:
       - "terraform init"
 
-  plan:cloudflare:
+  plan:proxmox:
     desc: Prepare all the k8s nodes for running k3s
-    dir: provision/terraform/cloudflare
+    dir: provision/terraform/proxmox
     cmds:
       - "terraform plan"
 
-  apply:cloudflare:
+  apply:proxmox:
     desc: Prepare all the k8s nodes for running k3s
-    dir: provision/terraform/cloudflare
+    dir: provision/terraform/proxmox
     cmds:
       - "terraform apply"

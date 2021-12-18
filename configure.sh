@@ -28,12 +28,12 @@ main() {
     verify_binaries
 
     if [[ "${verify}" == 1 ]]; then
-        verify_ansible_hosts
+        #verify_ansible_hosts
         verify_metallb
         verify_kubevip
         verify_age
         verify_git_repository
-        verify_cloudflare
+       # verify_cloudflare
         success
     else
         # sops configuration file
@@ -46,21 +46,21 @@ main() {
             > "${PROJECT_DIR}/cluster/base/flux-system/gotk-sync.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/kube-vip-daemonset.yaml" \
             > "${PROJECT_DIR}/cluster/core/kube-system/kube-vip/daemon-set.yaml"
-        envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-secrets.sops.yaml" \
-            > "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
-        envsubst < "${PROJECT_DIR}/tmpl/cluster/cert-manager-secret.sops.yaml" \
-            > "${PROJECT_DIR}/cluster/core/cert-manager/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/cert-manager/secret.sops.yaml"
+        # envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-secrets.sops.yaml" \
+        #     > "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
+        # envsubst < "${PROJECT_DIR}/tmpl/cluster/cert-manager-secret.sops.yaml" \
+        #     > "${PROJECT_DIR}/cluster/core/cert-manager/secret.sops.yaml"
+        # sops --encrypt --in-place "${PROJECT_DIR}/cluster/base/cluster-secrets.sops.yaml"
+        # sops --encrypt --in-place "${PROJECT_DIR}/cluster/core/cert-manager/secret.sops.yaml"
         # terraform
-        envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
-            > "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
-        sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/cloudflare/secret.sops.yaml"
+        #envsubst < "${PROJECT_DIR}/tmpl/terraform/secret.sops.yaml" \
+         #   > "${PROJECT_DIR}/provision/terraform/proxmox/secret.sops.yaml"
+       # sops --encrypt --in-place "${PROJECT_DIR}/provision/terraform/proxmox/secret.sops.yaml"
         # ansible
         envsubst < "${PROJECT_DIR}/tmpl/ansible/kube-vip.yml" \
             > "${PROJECT_DIR}/provision/ansible/inventory/group_vars/kubernetes/kube-vip.yml"
-        generate_ansible_hosts
-        generate_ansible_host_secrets
+        #generate_ansible_hosts
+        #generate_ansible_host_secrets
     fi
 }
 
@@ -257,39 +257,39 @@ generate_ansible_host_secrets() {
     done
 }
 
-generate_ansible_hosts() {
-    local worker_node_count=
-    {
-        printf -- "---\n"
-        printf "kubernetes:\n"
-        printf "  children:\n"
-        printf "    master:\n"
-        printf "      hosts:\n"
-        worker_node_count=0
-        for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
-            node_id=$(echo "${var}" | awk -F"_" '{print $5}')
-            node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
-            if [[ "${!node_control}" == "true" ]]; then
-                printf "        k8s-%s:\n" "${node_id}"
-                printf "          ansible_host: %s\n" "${!var}"
-            else
-                worker_node_count=$((worker_node_count+1))
-            fi
-        done
-        if [[ ${worker_node_count} -gt 0 ]]; then
-            printf "    worker:\n"
-            printf "      hosts:\n"
-            for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
-                node_id=$(echo "${var}" | awk -F"_" '{print $5}')
-                node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
-                if [[ "${!node_control}" == "false" ]]; then
-                    printf "        k8s-%s:\n" "${node_id}"
-                    printf "          ansible_host: %s\n" "${!var}"
-                fi
-            done
-        fi
-    } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yml"
-}
+# generate_ansible_hosts() {
+#     local worker_node_count=
+#     {
+#         printf -- "---\n"
+#         printf "kubernetes:\n"
+#         printf "  children:\n"
+#         printf "    master:\n"
+#         printf "      hosts:\n"
+#         worker_node_count=0
+#         for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
+#             node_id=$(echo "${var}" | awk -F"_" '{print $5}')
+#             node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
+#             if [[ "${!node_control}" == "true" ]]; then
+#                 printf "        k8s-%s:\n" "${node_id}"
+#                 printf "          ansible_host: %s\n" "${!var}"
+#             else
+#                 worker_node_count=$((worker_node_count+1))
+#             fi
+#         done
+#         if [[ ${worker_node_count} -gt 0 ]]; then
+#             printf "    worker:\n"
+#             printf "      hosts:\n"
+#             for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
+#                 node_id=$(echo "${var}" | awk -F"_" '{print $5}')
+#                 node_control="BOOTSTRAP_ANSIBLE_CONTROL_NODE_${node_id}"
+#                 if [[ "${!node_control}" == "false" ]]; then
+#                     printf "        k8s-%s:\n" "${node_id}"
+#                     printf "          ansible_host: %s\n" "${!var}"
+#                 fi
+#             done
+#         fi
+#     } > "${PROJECT_DIR}/provision/ansible/inventory/hosts.yml"
+# }
 
 _log() {
     local type="${1}"

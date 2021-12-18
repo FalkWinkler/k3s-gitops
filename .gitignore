@@ -11,6 +11,7 @@ kubeconfig
 *.agekey
 # Ansible
 xanmanning.k3s*
+gantsign.keyboard
 # Terraform
 .terraform
 .terraform.tfstate*

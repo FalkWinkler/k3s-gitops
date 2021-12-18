@@ -10,4 +10,9 @@
       pause:
         seconds: 5
   roles:
-    - ubuntu
+    - ubuntu 
+    - role: gantsign.keyboard
+      # European keyboard model (pc105 is widely used outside Europe as well)
+      keyboard_model: pc105
+      # Layout for German
+      keyboard_layout: de
