@@ -7,7 +7,7 @@ kubernetes:
           ansible_host: ${ip}
           ansible_user: ubuntu
           ansible_become_pass: ubuntu
-          ansible_ssh_private_key_file: ${ansible_ssh_private_key_file} 
+          ansible_ssh_private_key_file: ${ansible_ssh_private_key_file}
 %{ endfor ~}
     worker:
       hosts:
