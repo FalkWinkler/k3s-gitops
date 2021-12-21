@@ -20,9 +20,10 @@ spec:
   chart:
     spec:
        # The path of the chart relative to the repository root
-      chart: ./deploy/godaddy-webhook
+      chart: ./deploy/godaddy-webhook/
       # The reference to the GitRepository
       sourceRef:
          kind: GitRepository
          name: godaddy-webhook-source
+         namespace: flux-system
 
