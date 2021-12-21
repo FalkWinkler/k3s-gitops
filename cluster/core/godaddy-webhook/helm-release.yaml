@@ -4,9 +4,8 @@ kind: HelmRelease
 metadata:
   name: godaddy-webhook
   namespace: cert-manager
-spec:
-  interval: 5m
-  chart:
+chart:
     git: git@github.com:snowdrop/godaddy-webhook.git
     ref: master
-    path: deploy/godaddy-webhook   
+    path: deploy/godaddy-webhook
+  
