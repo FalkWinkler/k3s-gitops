@@ -7,11 +7,6 @@ metadata:
 spec:
   interval: 5m
   chart:
-    spec:
-      # renovate: registryUrl=https://metallb.github.io/metallb
-      chart: godaddy-webhook
-      #version: 0.11.0
-      sourceRef:
-        kind: HelmRepository
-        name: godaddy-webhook-charts
-        namespace: flux-system
+    git: git@github.com:snowdrop/godaddy-webhook.git
+    ref: master
+    path: deploy/godaddy-webhook   
