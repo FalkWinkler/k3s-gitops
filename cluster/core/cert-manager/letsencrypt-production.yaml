@@ -9,13 +9,17 @@ spec:
     email: "${SECRET_CLOUDFLARE_EMAIL}"
     privateKeySecretRef:
       name: letsencrypt-production
-    solvers:
+    solvers:      
       - dns01:
-          cloudflare:
-            email: "${SECRET_CLOUDFLARE_EMAIL}"
-            apiKeySecretRef:
-              name: cloudflare-api-key
-              key: api-key
+          webhook:
+            config:             
+              authApiSecretRef: 
+                name: godaddy-api-secret
+                key:  api-secret
+              production: true
+              ttl: 600
+            groupName: "acme.${SECRET_DOMAIN}"
+            solverName: godaddy
         selector:
           dnsZones:
             - ${SECRET_DOMAIN}
