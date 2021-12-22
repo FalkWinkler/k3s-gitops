@@ -14,8 +14,8 @@ spec:
           webhook:
             config:             
               authApiSecretRef: 
-                name: godaddy-api-secret
-                key:  api-secret
+                name: godaddy-api-key
+                key:  token
               production: false
               ttl: 600
             groupName: "acme.${SECRET_DOMAIN}"
