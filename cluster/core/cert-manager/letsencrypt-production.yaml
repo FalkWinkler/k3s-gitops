@@ -21,5 +21,5 @@ spec:
             groupName: "acme.${SECRET_DOMAIN}"
             solverName: godaddy
         selector:
-          dnsZones:
-            - ${SECRET_DOMAIN}
+          dnsNames:
+            - '*.${SECRET_DOMAIN}'
