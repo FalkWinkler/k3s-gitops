@@ -28,5 +28,5 @@ spec:
          namespace: flux-system
   values:
     groupName: acme.winklercloud.de
-    #hostNetwork: true
+    hostNetwork: true
 
