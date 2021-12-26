@@ -26,4 +26,7 @@ spec:
          kind: GitRepository
          name: godaddy-webhook-source
          namespace: flux-system
+  values:
+    groupName: acme.winklercloud.de
+    #hostNetwork: true
 
