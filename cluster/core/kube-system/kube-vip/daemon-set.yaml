@@ -40,13 +40,12 @@ spec:
             - name: svc_enable
               value: "false"
             - name: vip_address
-              value: "192.168.178.254"
+              value: "192.168.178.80"
           securityContext:
             capabilities:
               add:
                 - NET_ADMIN
-                - NET_RAW
-                - SYS_TIME
+                - NET_RAW                
       hostAliases:
         - hostnames:
             - kubernetes
