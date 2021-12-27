@@ -56,6 +56,19 @@ spec:
       - "--providers.kubernetesingress.ingressendpoint.ip=${METALLB_TRAEFIK_ADDR}"
       - "--providers.kubernetesingress.allowexternalnameservices=true"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=${SECRET_CLOUDFLARE_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
+    persistence:
+      enabled: true
+      name: data
+    #  existingClaim: ""
+      accessMode: ReadWriteOnce
+      size: 128Mi
+      # storageClass: ""
+      path: /data
+      annotations: {}
     ports:
       traefik:
         expose: true
