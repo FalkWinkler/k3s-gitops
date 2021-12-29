@@ -1,0 +1,12 @@
+---
+- include: locale.yml
+  tags:
+    - locale
+
+- include: packages.yml
+  tags:
+    - packages
+
+- include: user.yml
+  tags:
+    - user

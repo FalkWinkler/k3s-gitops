@@ -11,3 +11,7 @@ roles:
     version: v2.11.1
   - src: gantsign.keyboard
     version: 1.5.0
+  - src: bertvv.dhcp
+    version: v3.1.0
+  - src: bertvv.bind
+    version: v5.1.0

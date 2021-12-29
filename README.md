@@ -1,5 +1,8 @@
 # Home K3s Cluster
 
+## Interne Infrastrukture
+- https://blog.jenningsga.com/private-network-with-proxmox/
+
 ## Installation von pre-commit
 ### Probleme mit apt install in wsl2
 

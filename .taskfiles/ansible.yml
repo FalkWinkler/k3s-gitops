@@ -21,6 +21,13 @@ tasks:
     dir: provision/ansible
     cmds:
       - "ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts"
+  
+  playbook:dns-install:
+    desc: Install Dns an Dhcp 
+    dir: provision/ansible
+    cmds:
+      - "ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/dns-install.yml"
+
 
   playbook:ubuntu-prepare:
     desc: Prepare all the k8s nodes for running k3s

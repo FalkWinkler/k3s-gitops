@@ -16,3 +16,5 @@ gantsign.keyboard
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
+/provision/ansible/roles/bertvv.bind
+/provision/ansible/roles/bertvv.dhcp

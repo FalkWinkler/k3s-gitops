@@ -9,7 +9,7 @@
     - name: Pausing for 5 seconds...
       pause:
         seconds: 5
-  roles:
+  roles:    
     - ubuntu
     - role: gantsign.keyboard
       # European keyboard model (pc105 is widely used outside Europe as well)
