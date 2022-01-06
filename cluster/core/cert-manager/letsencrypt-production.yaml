@@ -9,8 +9,17 @@ spec:
     email: "${SECRET_CLOUDFLARE_EMAIL}"
     privateKeySecretRef:
       name: letsencrypt-production
-        # Add a single challenge solver, HTTP01 using nginx
-    solvers:
-    - http01:
-        ingress:
-          class: traefik
+    solvers:      
+      - dns01:
+          webhook:
+            config:             
+              authApiSecretRef: 
+                name: godaddy-api-key
+                key:  token
+              production: true
+              ttl: 600
+            #groupName: "acme.${SECRET_DOMAIN}"
+            solverName: godaddy
+        selector:          
+          dnsZones:
+            - "${SECRET_DOMAIN}."
