@@ -18,8 +18,8 @@ spec:
                 key:  token
               production: true
               ttl: 600
-            #groupName: "acme.${SECRET_DOMAIN}"
+            groupName: "acme.${SECRET_DOMAIN}"
             solverName: godaddy
         selector:          
-          dnsZones:
-            - "${SECRET_DOMAIN}."
+          dnsNames:
+            - "*.${SECRET_DOMAIN}"
