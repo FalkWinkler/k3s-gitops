@@ -20,11 +20,12 @@ spec:
     webhook:
       enabled: true
     extraArgs:
-      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
+      - --dns01-recursive-nameservers=97.74.101.32:53,1.1.1.1:53,9.9.9.9:53
       - --dns01-recursive-nameservers-only    
     replicaCount: 1
     podDnsPolicy: "None"
     podDnsConfig:
       nameservers:
+        - "97.74.101.32"
         - "1.1.1.1"
         - "9.9.9.9"
