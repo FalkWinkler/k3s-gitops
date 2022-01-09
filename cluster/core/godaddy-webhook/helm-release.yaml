@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://github.com/snowdrop/godaddy-webhook.git
+  url: https://github.com/Fred78290/cert-manager-webhook-godaddy.git
   ref:
     branch: master 
 ---
@@ -26,7 +26,10 @@ spec:
          kind: GitRepository
          name: godaddy-webhook-source
          namespace: flux-system
-  # values:
-  #   groupName: "acme.${SECRET_DOMAIN}"
-  #   hostNetwork: true
+    values:
+     groupName: "acme.mycompany.com"
+     image.repository: fred78290/cert-manager-godaddy
+     image.tag: v1.21.0
+
+       #   hostNetwork: true
 
