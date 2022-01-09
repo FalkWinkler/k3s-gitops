@@ -18,7 +18,7 @@ spec:
                 key:  token
               production: false
               ttl: 600
-            # groupName: "acme.${SECRET_DOMAIN}"
+              groupName: acme.mycompany.com
             solverName: godaddy
         selector:
           dnsNames:
