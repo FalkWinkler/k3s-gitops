@@ -9,17 +9,10 @@ spec:
     email: "${SECRET_CLOUDFLARE_EMAIL}"
     privateKeySecretRef:
       name: letsencrypt-staging
-    solvers:      
-      - dns01:
-          webhook:
-            config:             
-              authApiSecretRef: 
-                name: godaddy-api-key
-                key:  token
-              production: false
-              ttl: 600
-              groupName: acme.mycompany.com
-            solverName: godaddy
-        selector:
-          dnsNames:
-            - "*.${SECRET_DOMAIN}"
+    solvers:
+    - dns01:
+        cloudflare:
+          email: "${SECRET_CLOUDFLARE_EMAIL}"
+          apiTokenSecretRef:
+            name: cloudflare-token-secret
+            key: cloudflare-token
