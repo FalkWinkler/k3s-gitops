@@ -5,4 +5,3 @@ resources:
   - cert-manager 
   - metallb-system
   - system-upgrade
-  - godaddy-webhook
