@@ -14,21 +14,21 @@ variable "password" {
 variable "proxmox-host" {
   description = "The proxmox host name"
   type        = string
-  default = "192.168.178.150"
+  default = "192.168.10.254"
 
 }
 
 variable "nameserver" {
   type = string
   description = "die Ip Adresse des Nameserver"
-  default ="192.168.178.1"
+  default ="192.168.10.7"
 }
 
 
 variable "search_domain" {
   type = string
   description = "die Such Domain"
-  default ="fritz.box"
+  default ="home.lan"
 }
 
 variable "pvt_key" {
@@ -44,7 +44,7 @@ variable "num_k3s_masters_mem" {
 }
 
 variable "num_k3s_nodes" {
- default = 3
+ default = 2
 }
 
 variable "num_k3s_nodes_mem" {
@@ -56,7 +56,7 @@ variable "tamplate_vm_name" {
 }
 
 variable "server_node" {
-  default = "server"
+  default = "pve"
 }
 
 variable "sshkeys" {
