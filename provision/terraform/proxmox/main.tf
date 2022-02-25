@@ -30,15 +30,30 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
   ssh_user    = var.ssh_user
   os_type     = "cloud-init"
   agent       = 1
-  memory      = var.num_k3s_masters_mem
+  memory      = var.num_k3s_masters_mem 
   cores       = 4
 
 
-  ipconfig0 = "ip=192.168.178.8${count.index + 1}/24,gw=192.168.178.1"
+  ipconfig0 = "ip=192.168.10.8${count.index + 1}/24,gw=192.168.10.1"
 
   searchdomain = var.search_domain
   nameserver   = var.nameserver
   sshkeys      = var.sshkeys
+  bootdisk = "scsi0"
+
+   disk {    
+    type = "scsi"
+    size = "20G"
+    ssd = 1
+    storage = "local-zfs"    
+    iothread = 1
+  }
+  
+  network {      
+      model = "virtio"
+      bridge = "vmbr1"
+    }
+
   #sshkeys      = data.sops_file.secrets.data["k8s.ssh_key"]
 }
 
@@ -50,11 +65,24 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
   ssh_user    = var.ssh_user
   os_type     = "cloud-init"
   agent       = 1
-  memory      = var.num_k3s_nodes_mem
+  memory      = var.num_k3s_nodes_mem 
   cores       = 4
 
-  ipconfig0 = "ip=192.168.178.9${count.index + 1}/24,gw=192.168.178.1"
+  ipconfig0 = "ip=192.168.10.9${count.index + 1}/24,gw=192.168.10.1"
   sshkeys   =  var.sshkeys
+  bootdisk = "scsi0"
+
+  disk {    
+    type = "scsi"
+    size = "20G"
+    ssd = 1
+    storage = "local-zfs"    
+    iothread = 1
+  }
+  network {  
+    model = "virtio"
+    bridge = "vmbr1"
+  }
 
 }
 
