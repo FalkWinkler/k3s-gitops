@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: external-dns
+      version: 6.1.6
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    nameOverride: external-dns
+    # interval: "5m"
+    logLevel: debug
+    sources:
+    - ingress
+    provider: rfc2136
+    rfc2136:
+      host: "${INTERNAL_DNS_IP}"
+      port: 53
+      zone: k3s.home.lan
+    policy: sync
+    txtPrefix: "k3s."
+    domainFilters:
+    - "${DOMAIN_INTERNAL}"
+    crd:
+      create: false
+      apiversion: externaldns.k8s.io/v1alpha1
+      kind: DNSEndpoint   
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 25m
+      limits:
+        memory: 250Mi
