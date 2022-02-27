@@ -27,8 +27,10 @@ spec:
       host: "${INTERNAL_DNS_IP}"
       port: 53
       zone: k3s.home.lan
+      tsigAxfr : ""      
     policy: sync
-    txtPrefix: "k3s."
+    txtPrefix: "external-dns-"
+    txt-owner-id: k3s
     domainFilters:
     - "${DOMAIN_INTERNAL}"
     crd:
