@@ -108,18 +108,18 @@ spec:
     - vonage-status-panel
     - grafana-worldmap-panel
     - grafana-clock-panel
-    serviceMonitor:
-      enabled: true
+    # serviceMonitor:
+    #   enabled: true
     ingress:
       enabled: true
       ingressClassName: "traefik"
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: "web"
+        traefik.ingress.kubernetes.io/router.entrypoints: "web,websecure"
       hosts:
       - "grafana.${DOMAIN_INTERNAL}"
-      # tls:
-      # - hosts:
-      #   - "grafana.${DOMAIN_INTERNAL}"
+      tls:
+      - hosts:
+        - "grafana.${DOMAIN_INTERNAL}"
     serviceAccount:
       create: true
       autoMount: true
