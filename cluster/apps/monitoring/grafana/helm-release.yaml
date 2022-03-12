@@ -68,7 +68,7 @@ spec:
         datasources:
         - name: Prometheus
           type: prometheus
-          url: http://thanos-query:9090
+          url: http://prometheus-operated:9090
           access: proxy
           isDefault: true
         - name: Loki
@@ -108,8 +108,8 @@ spec:
     - vonage-status-panel
     - grafana-worldmap-panel
     - grafana-clock-panel
-    # serviceMonitor:
-    #   enabled: true
+    serviceMonitor:
+      enabled: true
     ingress:
       enabled: true
       ingressClassName: "traefik"
