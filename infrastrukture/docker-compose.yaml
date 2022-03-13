@@ -1,0 +1,115 @@
+version: '3.1'
+
+
+################################################################################
+# SERVICES
+################################################################################
+services:
+  traefik:
+    image: "traefik:v2.6"
+    container_name: "traefik"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  # ------------------------------------------------------------
+  # Bind (DNS Server)
+  # ------------------------------------------------------------
+  bind:
+    image: cytopia/bind:0.17
+    hostname: bind
+    restart: on-failure:5       
+    ports:
+      # [local-machine:]local-port:docker-port
+      - "53:53/tcp"
+      - "53:53/udp"
+
+    environment:
+      ##
+      ## Debug?
+      ##
+      - DEBUG_ENTRYPOINT=${DEBUG_COMPOSE_ENTRYPOINT}
+
+      ##
+      ## Bind wildcard/host settings
+      ##
+      - WILDCARD_DNS=k3s.home.lan=192.168.10.200=k3s.home.lan
+      
+      ##
+      ## extrahosts
+      ##
+      - EXTRA_HOSTS='registry.home.lan=192.168.10.7'
+
+      ##
+      ## Forwarding
+      ##
+      - DNS_FORWARDER=${BIND_DNS_RESOLVER:-1.1.1.1,8.8.4.4}
+      
+      ##
+      ## Queries
+      ##
+      - ALLOW_QUERY=192.168.10.0/24,192.168.20.0/24,192.168.30.0/24,192.168.40.0/24,127.0.0.1
+      
+      ##
+      ## Recursion
+      ##
+      - ALLOW_RECURSION=192.168.10.0/24,192.168.20.0/24,192.168.30.0/24,192.168.40.0/24,127.0.0.1 
+      
+      
+      ##
+      ## Security
+      ##
+      - DNSSEC_VALIDATE=${BIND_DNSSEC_VALIDATE:-no}
+
+      ##
+      ## Time settings
+      ##
+      #- TTL_TIME=${BIND_TTL_TIME}
+      #- REFRESH_TIME=${BIND_REFRESH_TIME}
+      #- RETRY_TIME=${BIND_RETRY_TIME}
+      #- EXPIRY_TIME=${BIND_EXPIRY_TIME}
+      #- MAX_CACHE_TIME=${BIND_MAX_CACHE_TIME}
+
+      ##
+      ## Query log
+      ##
+      - DOCKER_LOGS=${BIND_LOG_DNS_QUERIES}
+
+    dns:
+      - 127.0.0.1
+  registry:
+        image: registry:2.7
+        volumes:
+            - dockerregistry:/var/lib/registry
+        environment:
+            - REGISTRY_HTTP_SECRET=my_registry_secret
+            - REGISTRY_STORAGE_DELETE_ENABLED=true       
+
+  ui:
+        image: joxit/docker-registry-ui:latest
+        environment:
+            - DELETE_IMAGES=true
+            - REGISTRY_TITLE=My Private Docker Registry
+            - NGINX_PROXY_PASS_URL=http://docker-registry_registry:5000
+            - SINGLE_REGISTRY=true
+        depends_on: ['registry']        
+        deploy:
+          labels:
+            traefik.backend: 'registry.home.lan'
+            traefik.frontend.rule: 'Host:registry.home.lan'
+            traefik.enable: 'true'
+            traefik.port: 80
+            #traefik.docker.network: 'traefik-net'
+            traefik.frontend.auth.basic: 'admin:$apr1$XXrpwZre$ItZSXpoeB6bdPLCGT7eXG0'
+            traefik.frontend.passHostHeader: 'true'
+volumes:
+  dockerregistry:
+    external: true
