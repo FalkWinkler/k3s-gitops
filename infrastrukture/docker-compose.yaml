@@ -86,30 +86,30 @@ services:
     dns:
       - 127.0.0.1
   registry:
-        image: registry:2.7
-        volumes:
-            - dockerregistry:/var/lib/registry
-        environment:
-            - REGISTRY_HTTP_SECRET=my_registry_secret
-            - REGISTRY_STORAGE_DELETE_ENABLED=true       
+    image: registry:2.7
+    volumes:
+        - dockerregistry:/var/lib/registry
+    environment:
+        - REGISTRY_HTTP_SECRET=my_registry_secret
+        - REGISTRY_STORAGE_DELETE_ENABLED=true       
 
   ui:
-        image: joxit/docker-registry-ui:latest
-        environment:
-            - DELETE_IMAGES=true
-            - REGISTRY_TITLE=My Private Docker Registry
-            - NGINX_PROXY_PASS_URL=http://docker-registry_registry:5000
-            - SINGLE_REGISTRY=true
-        depends_on: ['registry']        
-        deploy:
-          labels:
-            traefik.backend: 'registry.home.lan'
-            traefik.frontend.rule: 'Host:registry.home.lan'
-            traefik.enable: 'true'
-            traefik.port: 80
-            #traefik.docker.network: 'traefik-net'
-            traefik.frontend.auth.basic: 'admin:$apr1$XXrpwZre$ItZSXpoeB6bdPLCGT7eXG0'
-            traefik.frontend.passHostHeader: 'true'
+    image: joxit/docker-registry-ui:latest
+    environment:
+        - DELETE_IMAGES=true
+        - REGISTRY_TITLE=My Private Docker Registry
+        - NGINX_PROXY_PASS_URL=http://docker-registry_registry:5000
+        - SINGLE_REGISTRY=true
+    depends_on: ['registry']
+    deploy:
+      labels:
+        traefik.backend: 'registry.home.lan'
+        traefik.frontend.rule: 'Host:registry.home.lan'
+        traefik.enable: 'true'
+        traefik.port: 80
+        #traefik.docker.network: 'traefik-net'
+        traefik.frontend.auth.basic: 'admin:$apr1$XXrpwZre$ItZSXpoeB6bdPLCGT7eXG0'
+        traefik.frontend.passHostHeader: 'true'
 volumes:
   dockerregistry:
     external: true
