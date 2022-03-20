@@ -5,6 +5,9 @@ version: '3.1'
 # SERVICES
 ################################################################################
 services:
+##----------------------------------------------------------------
+## traefik
+##----------------------------------------------------------------
   traefik:
     image: "traefik:v2.6"
     container_name: "traefik"
@@ -85,31 +88,55 @@ services:
 
     dns:
       - 127.0.0.1
+##----------------------------------------------------------
+## docker registry
+##----------------------------------------------------------
   registry:
     image: registry:2.7
     volumes:
         - dockerregistry:/var/lib/registry
     environment:
         - REGISTRY_HTTP_SECRET=my_registry_secret
-        - REGISTRY_STORAGE_DELETE_ENABLED=true       
-
+        - REGISTRY_STORAGE_DELETE_ENABLED=true
+    labels:
+      traefik.enable: 'true'
+      traefik.http.routers.registry.entrypoints: 'web'
+      traefik.http.routers.registry.rule: Host(`docker-registry.home.lan`)
+      traefik.http.routers.registry.service: 'registry'
+      traefik.http.services.registry.loadbalancer.server.port: 5000
+      traefik.http.services.registry.loadbalancer.passhostheader: 'true'
+      # - "traefik.http.middlewares.registry-https-redirect.redirectscheme.scheme=https"
+      # - "traefik.http.routers.registry.middlewares=registry-https-redirect"
+      # - "traefik.http.routers.registry-secure.entrypoints=https"
+      # - "traefik.http.routers.registry-secure.rule=Host(`registry.git.example.com`)"
+      # - "traefik.http.routers.registry-secure.tls=true"
+      # - "traefik.http.routers.registry-secure.tls.certresolver=http"     
+##----------------------------------------------------------
+## registry ui
+##----------------------------------------------------------
   ui:
     image: joxit/docker-registry-ui:latest
     environment:
         - DELETE_IMAGES=true
         - REGISTRY_TITLE=My Private Docker Registry
-        - NGINX_PROXY_PASS_URL=http://docker-registry_registry:5000
+        - NGINX_PROXY_PASS_URL=http://registry:5000
         - SINGLE_REGISTRY=true
     depends_on: ['registry']
-    deploy:
-      labels:
-        traefik.backend: 'registry.home.lan'
-        traefik.frontend.rule: 'Host:registry.home.lan'
-        traefik.enable: 'true'
-        traefik.port: 80
-        #traefik.docker.network: 'traefik-net'
-        traefik.frontend.auth.basic: 'admin:$apr1$XXrpwZre$ItZSXpoeB6bdPLCGT7eXG0'
-        traefik.frontend.passHostHeader: 'true'
+    labels:
+      traefik.enable: 'true'
+      traefik.http.routers.ui.rule: Host(`registry.home.lan`)
+      traefik.http.routers.ui.entrypoints: web
+      traefik.http.routers.api.middlewares: auth
+      traefik.http.middlewares.auth.basicauth.users: 'admin:$apr1$XXrpwZre$ItZSXpoeB6bdPLCGT7eXG0'
+      traefik.http.routers.ui.service: uisvc
+      traefik.http.services.uisvc.loadbalancer.passhostheader: 'true'      
+      traefik.frontend.auth.basic: 'admin:$apr1$XXrpwZre$ItZSXpoeB6bdPLCGT7eXG0'
+      traefik.frontend.passHostHeader: 'true'
 volumes:
   dockerregistry:
-    external: true
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /shared
+      

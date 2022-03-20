@@ -14,6 +14,8 @@
 ## https://github.com/pawalt/proxmox-k3s
 ## https://canthonyscott.com/setting-up-a-k3s-kubernetes-cluster-within-proxmox/
 ## https://github.com/toboshii/home-cluster
+### Storage mit truenas
+- https://jonathangazeley.com/2021/01/05/using-truenas-to-provide-persistent-storage-for-kubernetes/
 
 
 # Template for deploying k3s backed by Flux
