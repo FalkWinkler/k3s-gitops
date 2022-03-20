@@ -1,0 +1,76 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prometheus-operator
+  namespace: monitoring
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 33.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
+  values:
+    grafana:
+      enabled: true
+      datasources:
+        deleteDatasources:
+        - name: Loki
+          orgId: 1
+        datasources.yaml:
+          apiVersion: 1
+          datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-stack-prometheus:9090/
+            access: proxy
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki:3100
+      dashboards:
+        default:
+          # Ref: https://grafana.com/grafana/dashboards/12175
+          calico-felix:
+            gnetId: 12175
+            revision: 5
+            datasource: Prometheus 
+          # Ref: https://grafana.com/grafana/dashboards/7845
+          zfs:
+            gnetId: 7845
+            revision: 4
+            datasource: Prometheus
+          flux-cluster:
+            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
+            datasource: Prometheus
+          flux-control-plane:
+            url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
+            datasource: Prometheus
+      ingress:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "web"
+        hosts:
+          - "grafana.${DOMAIN_INTERNAL}"
+        tls:
+          - hosts:
+              - "grafana.${DOMAIN_INTERNAL}"
+    alertmanager:
+      enabled: false
+    prometheus:
+      #ingress:
+      prometheusSpec:
+        replicas: 1
+        retention: 7d
