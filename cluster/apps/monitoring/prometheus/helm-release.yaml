@@ -23,6 +23,21 @@ spec:
   values:
     grafana:
       enabled: true
+      env:
+        GF_EXPLORE_ENABLED: true
+        GF_PANELS_DISABLE_SANITIZE_HTML: true
+        GF_LOG_FILTERS: rendering:debug
+        GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+        GF_DATE_FORMATS_FULL_DATE: "MMM Do, YYYY hh:mm:ss a"
+        GF_DATE_FORMATS_INTERVAL_SECOND: "hh:mm:ss a"
+        GF_DATE_FORMATS_INTERVAL_MINUTE: "hh:mm a"
+        GF_DATE_FORMATS_INTERVAL_HOUR: "DD/MM hh:mm a"
+        GF_DATE_FORMATS_INTERVAL_DAY: "DD/MM"
+        GF_DATE_FORMATS_INTERVAL_MONTH: "MM-YYYY"
+        GF_DATE_FORMATS_INTERVAL_YEAR: "YYYY"
+      grafana.ini:
+        server:
+          root_url: "http://grafana.${DOMAIN_INTERNAL}"
       datasources:
         deleteDatasources:
         - name: Loki
@@ -70,7 +85,13 @@ spec:
     alertmanager:
       enabled: false
     prometheus:
-      #ingress:
+      ingress:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "web"
+        hosts:
+          - "prometheus.${DOMAIN_INTERNAL}"
       prometheusSpec:
         replicas: 1
         retention: 7d
