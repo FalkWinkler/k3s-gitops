@@ -17,7 +17,7 @@ spec:
       interval: 5m
   values:    
     nfs:
-     server: 10.128.10.10
+     server: 192.168.10.10
      path: /mnt/Volume2/kubernetes
     storageClass:
       name: nfs
