@@ -5,6 +5,9 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "schedule": [
+    "every weekend"
+  ],
   "flux": {
     "fileMatch": [
       "cluster/.+\\.ya?ml$"
