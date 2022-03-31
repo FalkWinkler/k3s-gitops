@@ -23,6 +23,7 @@ spec:
       name: nfs
       reclaimPolicy: Retain
       pathPattern: "${.PVC.namespace}/${.PVC.annotations.nfs.io/storage-path}"
+      onDelete: delete
 
 
 
