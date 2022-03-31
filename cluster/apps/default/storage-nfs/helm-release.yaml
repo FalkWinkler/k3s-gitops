@@ -21,9 +21,8 @@ spec:
      path: /mnt/Volume2/kubernetes
     storageClass:
       name: nfs
-      reclaimPolicy: Retain
-      pathPattern: "${.PVC.namespace}/${.PVC.annotations.nfs.io/storage-path}"
-      onDelete: delete
+      reclaimPolicy: Retain     
+      
 
 
 
