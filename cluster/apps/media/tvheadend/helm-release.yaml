@@ -17,7 +17,7 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
-  values: {}
+  values:
     # nameOverride: tvheadend
     # fullnameOverride: tvheadend
     # hostNetwork: true
@@ -25,14 +25,14 @@ spec:
     #   kubernetes.io/hostname: "k3s-worker-1"
     # env:
     #   TZ: Europe/Berlin
-    # ingress:
-    #   main:
-    #     enabled: true
-    #     ingressClassName: "traefik"
-    #     annotations:
-    #       traefik.ingress.kubernetes.io/router.entrypoints: "web"
-    #     hosts:
-    #     - host: "tv.${DOMAIN_INTERNAL}"
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "web"
+        hosts:
+        - host: "tv.${DOMAIN_INTERNAL}"
     # persistence:
     #   config:
     #     enabled: false
