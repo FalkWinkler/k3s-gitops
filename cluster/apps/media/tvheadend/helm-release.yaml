@@ -21,8 +21,8 @@ spec:
     nameOverride: tvheadend
     fullnameOverride: tvheadend
     hostNetwork: true
-    # nodeSelector:
-    #   kubernetes.io/hostname: "k3s-worker-1"
+    nodeSelector:
+      kubernetes.io/hostname: "k3s-worker-1"
     env:
       TZ: Europe/Berlin
     ingress:
@@ -35,13 +35,13 @@ spec:
         - host: "tv.${DOMAIN_INTERNAL}"
     persistence:
       config:
-        enabled: true
+        enabled: false
         storageClass: nfs
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 1Gi
       recordings:
-        enabled: true
+        enabled: false
         storageClass: nfs
         mountPath: /recordings
         accessMode: ReadWriteOnce
