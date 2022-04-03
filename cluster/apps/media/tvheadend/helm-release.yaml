@@ -17,33 +17,33 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
-  values:
-    nameOverride: tvheadend
-    fullnameOverride: tvheadend
-    hostNetwork: true
-    nodeSelector:
-      kubernetes.io/hostname: "k3s-worker-1"
-    env:
-      TZ: Europe/Berlin
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "web"
-        hosts:
-        - host: "tv.${DOMAIN_INTERNAL}"
-    persistence:
-      config:
-        enabled: false
-        storageClass: nfs
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-      recordings:
-        enabled: false
-        storageClass: nfs
-        mountPath: /recordings
-        accessMode: ReadWriteOnce
-        size: 300Gi
+  values: {}
+    # nameOverride: tvheadend
+    # fullnameOverride: tvheadend
+    # hostNetwork: true
+    # nodeSelector:
+    #   kubernetes.io/hostname: "k3s-worker-1"
+    # env:
+    #   TZ: Europe/Berlin
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     ingressClassName: "traefik"
+    #     annotations:
+    #       traefik.ingress.kubernetes.io/router.entrypoints: "web"
+    #     hosts:
+    #     - host: "tv.${DOMAIN_INTERNAL}"
+    # persistence:
+    #   config:
+    #     enabled: false
+    #     storageClass: nfs
+    #     mountPath: /config
+    #     accessMode: ReadWriteOnce
+    #     size: 1Gi
+    #   recordings:
+    #     enabled: false
+    #     storageClass: nfs
+    #     mountPath: /recordings
+    #     accessMode: ReadWriteOnce
+    #     size: 300Gi
 
