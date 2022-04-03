@@ -23,8 +23,8 @@ spec:
     hostNetwork: true
     nodeSelector:
       kubernetes.io/hostname: "k3s-worker-1"
-    env:
-      TZ: "Europe/Berlin"
+    # env:
+    #   TZ: "Europe/Berlin"
     ingress:
       main:
         enabled: true
@@ -33,17 +33,17 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "web"
         hosts:
         - host: "tv.${DOMAIN_INTERNAL}"
-    # persistence:
-    #   config:
-    #     enabled: false
-    #     storageClass: nfs
-    #     mountPath: /config
-    #     accessMode: ReadWriteOnce
-    #     size: 1Gi
-    #   recordings:
-    #     enabled: false
-    #     storageClass: nfs
-    #     mountPath: /recordings
-    #     accessMode: ReadWriteOnce
-    #     size: 300Gi
+    persistence:
+      config:
+        enabled: true
+        storageClass: nfs
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+      recordings:
+        enabled: true
+        storageClass: nfs
+        mountPath: /recordings
+        accessMode: ReadWriteOnce
+        size: 300Gi
 
