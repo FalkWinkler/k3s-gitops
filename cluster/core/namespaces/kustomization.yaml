@@ -5,3 +5,5 @@ resources:
   - metallb-system.yaml
   - networking.yaml
   - monitoring.yaml
+  - security.yaml
+  - media.yaml
