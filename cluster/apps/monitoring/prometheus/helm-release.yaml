@@ -78,7 +78,7 @@ spec:
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "web"
         hosts:
-          - "grafana.${DOMAIN_INTERNAL}"        
+          - "grafana.${DOMAIN_INTERNAL}"
     alertmanager:
       enabled: false
     prometheus:
