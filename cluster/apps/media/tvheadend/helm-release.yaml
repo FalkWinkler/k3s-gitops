@@ -33,13 +33,13 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "web"
         hosts:
         - host: "tv.${DOMAIN_INTERNAL}"
-    persistence:
-      config:
-        enabled: true
-        storageClass: nfs
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
+    persistence: {}
+      # config:
+      #   enabled: true
+      #   storageClass: nfs
+      #   mountPath: /config
+      #   accessMode: ReadWriteOnce
+      #   size: 1Gi
       # recordings:
       #   enabled: true
       #   storageClass: nfs
