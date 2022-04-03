@@ -24,7 +24,7 @@ spec:
     nodeSelector:
       kubernetes.io/hostname: "k3s-worker-1"
     env:
-      TZ: Europe/Berlin
+      TZ: "Europe/Berlin"
     ingress:
       main:
         enabled: true
