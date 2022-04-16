@@ -4,4 +4,3 @@ resources:
   - namespaces
   - cert-manager 
   - metallb-system
-  - system-upgrade
