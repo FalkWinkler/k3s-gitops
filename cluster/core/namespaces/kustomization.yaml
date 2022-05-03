@@ -7,3 +7,4 @@ resources:
   - monitoring.yaml
   - security.yaml
   - media.yaml
+  - document
