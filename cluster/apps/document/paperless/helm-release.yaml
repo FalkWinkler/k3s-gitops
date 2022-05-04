@@ -86,5 +86,5 @@ spec:
         type: nfs
         server: 192.168.10.5
         path: /mnt/Volume2/document/export
-  redis:
-    enabled: true
+    redis:
+      enabled: true
