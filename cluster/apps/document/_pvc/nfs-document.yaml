@@ -25,7 +25,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nfs-document-pvc
-  namespace: media
+  namespace: document
 spec:
   accessModes:
   - ReadWriteMany
