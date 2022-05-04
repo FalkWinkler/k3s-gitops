@@ -60,31 +60,31 @@ spec:
       # @default -- See values.yaml
       data:
         enabled: true
-        mountPath: /usr/src/paperless/data        
-        type: nfs
-        server: ${NAS_IP}
-        path: /mnt/Volume2/document/data
+        mountPath: /usr/src/paperless/data
+        type: pvc
+        existingClaim: nfs-document-pvc
+        subPath: /data
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
         enabled: true
-        mountPath: /usr/src/paperless/media       
-        type: nfs
-        server: ${NAS_IP}
-        path: /mnt/Volume2/document/media
+        mountPath: /usr/src/paperless/media
+        type: pvc
+        existingClaim: nfs-document-pvc
+        subPath: /media
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
         enabled: true
         mountPath: /usr/src/paperless/consume
-        type: nfs
-        server: ${NAS_IP}
-        path: /mnt/Volume2/document/consume
+        type: pvc
+        existingClaim: nfs-document-pvc
+        subPath: /consume
       export:
         enabled: true
-        mountPath: /usr/src/paperless/export        
-        type: nfs
-        server: ${NAS_IP}
-        path: /mnt/Volume2/document/export
+        mountPath: /usr/src/paperless/export
+        type: pvc
+        existingClaim: nfs-document-pvc
+        subPath: /export
     redis:
       enabled: true
