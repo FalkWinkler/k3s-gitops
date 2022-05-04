@@ -88,3 +88,4 @@ spec:
         subPath: /export
     redis:
       enabled: true
+      replica.replicaCount: 0
