@@ -62,7 +62,7 @@ spec:
         enabled: true
         mountPath: /usr/src/paperless/data        
         type: nfs
-        server: 192.168.10.5
+        server: ${NAS_IP}
         path: /mnt/Volume2/document/data
       # -- Configure persistence for media.
       # @default -- See values.yaml
@@ -70,7 +70,7 @@ spec:
         enabled: true
         mountPath: /usr/src/paperless/media       
         type: nfs
-        server: 192.168.10.5
+        server: ${NAS_IP}
         path: /mnt/Volume2/document/media
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
@@ -78,13 +78,13 @@ spec:
         enabled: true
         mountPath: /usr/src/paperless/consume
         type: nfs
-        server: 192.168.10.5
+        server: ${NAS_IP}
         path: /mnt/Volume2/document/consume
       export:
         enabled: true
         mountPath: /usr/src/paperless/export        
         type: nfs
-        server: 192.168.10.5
+        server: ${NAS_IP}
         path: /mnt/Volume2/document/export
     redis:
       enabled: true
