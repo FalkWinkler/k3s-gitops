@@ -61,31 +61,39 @@ spec:
       data:
         enabled: true
         mountPath: /usr/src/paperless/data
-        type: pvc
-        existingClaim: nfs-document-pvc
-        subPath: data
+        emptyDir:
+          enabled: false
+        # type: pvc
+        # existingClaim: nfs-document-pvc
+        # subPath: data
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
         enabled: true
         mountPath: /usr/src/paperless/media
-        type: pvc
-        existingClaim: nfs-document-pvc
-        subPath: media
+        emptyDir:
+          enabled: false
+        # type: pvc
+        # existingClaim: nfs-document-pvc
+        # subPath: media
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
         enabled: true
         mountPath: /usr/src/paperless/consume
-        type: pvc
-        existingClaim: nfs-document-pvc
-        subPath: consume
+        emptyDir:
+          enabled: false
+        # type: pvc
+        # existingClaim: nfs-document-pvc
+        # subPath: consume
       export:
         enabled: true
         mountPath: /usr/src/paperless/export
-        type: pvc
-        existingClaim: nfs-document-pvc
-        subPath: export
+        emptyDir:
+          enabled: false
+        # type: pvc
+        # existingClaim: nfs-document-pvc
+        # subPath: export
     redis:
       enabled: true
       architecture: standalone
