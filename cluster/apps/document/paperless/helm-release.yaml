@@ -59,7 +59,7 @@ spec:
       # -- Configure persistence for data.
       # @default -- See values.yaml
       data:
-        enabled: true
+        enabled: false
         mountPath: /usr/src/paperless/data
         emptyDir:
           enabled: false
@@ -69,7 +69,7 @@ spec:
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
-        enabled: true
+        enabled: false
         mountPath: /usr/src/paperless/media
         emptyDir:
           enabled: false
@@ -79,7 +79,7 @@ spec:
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
-        enabled: true
+        enabled: false
         mountPath: /usr/src/paperless/consume
         emptyDir:
           enabled: false
@@ -87,7 +87,7 @@ spec:
         # existingClaim: nfs-document-pvc
         # subPath: consume
       export:
-        enabled: true
+        enabled: false
         mountPath: /usr/src/paperless/export
         emptyDir:
           enabled: false
