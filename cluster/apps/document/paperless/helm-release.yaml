@@ -80,12 +80,10 @@ spec:
       # @default -- See values.yaml
       consume:
         enabled: true
-        mountPath: /usr/src/paperless/consume
-        emptyDir:
-          enabled: false
-        # type: pvc
-        # existingClaim: nfs-document-pvc
-        # subPath: consume
+        mountPath: /usr/src/paperless/consume        
+        type: pvc
+        existingClaim: nfs-document-pvc
+        subPath: consume
       export:
         enabled: false
         mountPath: /usr/src/paperless/export
