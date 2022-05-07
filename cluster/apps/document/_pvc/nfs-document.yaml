@@ -15,6 +15,7 @@ spec:
     path: /mnt/Volume2/document
   mountOptions:
   - hard
+  - nolock
   - nfsvers=4.1
 ---
 apiVersion: v1
