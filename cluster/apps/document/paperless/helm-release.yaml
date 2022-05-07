@@ -79,7 +79,7 @@ spec:
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
-        enabled: false
+        enabled: true
         mountPath: /usr/src/paperless/consume
         emptyDir:
           enabled: false
