@@ -41,7 +41,7 @@ The following components will be installed in your [k3s](https://k3s.io/) cluste
 
 Feel free to read up on any of these technologies before you get started to be more familiar with them.
 
-- [cert-manager](https://cert-manager.io/) - SSL certificates - with Cloudflare DNS challenge
+_Additional applications include [hajimari](https://github.com/toboshii/hajimari), [error-pages](https://github.com/tarampampam/error-pages), [echo-server](https://github.com/Ealenn/Echo-Server), [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller), [reflector](https://github.com/emberstack/kubernetes-reflector), and [reloader](https://github.com/stakater/Reloader)_
 - [calico](https://www.tigera.io/project-calico/) - CNI (container network interface)
 - [echo-server](https://github.com/Ealenn/Echo-Server) - REST Server Tests (Echo-Server) API (useful for debugging HTTP issues)
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) - Automatically configure external DNS servers for Kubernetes Ingresses and Services
