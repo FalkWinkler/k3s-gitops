@@ -113,26 +113,15 @@ pre-commit install-hooks
 
 The Git repository contains the following directories under `cluster` and are ordered below by how Flux will apply them.
 
-- **base** directory is the entrypoint to Flux
-- **crds** directory contains custom resource definitions (CRDs) that need to exist globally in your cluster before anything else exists
-- **core** directory (depends on **crds**) are important infrastructure applications (grouped by namespace) that should never be pruned by Flux
-- **apps** directory (depends on **core**) is where your common applications (grouped by namespace) could be placed, Flux will prune resources here if they are not tracked by Git anymore
-
-```
-cluster
-├── apps
-│   ├── default
-│   ├── networking
+```sh
+📁 cluster      # k8s cluster defined as code
+├─📁 flux       # flux, gitops operator, loaded before everything
+├─📁 crds       # custom resources, loaded before 📁 core and 📁 apps
+├─📁 charts     # helm repos, loaded before 📁 core and 📁 apps
+├─📁 config     # cluster config, loaded before 📁 core and 📁 apps
+├─📁 core       # crucial apps, namespaced dir tree, loaded before 📁 apps
+└─📁 apps       # regular apps, namespaced dir tree, loaded last
 │   └── system-upgrade
-├── base
-│   └── flux-system
-├── core
-│   ├── cert-manager
-│   ├── metallb-system
-│   ├── namespaces
-│   └── system-upgrade
-└── crds
-    └── cert-manager
 ```
 
 ## :rocket:&nbsp; Lets go!
@@ -247,60 +236,44 @@ If Terraform was ran successfully and you have port forwarded `80` and `443` in 
 1. Verify Flux can be installed
 
 ```sh
-flux --kubeconfig=./provision/kubeconfig check --pre
+    ```sh
+    task cluster:verify
 # ► checking prerequisites
 # ✔ kubectl 1.21.5 >=1.18.0-0
 # ✔ Kubernetes 1.21.5+k3s1 >=1.16.0-0
 # ✔ prerequisites checks passed
 ```
 
-2. Pre-create the `flux-system` namespace
+2. Push you changes to git
 
-```sh
-kubectl --kubeconfig=./provision/kubeconfig create namespace flux-system --dry-run=client -o yaml | kubectl --kubeconfig=./provision/kubeconfig apply -f -
-```
 
-3. Add the Age key in-order for Flux to decrypt SOPS secrets
-
-```sh
-cat ~/.config/sops/age/keys.txt |
     kubectl --kubeconfig=./provision/kubeconfig \
     -n flux-system create secret generic sops-age \
     --from-file=age.agekey=/dev/stdin
-```
-
-:round_pushpin: Variables defined in `./cluster/base/cluster-secrets.sops.yaml` and `./cluster/base/cluster-settings.sops.yaml` will be usable anywhere in your YAML manifests under `./cluster`
-
-4. **Verify** all the above files are **encrypted** with SOPS
-
 5. If you verified all the secrets are encrypted, you can delete the `tmpl` directory now
 
 6.  Push you changes to git
 
 ```sh
 git add -A
-git commit -m "initial commit"
+    git commit -m "Initial commit :rocket:"
 git push
 ```
 
-7. Install Flux
-
-:round_pushpin: Due to race conditions with the Flux CRDs you will have to run the below command twice. There should be no errors on this second run.
+3. Install Flux and sync the cluster to the Git repository
 
 ```sh
-kubectl --kubeconfig=./provision/kubeconfig apply --kustomize=./cluster/base/flux-system
+    task cluster:install
 # namespace/flux-system configured
 # customresourcedefinition.apiextensions.k8s.io/alerts.notification.toolkit.fluxcd.io created
-# ...
 # unable to recognize "./cluster/base/flux-system": no matches for kind "Kustomization" in version "kustomize.toolkit.fluxcd.io/v1beta1"
 # unable to recognize "./cluster/base/flux-system": no matches for kind "GitRepository" in version "source.toolkit.fluxcd.io/v1beta1"
 # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
 # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
 # unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
-# unable to recognize "./cluster/base/flux-system": no matches for kind "HelmRepository" in version "source.toolkit.fluxcd.io/v1beta1"
 ```
 
-8. Verify Flux components are running in the cluster
+4. Verify Flux components are running in the cluster
 
 ```sh
 kubectl --kubeconfig=./provision/kubeconfig get pods -n flux-system
@@ -337,6 +310,7 @@ By default in this template Kubernetes ingresses are set to use the [Let's Encry
 
 Once you have confirmed there are no issues requesting your certificates replace `letsencrypt-staging` with `letsencrypt-production` in your ingress annotations for `cert-manager.io/cluster-issuer`
 
+[Renovatebot](https://www.mend.io/free-developer-tools/renovate/) will scan your repository and offer PRs when it finds dependencies out of date. Common dependencies it will discover and update are Flux, Ansible Galaxy Roles, Terraform Providers, Kubernetes Helm Charts, Kubernetes Container Images, Pre-commit hooks updates, and more!
 ### 🪝 Github Webhook
 
 Flux is pull-based by design meaning it will periodically check your git repository for changes, using a webhook you can enable Flux to update your cluster on `git push`. In order to configure Github to send `push` events from your repository to the Flux webhook receiver you will need two things:
@@ -379,6 +353,8 @@ Our Check out our [wiki](https://github.com/k8s-at-home/template-cluster-k3s/wik
 ## :mega:&nbsp; Post installation
 
 ### :point_right:&nbsp; Troubleshooting
+        name: flux-installation
+        interval: 10m
 
 Our [wiki](https://github.com/k8s-at-home/template-cluster-k3s/wiki) is a good place to start troubleshooting issues. If that doesn't cover your issue, start a new thread in the #support channel on our [Discord](https://digcord.gg/k8s-at-home).
 
