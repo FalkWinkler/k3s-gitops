@@ -8,6 +8,5 @@ resources:
   - default
   - flux-system
   - kube-system
-  - metallb-system
   - networking
   # - system-upgrade
