@@ -22,11 +22,11 @@ spec:
     fullnameOverride: paperless
     env:
       USERMAP_UID: 1000
-      USERMAP_GID: 1000     
-      PAPERLESS_CONSUMPTION_DIR: "/consume"
+      USERMAP_GID: 1000
+      #PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_OCR_LANGUAGE: deu
       PAPERLESS_TIME_ZONE: Europe/Berlin
-      PAPERLESS_FILENAME_FORMAT: "{document_type}/{correspondent}/{create_year}-{create_month}-{correspondent}-{title}-{tag_list}"
+      PAPERLESS_FILENAME_FORMAT: '{document_type}/{correspondent}/{created_year}'
       PAPERLESS_FILENAME_DATE_ORDER: YMD
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
       PAPERLESS_CONSUMER_RECURSIVE: "true"
@@ -59,39 +59,35 @@ spec:
       # -- Configure persistence for data.
       # @default -- See values.yaml
       data:
-        enabled: false
-        mountPath: /usr/src/paperless/data
-        emptyDir:
-          enabled: false
-        # type: pvc
-        # existingClaim: nfs-document-pvc
-        # subPath: data
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        path: /mnt/Volume2/document/data
+        accessMode: ReadWriteMany
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
-        enabled: false
-        mountPath: /usr/src/paperless/media
-        emptyDir:
-          enabled: false
-        # type: pvc
-        # existingClaim: nfs-document-pvc
-        # subPath: media
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        path: /mnt/Volume2/document/media
+        accessMode: ReadWriteMany   
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
-        enabled: false
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        path: /mnt/Volume2/document/consume
         mountPath: /usr/src/paperless/consume
-        type: pvc
-        existingClaim: nfs-document-pvc
-        subPath: consume
+        accessMode: ReadWriteMany
       export:
-        enabled: false
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        path: /mnt/Volume2/document/export
         mountPath: /usr/src/paperless/export
-        emptyDir:
-          enabled: false
-        # type: pvc
-        # existingClaim: nfs-document-pvc
-        # subPath: export
+        accessMode: ReadWriteMany
     redis:
       enabled: true
       architecture: standalone
