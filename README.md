@@ -1,5 +1,7 @@
 # Home K3s Cluster
 
+# Vpn 
+https://blog.jamesclonk.io/posts/wireguard-on-kubernetes/
 ## Installation von pre-commit
 ### Probleme mit apt install in wsl2
 
