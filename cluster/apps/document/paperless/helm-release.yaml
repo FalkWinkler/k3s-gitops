@@ -21,8 +21,8 @@ spec:
     nameOverride: paperless
     fullnameOverride: paperless
     env:
-      USERMAP_UID: 1000
-      USERMAP_GID: 1000
+      USERMAP_UID: 1001
+      #USERMAP_GID: 1000
       #PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_OCR_LANGUAGE: deu
       PAPERLESS_TIME_ZONE: Europe/Berlin
