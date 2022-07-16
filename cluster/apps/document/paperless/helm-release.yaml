@@ -21,8 +21,8 @@ spec:
     nameOverride: paperless
     fullnameOverride: paperless
     env:
-      USERMAP_UID: 1500
-      USERMAP_GID: 1500
+      USERMAP_UID: 1000
+      USERMAP_GID: 1000
       #PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_OCR_LANGUAGE: deu
       PAPERLESS_TIME_ZONE: Europe/Berlin
@@ -32,7 +32,7 @@ spec:
       PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_ADMIN_USER: admin
       PAPERLESS_ADMIN_PASSWORD: admin@123
-      PAPERLESS_REDIS: redis://paperless-redis-master:6379
+      PAPERLESS_REDIS: redis://redis:6379
     service:
       main:
         type: LoadBalancer
@@ -62,7 +62,7 @@ spec:
         enabled: true
         type: nfs
         server: 192.168.10.10
-        path: /mnt/Volume2/Dokumente
+        path: /mnt/Volume2/document/data
         accessMode: ReadWriteMany
       # -- Configure persistence for media.
       # @default -- See values.yaml
@@ -70,7 +70,7 @@ spec:
         enabled: true
         type: nfs
         server: 192.168.10.10
-        path: /mnt/Volume2/Dokumente
+        path: /mnt/Volume2/document/media
         accessMode: ReadWriteMany   
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
@@ -78,14 +78,14 @@ spec:
         enabled: true
         type: nfs
         server: 192.168.10.10
-        path: /mnt/Volume2/Dokumente
+        path: /mnt/Volume2/document/consume
         mountPath: /usr/src/paperless/consume
         accessMode: ReadWriteMany
       export:
         enabled: true
         type: nfs
         server: 192.168.10.10
-        path: /mnt/Volume2/Dokumente
+        path: /mnt/Volume2/document/export
         mountPath: /usr/src/paperless/export
         accessMode: ReadWriteMany
     redis:
