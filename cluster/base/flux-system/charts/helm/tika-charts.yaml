@@ -6,5 +6,5 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://github.com/apache/tika-helm
+  url: https://apache.jfrog.io/artifactory/tika
   timeout: 3m
