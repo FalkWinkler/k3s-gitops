@@ -5,6 +5,6 @@ metadata:
   name: tika-charts
   namespace: flux-system
 spec:
-  interval: 30m0s
+  interval: 30m
   url: https://apache.jfrog.io/artifactory/tika
-  timeout: 3m0s
+  timeout: 3m
