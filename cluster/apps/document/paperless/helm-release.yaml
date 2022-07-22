@@ -33,6 +33,12 @@ spec:
       PAPERLESS_ADMIN_USER: admin
       PAPERLESS_ADMIN_PASSWORD: admin@123
       PAPERLESS_REDIS: redis://paperless-redis-master:6379
+      PAPERLESS_TASK_WORKERS: 2
+      PAPERLESS_THREADS_PER_WORKER: 2
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998      
+      #PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000      
+
     service:
       main:
         type: LoadBalancer
