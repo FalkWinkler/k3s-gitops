@@ -25,6 +25,7 @@ spec:
       USERMAP_GID: 1000
       #PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_OCR_LANGUAGE: deu
+      PAPERLESS_OCR_LANGUAGES: deu eng
       PAPERLESS_TIME_ZONE: Europe/Berlin
       PAPERLESS_FILENAME_FORMAT: '{document_type}/{correspondent}/{created_year}'
       PAPERLESS_FILENAME_DATE_ORDER: YMD

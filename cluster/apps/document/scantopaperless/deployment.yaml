@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scan-to-paperless
+  namespace: document
+spec:
+  selector:
+    matchLabels:
+      app: scan-to-paperless
+  template:
+    metadata:
+      labels:
+        app: scan-to-paperless
+    spec:
+      containers:
+      - name: scan-to-paperless
+        image: sbrunner/scan-to-paperless
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+          - mountPath: /destination
+            name: consume
+          - mountPath: /source
+            name: scan
+      securityContext:
+          runAsUser: 1500
+          runAsGroup: 1500
+      volumes:
+      - name: consume
+        nfs:
+          path: /mnt/Volume2/document/consume
+          server: 192.168.10.10
+      - name: scan
+        nfs:
+          path: /mnt/Volume2/document/scan
+          server: 192.168.10.10
