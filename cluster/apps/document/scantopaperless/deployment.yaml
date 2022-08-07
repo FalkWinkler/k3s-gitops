@@ -34,9 +34,9 @@ spec:
       volumes:
       - name: consume
         nfs:
-          path: /mnt/Volume2/document/consume
+          path: /mnt/Volume1/document/consume
           server: 192.168.10.10
       - name: scan
         nfs:
-          path: /mnt/Volume2/document/scan
+          path: /mnt/Volume1/document/scan
           server: 192.168.10.10
