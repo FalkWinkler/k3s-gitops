@@ -14,3 +14,4 @@ resources:
   - stakater.yaml
   - traefik.yaml
   - weaveworks-kured.yaml
+  - tika-charts.yaml
