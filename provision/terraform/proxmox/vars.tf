@@ -52,7 +52,7 @@ variable "num_k3s_nodes_mem" {
 }
 
 variable "tamplate_vm_name" {
- default = "ubuntu-focal-cloudinit-template"
+ default = "fedora-36-cloud-init"
 }
 
 variable "server_node" {
