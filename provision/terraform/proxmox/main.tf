@@ -41,11 +41,11 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
   sshkeys      = var.sshkeys
   bootdisk = "scsi0"
 
-   disk {    
+   disk {
     type = "scsi"
     size = "20G"
     ssd = 1
-    storage = "local-zfs"    
+    storage = "local-zfs"
     iothread = 1
   }
   
