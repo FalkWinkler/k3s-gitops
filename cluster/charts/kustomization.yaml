@@ -13,4 +13,3 @@ resources:
   - metrics-server.yaml
   - stakater.yaml
   - weaveworks-kured.yaml
-  - tika-charts.yaml
