@@ -5,8 +5,8 @@ kubernetes:
 %{ for hostname, ip in k3s_masters ~}
         ${hostname}:
           ansible_host: ${ip}
-          ansible_user: ubuntu
-          ansible_become_pass: ubuntu
+          ansible_user: fedora
+          ansible_become_pass: fedora
           ansible_ssh_private_key_file: ${ansible_ssh_private_key_file}
 %{ endfor ~}
     worker:
@@ -14,7 +14,7 @@ kubernetes:
 %{~ for hostname, ip in k3s_workers }
         ${hostname}:
           ansible_host: ${ip}
-          ansible_user: ubuntu
-          ansible_become_pass: ubuntu
+          ansible_user: fedora
+          ansible_become_pass: fedora
           ansible_ssh_private_key_file: ${ansible_ssh_private_key_file}
 %{~ endfor ~}

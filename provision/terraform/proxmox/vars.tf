@@ -70,5 +70,5 @@ variable "sshkeys" {
 variable "ssh_user" {
   description = "user to put ssh keys under"
   type = string
-  default = "ubuntu"
+  default = "fedora"
 }
