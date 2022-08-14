@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.10.0
+      version: 1.11.0
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -25,23 +25,28 @@ spec:
   values:
     interval: 5m
     logLevel: debug
-    sources:
-    - ingress
-    provider: rfc2136
-    rfc2136:
-      host: "${INTERNAL_DNS_IP}"
-      port: 53
-      zone: k3s.home.lan
-      tsigAxfr : ""      
+    provider: cloudflare
+    env:
+      - name: CF_API_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-cloud-credentials
+            key: email
+      - name: CF_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-cloud-credentials
+            key: api-key
+    extraArgs:
+      - --cloudflare-proxied
+      - --annotation-filter=external-dns/is-public in (true)
     policy: sync
-    txtPrefix: "external-dns-"
-    txt-owner-id: k3s
+    sources:
+      - ingress
+    txtPrefix: "k8s."
+    txtOwnerId: "default"
     domainFilters:
-    - "${DOMAIN_INTERNAL}"
-    crd:
-      create: false
-      apiversion: externaldns.k8s.io/v1alpha1
-      kind: DNSEndpoint   
+      - "${SECRET_DOMAIN}"
     resources:
       requests:
         memory: 100Mi
