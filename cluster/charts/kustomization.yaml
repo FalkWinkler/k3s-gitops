@@ -13,3 +13,4 @@ resources:
   - metrics-server.yaml
   - stakater.yaml
   - weaveworks-kured.yaml
+  - nfs-subdir-external-provisioner-charts.yaml
