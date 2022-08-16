@@ -52,20 +52,20 @@ spec:
         annotations:
           hajimari.io/icon: "form-textbox-password"
         hosts:
-        - host: "bitwarden.${SECRET_DOMAIN}"
-        paths:
-          - path: /
-            pathType: Prefix
-            service:
-              port: http
-          - path: /notifications/hub/negotiate
-            pathType: Prefix
-            service:
-              port: http
-          - path: /notifications/hub
-            pathType: Prefix
-            service:
-              port: websocket
+          - host: "bitwarden.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: *port
+              - path: /notifications/hub/negotiate
+                pathType: Prefix
+                service:
+                  port: *port
+              - path: /notifications/hub
+                pathType: Prefix
+                service:
+                  port: *websocket-port
         tls:
         - hosts:
           - "bitwarden.${SECRET_DOMAIN}"
