@@ -1,0 +1,96 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  creationTimestamp: "2022-08-15T04:35:40Z"
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 1
+  labels:
+    kustomize.toolkit.fluxcd.io/name: apps
+    kustomize.toolkit.fluxcd.io/namespace: flux-system
+  name: &app vaultwarden
+  namespace: security
+  resourceVersion: "886750"
+  uid: 69ba75c6-0f6c-4588-9e0e-beb36466cce8
+spec:
+  releaseName: *app
+  interval: 15m
+  chart:
+    spec:
+      chart: vaultwarden
+      version: 5.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5 
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    env:
+      ADMIN_TOKEN: null
+      DATA_FOLDER: config
+      DOMAIN: https://bitwarden.${SECRET_DOMAIN
+      SIGNUPS_ALLOWED: false
+      WEBSOCKET_ADDRESS: 0.0.0.0
+      WEBSOCKET_ENABLED: true
+      WEBSOCKET_PORT: 3012
+    fullnameOverride: vaultwarden
+    image:
+      repository: vaultwarden/server
+      tag: 5.3.2
+    service:
+      main:
+        ports:
+          http:
+            port: &port 80
+          websocket:
+            enabled: true
+            port: &websocket-port 3012
+    ingress:
+      main:
+        annotations:
+          hajimari.io/icon: form-textbox-password
+        enabled: true
+        hosts:
+        - host: "bitwarden.${SECRET_DOMAIN}"
+        ingressClassName: nginx
+        paths:
+        - path: /
+          pathType: Prefix
+          service:
+            port: *port
+        - path: /notifications/hub/negotiate
+          pathType: Prefix
+          service:
+            port: *port
+        - path: /notifications/hub
+          pathType: Prefix
+          service:
+            port: *websocket-port
+        tls:
+          - hosts:
+            - "bitwarden.${SECRET_DOMAIN}"
+            secretName: vaultwarden-tls
+    nameOverride: *app
+    persistence:
+      config:
+        accessMode: ReadWriteOnce
+        enabled: true
+        size: 10Gi
+        storageClass: nfs
+status:
+  conditions:
+  - lastTransitionTime: "2022-08-15T04:35:40Z"
+    message: HelmChart 'flux-system/security-vaultwarden' is not ready
+    reason: ArtifactFailed
+    status: "False"
+    type: Ready
+  failures: 92
+  helmChart: flux-system/security-vaultwarden
+  observedGeneration: 1
