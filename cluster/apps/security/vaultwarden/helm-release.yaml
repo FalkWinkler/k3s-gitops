@@ -2,11 +2,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: vaultwarden
+  name: &app vaultwarden
   namespace: security
 spec:
-  releaseName: vaultwarden
-  interval: 5m
+  releaseName: *app
+  interval: 15m
   chart:
     spec:
       chart: kah-common-chart
@@ -24,8 +24,8 @@ spec:
     remediation:
       retries: 5
   values:
-    nameOverride: vaultwarden
-    fullnameOverride: vaultwarden
+    global:
+      nameOverride: *app
     image:
       repository: ghcr.io/k8s-at-home/vaultwarden
       tag: 1.25.2
