@@ -37,6 +37,12 @@ spec:
       WEBSOCKET_PORT: 3012
       DOMAIN: https://bitwarden.${SECRET_DOMAIN}
       ADMIN_TOKEN: ${SECRET_VAULTWARDEN_ADMIN_TOKEN}
+      SMTP_HOST: "smtp.sendgrid.net"
+      SMTP_SECURITY: force_tls
+      SMTP_PORT: 465
+      SMTP_USERNAME: "apikey"
+      SMTP_PASSWORD: "${SECRET_SENDGRID_API_KEY}"
+      SMTP_AUTH_MECHANISM: "Login"
     service:
       main:
         ports:
