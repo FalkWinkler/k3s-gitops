@@ -38,6 +38,7 @@ spec:
       DOMAIN: https://bitwarden.${SECRET_DOMAIN}
       ADMIN_TOKEN: ${SECRET_VAULTWARDEN_ADMIN_TOKEN}
       SMTP_HOST: "smtp.sendgrid.net"
+      SMTP_FROM: "no-reply@bitwarden.${SECRET_DOMAIN}"
       SMTP_SECURITY: force_tls
       SMTP_PORT: 465
       SMTP_USERNAME: "apikey"
