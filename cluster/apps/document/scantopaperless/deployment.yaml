@@ -5,6 +5,13 @@ metadata:
   name: scan-to-paperless
   namespace: document
 spec:
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   selector:
     matchLabels:
       app: scan-to-paperless
