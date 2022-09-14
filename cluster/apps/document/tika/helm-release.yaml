@@ -9,8 +9,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: apache-tika
-      version: 0.12.1
+      chart: tika
+      version: 2.2.1-full
       sourceRef:
         kind: HelmRepository
         name: tika
