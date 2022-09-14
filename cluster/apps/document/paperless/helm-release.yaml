@@ -9,14 +9,13 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: paperless
-      version: 9.0.0
+      chart: kah-common-chart
+      version: 1.2.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: k8s-at-home
         namespace: flux-system
-      interval: 5m
+      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -25,6 +24,9 @@ spec:
     remediation:
       retries: 5
   values:
+    image:
+      repository: ghcr.io/paperless-ngx/paperless-ngx
+      tag: 1.8.0
     nameOverride: paperless
     fullnameOverride: paperless
     env:
@@ -55,9 +57,8 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "web"
           external-dns.alpha.kubernetes.io/hostname: "dokumente.${DOMAIN_INTERNAL}"
         hosts:
         - host: "dokumente.${DOMAIN_INTERNAL}"

@@ -9,14 +9,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: tika
-      version: 2.2.1
+      chart: apache-tika
+      version: 0.12.1
       sourceRef:
         kind: HelmRepository
-        name: tika-charts
+        name: tika
         namespace: flux-system
-      interval: 5m
   install:
     createNamespace: true
     remediation:
@@ -24,16 +22,15 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  values:    
+  values:
     env:
       USERMAP_UID: 1000
       USERMAP_GID: 1000
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: "nginx"
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "web"
           external-dns.alpha.kubernetes.io/hostname: "tika.${DOMAIN_INTERNAL}"
         hosts:
         - host: "tika.${DOMAIN_INTERNAL}"
