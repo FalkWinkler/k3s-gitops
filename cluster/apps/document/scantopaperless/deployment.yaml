@@ -33,7 +33,7 @@ spec:
           - mountPath: /source
             name: scan
         env:
-          PROGRESS: true
+          - PROGRESS="true"
       securityContext:
           runAsUser: 1500
           runAsGroup: 1500
