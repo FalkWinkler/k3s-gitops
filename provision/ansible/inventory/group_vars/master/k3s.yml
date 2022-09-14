@@ -55,3 +55,6 @@ k3s_server:
     - "feature-gates=MixedProtocolLBService=true"
     # Required for HAProxy health-checks
     - "anonymous-auth=true"
+ # Stop k3s control plane having workloads scheduled on them
+  node-taint:
+    - "k3s-controlplane=true:NoExecute"
