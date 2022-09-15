@@ -92,7 +92,7 @@ services:
 ## docker registry
 ##----------------------------------------------------------
   registry:
-    image: registry:2.7
+    image: registry:2.8
     volumes:
         - dockerregistry:/var/lib/registry
     environment:
