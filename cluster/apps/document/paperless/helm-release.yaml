@@ -47,7 +47,7 @@ spec:
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_THREADS_PER_WORKER: 2
       PAPERLESS_TIKA_ENABLED: 1
-      PAPERLESS_TIKA_ENDPOINT: http://tika:9998      
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       #PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000      
 
     service:
@@ -104,6 +104,7 @@ spec:
         path: /mnt/Volume1/document/export
         mountPath: /usr/src/paperless/export
         accessMode: ReadWriteMany
-    redis:
-      enabled: true
-      architecture: standalone
+    addons:
+      redis:
+        enabled: true
+        architecture: standalone
