@@ -12,7 +12,7 @@ spec:
       version: 17.1.5
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: bitnami
         namespace: flux-system
   install:
     createNamespace: true
@@ -22,8 +22,6 @@ spec:
     remediation:
       retries: 5
   values:
-    global:
-      imageRegistry: public.ecr.aws
     auth:
       enabled: false
       sentinel: false
