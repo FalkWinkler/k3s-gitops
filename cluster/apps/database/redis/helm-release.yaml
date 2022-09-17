@@ -5,7 +5,6 @@ metadata:
   name: &app redis
   namespace: database
 spec:
-  releaseName: *app
   interval: 15m
   chart:
     spec:
@@ -24,9 +23,7 @@ spec:
       retries: 5
   values:
     global:
-      nameOverride: *app
-    controller:
-      strategy: RollingUpdate
+      imageRegistry: public.ecr.aws
     auth:
       enabled: false
       sentinel: false
@@ -41,9 +38,3 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-    resources:
-      requests:
-        cpu: 10m
-        memory: 10Mi
-      limits:
-        memory: 100Mi
