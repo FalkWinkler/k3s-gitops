@@ -88,7 +88,7 @@ spec:
         type: nfs
         server: 192.168.10.10
         path: /mnt/Volume1/document/data
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
@@ -96,7 +96,7 @@ spec:
         type: nfs
         server: 192.168.10.10
         path: /mnt/Volume1/document/media
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
@@ -105,11 +105,11 @@ spec:
         server: 192.168.10.10
         path: /mnt/Volume1/document/consume
         mountPath: /usr/src/paperless/consume
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
       export:
         enabled: true
         type: nfs
         server: 192.168.10.10
         path: /mnt/Volume1/document/export
         mountPath: /usr/src/paperless/export
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
