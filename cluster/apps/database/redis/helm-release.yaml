@@ -25,14 +25,14 @@ spec:
     architecture: standalone
     auth:
       enabled: false
-      sentinel: false
+      #sentinel: false
       # existingSecret: *app
-    sentinel:
-      enabled: true
-      masterSet: redis-master
-      getMasterTimeout: 10
-      startupProbe:
-        failureThreshold: 2
+    # sentinel:
+    #   enabled: true
+    #   masterSet: redis-master
+    #   getMasterTimeout: 10
+    #   startupProbe:
+    #     failureThreshold: 2
     # metrics:
     #   enabled: true
     #   serviceMonitor:
