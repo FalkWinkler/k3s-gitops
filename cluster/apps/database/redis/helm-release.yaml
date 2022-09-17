@@ -22,6 +22,7 @@ spec:
     remediation:
       retries: 5
   values:
+    architecture: standalone
     auth:
       enabled: false
       sentinel: false
