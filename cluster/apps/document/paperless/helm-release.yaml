@@ -26,6 +26,8 @@ spec:
     - name: redis
       namespace: database
   values:
+    controller:
+      replicas: 2
     global:
       nameOverride: *app
     image:
