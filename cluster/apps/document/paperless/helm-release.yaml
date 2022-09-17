@@ -50,7 +50,7 @@ spec:
       PAPERLESS_ADMIN_PASSWORD:
         valueFrom:
           secretKeyRef:
-            name: paperless-secret
+            name: paperless-test-secret
             key: PAPERLESS_ADMIN_PASSWORD
       PAPERLESS_REDIS: redis://redis-master.database:6379
       PAPERLESS_TASK_WORKERS: 2
