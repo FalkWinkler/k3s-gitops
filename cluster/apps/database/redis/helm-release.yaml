@@ -22,6 +22,9 @@ spec:
     remediation:
       retries: 5
   values:
+    nameOverride: *app
+    controller:
+      strategy: RollingUpdate
     architecture: standalone
     auth:
       enabled: false
