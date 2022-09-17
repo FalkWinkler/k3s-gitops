@@ -5,7 +5,7 @@ metadata:
   name: metallb
   namespace: networking
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: metallb
@@ -15,16 +15,13 @@ spec:
         name: metallb
         namespace: flux-system
   install:
+    crds: CreateReplace
     createNamespace: true
     remediation:
       retries: 5
   upgrade:
+    crds: CreateReplace
     remediation:
       retries: 5
   values:
-    configInline:
-      address-pools:
-        - name: default
-          protocol: layer2
-          addresses:
-            - "${METALLB_LB_RANGE}"
+    fullnameOverride: metallb
