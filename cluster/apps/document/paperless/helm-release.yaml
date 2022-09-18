@@ -78,8 +78,8 @@ spec:
           paths:
           - path: /
             pathType: Prefix
-            service:
-                port: *port
+            # service:
+            #     port: *port
     persistence:
       # -- Configure persistence for data.
       # @default -- See values.yaml
