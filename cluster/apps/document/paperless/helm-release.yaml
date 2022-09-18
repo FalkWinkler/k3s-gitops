@@ -59,14 +59,14 @@ spec:
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       #PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
 
-    # service:
-    #   main:
-    #     ports:
-    #       http:
-    #         port: &port 80
-    #     type: LoadBalancer
-    #     #loadBalancerIP: "${LB_PAPERLESS_IP}"
-    #     externalTrafficPolicy: Local
+    service:
+      main:
+        # ports:
+        #   http:
+        #     port: &port 80
+        type: LoadBalancer
+        loadBalancerIP: "${LB_PAPERLESS_IP}"
+        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true
