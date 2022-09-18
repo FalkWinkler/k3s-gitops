@@ -31,7 +31,7 @@ spec:
     global:
       nameOverride: *app
     image:
-      repository: ghcr.io/paperless-ngx/paperless-ngx
+      repository: lscr.io/linuxserver/paperless-ngx
       tag: 1.8.0
     nameOverride: paperless
     fullnameOverride: paperless
