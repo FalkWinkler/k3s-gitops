@@ -27,7 +27,7 @@ spec:
       namespace: database
   values:
     controller:
-      replicas: 1
+      replicas: 2
     global:
       nameOverride: *app
     image:
