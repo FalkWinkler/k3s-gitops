@@ -36,8 +36,8 @@ spec:
     nameOverride: paperless
     fullnameOverride: paperless
     env:
-      USERMAP_UID: 1000 #User document
-      USERMAP_GID: 1000 # Group documents
+      USERMAP_UID: 1500 #User document
+      USERMAP_GID: 1500 # Group documents
       #PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_OCR_LANGUAGE: deu
       PAPERLESS_OCR_LANGUAGES: deu eng
