@@ -38,8 +38,8 @@ spec:
     env:
       USERMAP_UID: 1500 #User document
       USERMAP_GID: 1500 # Group documents
-      #PAPERLESS_CONSUMPTION_DIR: "/consume"    
-      PAPERLESS_OCR_LANGUAGE: deu+eng
+      #PAPERLESS_CONSUMPTION_DIR: "/consume"
+      #PAPERLESS_OCR_LANGUAGE: deu+eng
       PAPERLESS_TIME_ZONE: Europe/Berlin
       PAPERLESS_FILENAME_FORMAT: '{document_type}/{correspondent}/{created_year}'
       PAPERLESS_FILENAME_DATE_ORDER: YMD
