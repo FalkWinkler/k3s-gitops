@@ -52,7 +52,7 @@ spec:
           secretKeyRef:
             name: paperless-secrets
             key: PAPERLESS_ADMIN_PASSWORD
-      #PAPERLESS_REDIS: redis://redis-master.database:6379
+      PAPERLESS_REDIS: redis://redis-master.database:6379
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_THREADS_PER_WORKER: 2
       PAPERLESS_TIKA_ENABLED: 1
