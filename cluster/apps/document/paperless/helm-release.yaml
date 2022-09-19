@@ -31,7 +31,7 @@ spec:
     global:
       nameOverride: *app
     image:
-      repository: ghcr.io/paperless-ngx/paperless-ngx
+      repository: lscr.io/linuxserver/paperless-ngx
       tag: 1.8.0
     nameOverride: paperless
     fullnameOverride: paperless
@@ -51,7 +51,7 @@ spec:
           secretKeyRef:
             name: paperless-secrets
             key: PAPERLESS_ADMIN_PASSWORD
-      PAPERLESS_REDIS: redis://redis-master.database:6379
+      #PAPERLESS_REDIS: redis://redis-master.database:6379
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_THREADS_PER_WORKER: 2
       PAPERLESS_TIKA_ENABLED: 1
