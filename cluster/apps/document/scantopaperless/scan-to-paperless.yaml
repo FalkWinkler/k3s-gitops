@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/sbrunner/scan-to-paperless/master/scan_to_paperless/config_schema.json
+
+scan_folder: /scan/
+scanimage_arguments: # Additional argument passed to the scanimage command
+  - --device=... # Use `scanimage --list` to get the possible values
+  - --format=png
+  - --mode=color
+  - --resolution=300
+default_args:
+  auto_mask: false
+  auto_cut: false
+  run_pngquant: true
+  cut_white: 200 # cut the near white color to have a uniform background
+  dpi: 300 # Not necessary if the scanner generate a tiff file
+  tesseract_lang: deu+eng # The used languages for the OCR

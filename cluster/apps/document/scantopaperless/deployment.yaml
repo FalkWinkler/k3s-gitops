@@ -25,6 +25,10 @@ spec:
             name: consume
           - mountPath: /source
             name: scan
+          - name: config
+            subPath: scan-to-paperless.yaml
+            mountPath: "~/.config/scan-to-paperless.yaml"
+            readOnly: true
         env:
           - name: PROGRESS
             value: "true"
