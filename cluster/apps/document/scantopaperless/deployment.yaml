@@ -27,7 +27,7 @@ spec:
             name: scan
           - name: config-scan-to-paperless
             subPath: scan-to-paperless.yaml
-            mountPath: "/home/1500/.config/scan-to-paperless.yaml"
+            mountPath: "${HOME}.config/scan-to-paperless.yaml"
             readOnly: true
         env:
           - name: PROGRESS
