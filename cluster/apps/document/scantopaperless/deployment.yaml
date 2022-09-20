@@ -32,9 +32,9 @@ spec:
         env:
           - name: PROGRESS
             value: "true"
-      securityContext:
-          runAsUser: 1500
-          runAsGroup: 1500
+      # securityContext:
+      #     runAsUser: 1500
+      #     runAsGroup: 1500
       volumes:
       - name: config-scan-to-paperless
         configMap:
