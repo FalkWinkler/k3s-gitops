@@ -4,4 +4,4 @@ resources:
   - namespace.yaml
   - paperless
   - tika
-  # - scantopaperless
+  - scantopaperless

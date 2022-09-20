@@ -1,0 +1,60 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app scan-to-paperless
+  namespace: document
+spec:
+  releaseName: *app
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  securityContext:
+    runAsUser: 1500
+    runAsGroup: 1500
+  values:
+    controller:
+      replicas: 1
+    global:
+      nameOverride: *app
+    image:
+      repository: sbrunner/scan-to-paperless
+      tag: latest
+    nameOverride: scan-to-paperless
+    fullnameOverride: scan-to-paperless
+    env:
+      #SCAN_CODES_DPI:
+      #SCAN_CODES_PDF_DPI:
+      #PROGRESS:
+    persistence:
+      # -- Configure persistence for data.
+      # @default -- See values.yaml
+      scan:
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        mountPath: /source
+        path: /mnt/Volume1/document/scan
+        accessMode: ReadWriteMany
+      # -- Configure volume to monitor for new documents.
+      # @default -- See values.yaml
+      consume:
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        mountPath: /destination
+        path: /mnt/Volume1/document/consume
+        accessMode: ReadWriteMany
