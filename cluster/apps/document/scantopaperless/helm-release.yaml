@@ -21,11 +21,11 @@ spec:
       retries: 5
   upgrade:
     remediation:
-      retries: 5
-  securityContext:
-    runAsUser: 1500
-    runAsGroup: 1500
+      retries: 5  
   values:
+    securityContext:
+      runAsUser: 1500
+      runAsGroup: 1500
     controller:
       replicas: 1
     global:
