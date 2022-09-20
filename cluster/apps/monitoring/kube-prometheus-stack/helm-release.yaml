@@ -25,33 +25,33 @@ spec:
   values:
     alertmanager:
       enabled: false
-    # nodeExporter:
-    #   serviceMonitor:
-    #     relabelings:
-    #       - action: replace
-    #         regex: (.*)
-    #         replacement: $1
-    #         sourceLabels:
-    #           - __meta_kubernetes_pod_node_name
-    #         targetLabel: kubernetes_node
-    # kubeStateMetrics:
-    #   enabled: true
-    # kube-state-metrics:
-    #   metricLabelsAllowlist:
-    #     - "persistentvolumeclaims=[*]"
-    #   prometheus:
-    #     monitor:
-    #       enabled: true
-    #       relabelings:
-    #         - action: replace
-    #           regex: (.*)
-    #           replacement: $1
-    #           sourceLabels:
-    #             - __meta_kubernetes_pod_node_name
-    #           targetLabel: kubernetes_node
-    # grafana:
-    #   enabled: false
-    #   forceDeployDashboards: true
+    nodeExporter:
+      serviceMonitor:
+        relabelings:
+          - action: replace
+            regex: (.*)
+            replacement: $1
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: kubernetes_node
+    kubeStateMetrics:
+      enabled: true
+    kube-state-metrics:
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
     # kubelet:
     #   enabled: true
     #   serviceMonitor:
