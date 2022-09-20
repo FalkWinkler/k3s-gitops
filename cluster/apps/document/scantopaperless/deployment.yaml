@@ -25,7 +25,7 @@ spec:
             name: consume
           - mountPath: /source
             name: scan
-          - name: config
+          - name: config-scan-to-paperless
             subPath: scan-to-paperless.yaml
             mountPath: "~/.config/scan-to-paperless.yaml"
             readOnly: true
@@ -36,6 +36,9 @@ spec:
           runAsUser: 1500
           runAsGroup: 1500
       volumes:
+      - name: config-scan-to-paperless
+        configMap:
+          name: config-scan-to-paperless
       - name: consume
         nfs:
           path: /mnt/Volume1/document/consume

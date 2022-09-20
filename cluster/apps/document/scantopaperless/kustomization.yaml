@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
 configMapGenerator:
-  - name: config
+  - name: config-scan-to-paperless
     files:
       - scan-to-paperless.yaml
 generatorOptions:
