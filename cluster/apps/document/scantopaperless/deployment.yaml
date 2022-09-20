@@ -26,7 +26,8 @@ spec:
           - mountPath: /source
             name: scan
         env:
-          - PROGRESS="true"
+          - name: PROGRESS
+            value: "true"
       securityContext:
           runAsUser: 1500
           runAsGroup: 1500
