@@ -1,0 +1,249 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 40.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+values:
+    alertmanager:
+      enabled: false
+    nodeExporter:
+      serviceMonitor:
+        relabelings:
+          - action: replace
+            regex: (.*)
+            replacement: $1
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: kubernetes_node
+    kubeStateMetrics:
+      enabled: true
+    kube-state-metrics:
+      metricLabelsAllowlist:
+        - "persistentvolumeclaims=[*]"
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels:
+                - __meta_kubernetes_pod_node_name
+              targetLabel: kubernetes_node
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
+      enabled: false
+
+    prometheus:
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "prometheus.${DOMAIN_INTERNAL}"
+          hajimari.io/enable: "false"
+        hosts:
+          - &host "prometheus.${DOMAIN_INTERNAL}"
+        tls:
+          - hosts:
+              - *host
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      thanosIngress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "thanos-sidecar.${DOMAIN_INTERNAL}"
+          nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+          hajimari.io/enable: "false"
+        hosts:
+          - &host "thanos-sidecar.${DOMAIN_INTERNAL}"
+        tls:
+          - hosts:
+              - *host
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 1000Mi
+      prometheusSpec:
+        replicas: 3
+        replicaExternalLabelName: __replica__
+        externalLabels:
+          cluster: ${CLUSTER_NAME}
+        podAntiAffinity: hard
+        retentionSize: "6GB"
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        retention: 2d
+        enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              selector:
+                matchLabels:
+                  app.kubernetes.io/name: pv-prometheus-ssd
+              resources:
+                requests:
+                  storage: 5Gi
+        thanos:
+          image: quay.io/thanos/thanos:v0.28.0
+          # renovate: datasource=docker depName=quay.io/thanos/thanos
+          version: "v0.28.0"
+        additionalScrapeConfigs:
+          - job_name: "coredns"
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "${GATEWAY_IP}:9153"
+          - job_name: "pfsense"
+            scrape_interval: 60s
+            metrics_path: "/metrics"
+            static_configs:
+              - targets: ["${LOCAL_LAN_PFSENSE}:9273"]
+                labels:
+                  app: "pfsense"
+          - job_name: "truenas"
+            scrape_interval: 60s
+            metrics_path: "/metrics"
+            static_configs:
+              - targets: ["${LOCAL_LAN_TRUENAS}:9273"]
+                labels:
+                  app: "truenas"
+          # Example scrape config for probing ingresses via the Blackbox Exporter.
+          #
+          # The relabeling allows the actual ingress scrape endpoint to be configured
+          # via the following annotations:
+          #
+          # * `prometheus.io/probe`: Only probe ingresses that have a value of `true`
+          - job_name: "kubernetes-ingresses"
+            metrics_path: /probe
+            scrape_interval: 60s
+            params:
+              module: [http_2xx]
+            kubernetes_sd_configs:
+              - role: ingress
+            relabel_configs:
+              - source_labels:
+                  [__meta_kubernetes_ingress_annotation_prometheus_io_probe]
+                action: keep
+                regex: true
+              - source_labels:
+                  [
+                    __meta_kubernetes_ingress_scheme,
+                    __address__,
+                    __meta_kubernetes_ingress_path,
+                  ]
+                regex: (.+);(.+);(.+)
+                replacement: ${1}://${2}${3}
+                target_label: __param_target
+              - target_label: __address__
+                replacement: blackbox-exporter:9115
+              - source_labels: [__param_target]
+                target_label: instance
+              - action: labelmap
+                regex: __meta_kubernetes_ingress_label_(.+)
+              - source_labels: [__meta_kubernetes_namespace]
+                target_label: kubernetes_namespace
+              - source_labels: [__meta_kubernetes_ingress_name]
+                target_label: kubernetes_name
+          - job_name: "kubernetes-services-http"
+            metrics_path: /probe
+            scrape_interval: 60s
+            params:
+              module: [http_2xx]
+            kubernetes_sd_configs:
+              - role: service
+            relabel_configs:
+              - source_labels:
+                  [__meta_kubernetes_service_annotation_prometheus_io_probe]
+                action: keep
+                regex: true
+              - source_labels:
+                  [__meta_kubernetes_service_annotation_prometheus_io_protocol]
+                action: keep
+                regex: http
+              - source_labels: [__address__]
+                target_label: __param_target
+              - target_label: __address__
+                replacement: blackbox-exporter:9115
+              - source_labels: [__param_target]
+                target_label: instance
+              - action: labelmap
+                regex: __meta_kubernetes_service_label_(.+)
+              - source_labels: [__meta_kubernetes_namespace]
+                target_label: kubernetes_namespace
+              - source_labels: [__meta_kubernetes_service_name]
+                target_label: kubernetes_name
+          - job_name: "kubernetes-services-tcp"
+            metrics_path: /probe
+            scrape_interval: 60s
+            params:
+              module: [tcp_connect]
+            kubernetes_sd_configs:
+              - role: service
+            relabel_configs:
+              - source_labels:
+                  [__meta_kubernetes_service_annotation_prometheus_io_probe]
+                action: keep
+                regex: true
+              - source_labels:
+                  [__meta_kubernetes_service_annotation_prometheus_io_protocol]
+                action: keep
+                regex: tcp
+              - source_labels: [__address__]
+                target_label: __param_target
+              - target_label: __address__
+                replacement: blackbox-exporter:9115
+              - source_labels: [__param_target]
+                target_label: instance
+              - action: labelmap
+                regex: __meta_kubernetes_service_label_(.+)
+              - source_labels: [__meta_kubernetes_namespace]
+                target_label: kubernetes_namespace
+              - source_labels: [__meta_kubernetes_service_name]
+                target_label: kubernetes_name
