@@ -131,28 +131,28 @@ spec:
           image: quay.io/thanos/thanos:v0.28.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
           version: "v0.28.0"
-    #     additionalScrapeConfigs:
-    #       - job_name: "coredns"
-    #         scrape_interval: 1m
-    #         scrape_timeout: 10s
-    #         honor_timestamps: true
-    #         static_configs:
-    #           - targets:
-    #               - "${GATEWAY_IP}:9153"
-    #       - job_name: "pfsense"
-    #         scrape_interval: 60s
-    #         metrics_path: "/metrics"
-    #         static_configs:
-    #           - targets: ["${LOCAL_LAN_PFSENSE}:9273"]
-    #             labels:
-    #               app: "pfsense"
-    #       - job_name: "truenas"
-    #         scrape_interval: 60s
-    #         metrics_path: "/metrics"
-    #         static_configs:
-    #           - targets: ["${LOCAL_LAN_TRUENAS}:9273"]
-    #             labels:
-    #               app: "truenas"
+        additionalScrapeConfigs:
+          - job_name: "coredns"
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
+            static_configs:
+              - targets:
+                  - "${GATEWAY_IP}:9153"
+          - job_name: "pfsense"
+            scrape_interval: 60s
+            metrics_path: "/metrics"
+            static_configs:
+              - targets: ["${LOCAL_LAN_PFSENSE}:9273"]
+                labels:
+                  app: "pfsense"
+          - job_name: "truenas"
+            scrape_interval: 60s
+            metrics_path: "/metrics"
+            static_configs:
+              - targets: ["${LOCAL_LAN_TRUENAS}:9273"]
+                labels:
+                  app: "truenas"
     #       # Example scrape config for probing ingresses via the Blackbox Exporter.
     #       #
     #       # The relabeling allows the actual ingress scrape endpoint to be configured
