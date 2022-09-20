@@ -52,24 +52,24 @@ spec:
     grafana:
       enabled: false
       forceDeployDashboards: true
-    # kubelet:
-    #   enabled: true
-    #   serviceMonitor:
-    #     metricRelabelings:
-    #       - action: replace
-    #         sourceLabels:
-    #           - node
-    #         targetLabel: instance
-    # kubeApiServer:
-    #   enabled: true
-    # kubeControllerManager:
-    #   enabled: false
-    # kubeScheduler:
-    #   enabled: false
-    # kubeProxy:
-    #   enabled: false
-    # kubeEtcd:
-    #   enabled: false
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+    kubeProxy:
+      enabled: false
+    kubeEtcd:
+      enabled: false
 
     # prometheus:
     #   ingress:
