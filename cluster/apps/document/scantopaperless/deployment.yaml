@@ -4,14 +4,7 @@ kind: Deployment
 metadata:
   name: scan-to-paperless
   namespace: document
-spec:
-  install:
-    createNamespace: true
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
+spec:  
   selector:
     matchLabels:
       app: scan-to-paperless
@@ -36,13 +29,13 @@ spec:
           - PROGRESS="true"
       securityContext:
           runAsUser: 1500
-          runAsGroup: 1500    
+          runAsGroup: 1500
       volumes:
       - name: consume
         nfs:
           path: /mnt/Volume1/document/consume
-          server: 192.168.10.10
+          server: "${LOCAL_LAN_TRUENAS}"
       - name: scan
         nfs:
           path: /mnt/Volume1/document/scan
-          server: 192.168.10.10
+          server: "${LOCAL_LAN_TRUENAS}"
