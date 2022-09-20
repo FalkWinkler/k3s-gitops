@@ -23,7 +23,7 @@ spec:
     remediation:
       retries: 5  
   values:
-    securityContext:
+    podSecurityContext:
       runAsUser: 1500
       runAsGroup: 1500
     controller:
