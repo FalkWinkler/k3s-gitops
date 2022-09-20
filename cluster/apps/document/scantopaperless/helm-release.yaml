@@ -58,3 +58,14 @@ spec:
         mountPath: /destination
         path: /mnt/Volume1/document/consume
         accessMode: ReadWriteMany
+      resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        memory: 1Gi
+    service:
+      main:
+        ports:
+          http:
+            port: &port 8000
