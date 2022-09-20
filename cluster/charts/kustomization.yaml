@@ -15,3 +15,5 @@ resources:
   - weaveworks-kured.yaml
   - nfs-subdir-external-provisioner-charts.yaml
   - apache-tika.yaml
+  - grafana-charts.yaml
+  - prometheus-community-charts.yaml
