@@ -36,8 +36,7 @@ spec:
           - PROGRESS="true"
       securityContext:
           runAsUser: 1500
-          runAsGroup: 1500
-      
+          runAsGroup: 1500    
       volumes:
       - name: consume
         nfs:
