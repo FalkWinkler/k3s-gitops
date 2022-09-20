@@ -70,41 +70,40 @@ spec:
       enabled: false
     kubeEtcd:
       enabled: false
-
-    # prometheus:
-    #   ingress:
-    #     enabled: true
-    #     pathType: Prefix
-    #     ingressClassName: "nginx"
-    #     annotations:
-    #       external-dns.alpha.kubernetes.io/hostname: "prometheus.${DOMAIN_INTERNAL}"
-    #       hajimari.io/enable: "false"
-    #     hosts:
-    #       - &host "prometheus.${DOMAIN_INTERNAL}"
-    #     tls:
-    #       - hosts:
-    #           - *host
-    #   thanosService:
-    #     enabled: true
-    #   thanosServiceMonitor:
-    #     enabled: true
-    #   thanosIngress:
-    #     enabled: true
-    #     pathType: Prefix
-    #     ingressClassName: "nginx"
-    #     annotations:
-    #       external-dns.alpha.kubernetes.io/hostname: "thanos-sidecar.${DOMAIN_INTERNAL}"
-    #       nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
-    #       hajimari.io/enable: "false"
-    #     hosts:
-    #       - &host "thanos-sidecar.${DOMAIN_INTERNAL}"
-    #     tls:
-    #       - hosts:
-    #           - *host
-    #   resources:
-    #     requests:
-    #       cpu: 1000m
-    #       memory: 1000Mi
+    prometheus:
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "prometheus.${DOMAIN_INTERNAL}"
+          hajimari.io/enable: "false"
+        hosts:
+          - &host "prometheus.${DOMAIN_INTERNAL}"
+        tls:
+          - hosts:
+              - *host
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
+      thanosIngress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "thanos-sidecar.${DOMAIN_INTERNAL}"
+          nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+          hajimari.io/enable: "false"
+        hosts:
+          - &host "thanos-sidecar.${DOMAIN_INTERNAL}"
+        tls:
+          - hosts:
+              - *host
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 1000Mi
     #   prometheusSpec:
     #     replicas: 3
     #     replicaExternalLabelName: __replica__
