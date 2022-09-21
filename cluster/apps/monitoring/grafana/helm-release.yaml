@@ -79,7 +79,7 @@ spec:
     dashboards:
       default:
         truenas:
-          url: https://raw.githubusercontent.com/auricom/home-ops/main/cluster/apps/monitoring/grafana/dashboards/truenas.json
+          url: https://raw.githubusercontent.com/FalkWinkler/k3s-gitops/main/cluster/apps/monitoring/grafana/dashboards/truenas.json
           datasource: Prometheus
          # Ref: https://grafana.com/grafana/dashboards/12175
         calico-felix:
