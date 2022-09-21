@@ -5,6 +5,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  CLUSTER_NAME: "cluster01"
   TIMEZONE: Germany/Berlin
   DOMAIN_INTERNAL: k3s.home.lan
   LOCAL_LAN_TRUENAS: 192.168.10.10
