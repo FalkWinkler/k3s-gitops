@@ -115,16 +115,16 @@ spec:
         retention: 2d
         enableAdminAPI: true
         walCompression: true
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: nfs
-              selector:
-                matchLabels:
-                  app.kubernetes.io/name: truenas-ssd-nfs
-              resources:
-                requests:
-                  storage: 10Gi
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: nfs
+        #       selector:
+        #         matchLabels:
+        #           app.kubernetes.io/name: truenas-ssd-nfs
+        #       resources:
+        #         requests:
+        #           storage: 10Gi
         thanos:
           image: quay.io/thanos/thanos:v0.28.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
