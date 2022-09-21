@@ -118,7 +118,9 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: "truenas-ssd-nfs"
+              selector:
+                matchLabels:
+                  app.kubernetes.io/name: truenas-ssd-nfs
               resources:
                 requests:
                   storage: 10Gi
