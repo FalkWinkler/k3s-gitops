@@ -80,9 +80,6 @@ spec:
           hajimari.io/enable: "false"
         hosts:
           - &host "prometheus.${DOMAIN_INTERNAL}"
-        tls:
-          - hosts:
-              - *host
       thanosService:
         enabled: true
       thanosServiceMonitor:
@@ -121,12 +118,10 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              selector:
-                matchLabels:
-                  app.kubernetes.io/name: pv-prometheus-ssd
+              storageClassName: "truenas-ssd-nfs"
               resources:
                 requests:
-                  storage: 5Gi
+                  storage: 10Gi
         thanos:
           image: quay.io/thanos/thanos:v0.28.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos

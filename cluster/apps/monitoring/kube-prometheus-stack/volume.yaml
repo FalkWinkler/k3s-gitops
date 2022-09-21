@@ -1,19 +1,20 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-prometheus-ssd
+  name: truenas-ssd-nfs
   namespace: monitoring
   labels:
-    app:  pv-prometheus-ssd
+    app:  truenas-ssd-nfs
 spec:
   capacity:
     storage: 5Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
+  storageClassName: truenas-ssd-nfs
   mountOptions:
     - hard
     - nfsvers=4.1
   nfs:
     server: "${LOCAL_LAN_TRUENAS}"
-    path: /mnt/SSD1/monitoring
+    path: /mnt/SSD1/k3s
