@@ -118,6 +118,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
+              storageClassName: nfs
               selector:
                 matchLabels:
                   app.kubernetes.io/name: truenas-ssd-nfs
