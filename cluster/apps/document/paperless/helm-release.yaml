@@ -97,7 +97,7 @@ spec:
         server: 192.168.10.10
         mountPath: /usr/src/paperless/data
         path: /mnt/Volume1/document/data
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
@@ -106,7 +106,7 @@ spec:
         server: 192.168.10.10
         mountPath: /usr/src/paperless/media
         path: /mnt/Volume1/document/media
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
