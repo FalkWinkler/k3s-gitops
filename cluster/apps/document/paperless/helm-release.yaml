@@ -62,11 +62,10 @@ spec:
       #PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
     resources:
       requests:
-        cpu: 500m
+        cpu: 1
         memory: 2Gi
       limits:
         memory: 4Gi
-        cpu: 800m
     service:
       main:
         ports:
