@@ -42,9 +42,6 @@ spec:
         #   nginx.ingress.kubernetes.io/auth-signin: "https://auth.${SECRET_CLUSTER_DOMAIN}"
         ingressClassName: "nginx"
         tls: false
-        extraTls:
-          - hosts:
-              - *host
     queryFrontend:
       enabled: false
     bucketweb:

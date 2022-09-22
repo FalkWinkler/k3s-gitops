@@ -94,9 +94,6 @@ spec:
           hajimari.io/enable: "false"
         hosts:
           - &host "thanos-sidecar.${DOMAIN_INTERNAL}"
-        tls:
-          - hosts:
-              - *host
       resources:
         requests:
           cpu: 1000m
