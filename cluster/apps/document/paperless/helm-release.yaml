@@ -56,16 +56,17 @@ spec:
             key: PAPERLESS_ADMIN_PASSWORD
       PAPERLESS_REDIS: redis://redis-master.database:6379
       PAPERLESS_TASK_WORKERS: 2
-      PAPERLESS_THREADS_PER_WORKER: 4      
+      PAPERLESS_THREADS_PER_WORKER: 4
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       #PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
     resources:
       requests:
-        cpu: 1000m
-        memory: 1Gi
-      limits:
+        cpu: 500m
         memory: 2Gi
+      limits:
+        memory: 4Gi
+        cpu: 800m
     service:
       main:
         ports:
