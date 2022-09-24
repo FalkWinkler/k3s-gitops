@@ -97,6 +97,9 @@ spec:
         mountPath: /usr/src/paperless/data
         path: /mnt/Volume1/document/data
         accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
       # -- Configure persistence for media.
       # @default -- See values.yaml
       media:
@@ -106,6 +109,9 @@ spec:
         mountPath: /usr/src/paperless/media
         path: /mnt/Volume1/document/media
         accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
       # -- Configure volume to monitor for new documents.
       # @default -- See values.yaml
       consume:
