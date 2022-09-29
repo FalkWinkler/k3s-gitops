@@ -24,7 +24,7 @@ k3s_server:
     # Disable metrics-server - installed with Flux
     - metrics-server
   # Disable local-path-provider - if using alternative storageClass (longhorn, nfs-subdir-external-provisioner, etc)
-    - local-storage
+    #- local-storage
   disable-network-policy: true
   disable-cloud-controller: true
   write-kubeconfig-mode: "644"
