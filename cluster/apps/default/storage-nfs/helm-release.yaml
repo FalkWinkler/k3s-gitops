@@ -23,6 +23,15 @@ spec:
     remediation:
       retries: 5
   values:
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
     nfs:
       server: 192.168.10.10
       path: /mnt/Volume1/kubernetes
