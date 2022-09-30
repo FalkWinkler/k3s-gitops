@@ -28,7 +28,6 @@ main() {
     verify_binaries
 
     if [[ "${verify}" == 1 ]]; then
-        verify_ansible_hosts
         verify_metallb
         verify_kubevip
         verify_addressing
@@ -84,8 +83,8 @@ main() {
             fi
         fi
         # generate ansible hosts file and secrets
-        generate_ansible_hosts
-        generate_ansible_host_secrets
+        #generate_ansible_hosts
+        #generate_ansible_host_secrets
         setup_github_webhook
         success
     fi
@@ -168,13 +167,13 @@ verify_addressing() {
     fi
 
     # Verify the node IP addresses are on the same network as the metallb range
-    for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
-        node_subnet=$(echo "${!var}" | cut -d. -f1,2,3)
-        if [[ "${node_subnet}" != "${metallb_subnet_min}" ]]; then
-            _log "ERROR" "The subnet for node '${!var}' is not in the same subnet as the provided metallb range '${BOOTSTRAP_METALLB_LB_RANGE}'"
-            exit 1
-        fi
-    done
+    # for var in "${!BOOTSTRAP_ANSIBLE_HOST_ADDR_@}"; do
+    #     node_subnet=$(echo "${!var}" | cut -d. -f1,2,3)
+    #     if [[ "${node_subnet}" != "${metallb_subnet_min}" ]]; then
+    #         _log "ERROR" "The subnet for node '${!var}' is not in the same subnet as the provided metallb range '${BOOTSTRAP_METALLB_LB_RANGE}'"
+    #         exit 1
+    #     fi
+    # done
 
     # Verify the kube-vip IP is in the same network as the metallb range
     kubevip_subnet=$(echo "${BOOTSTRAP_KUBE_VIP_ADDR}" | cut -d. -f1,2,3)
