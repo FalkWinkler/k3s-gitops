@@ -12,7 +12,7 @@ resources:
   - metallb.yaml
   - metrics-server.yaml
   - stakater.yaml
-  - weaveworks-kured.yaml
+  - kubereboot-charts.yaml
   - nfs-subdir-external-provisioner-charts.yaml
   - apache-tika.yaml
   - grafana-charts.yaml
