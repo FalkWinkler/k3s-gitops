@@ -14,3 +14,4 @@ resources:
   - metrics-server-charts.yaml
   - stakater-charts.yaml
   - apache-tika.yaml
+  - prometheus-community-charts.yaml
