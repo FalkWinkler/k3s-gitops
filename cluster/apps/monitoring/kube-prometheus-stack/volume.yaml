@@ -13,4 +13,3 @@ spec:
   nfs:
     server: "${LOCAL_LAN_TRUENAS}"
     path: /mnt/Volume1/k3s
-    subPath: monitoring
