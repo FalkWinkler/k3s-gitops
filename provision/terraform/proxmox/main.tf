@@ -7,9 +7,13 @@ terraform {
     }
      sops = {
       source = "carlpett/sops"
-      version = "0.6.3"
+      version = "0.7.1"
     }
   }
+}
+
+data "sops_file" "cloudinit_secrets" {
+  source_file = "secret.sops.yaml"
 }
 
 provider "proxmox" {
@@ -32,20 +36,22 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
   agent       = 1
   memory      = var.num_k3s_masters_mem 
   cores       = 4
+  vmid        = 300 + count.index
 
-
-  ipconfig0 = "ip=192.168.10.8${count.index + 1}/24,gw=192.168.10.1"
+  ipconfig0 = "ip=192.168.10.8${1 + count.index}/24,gw=192.168.10.1"
 
   searchdomain = var.search_domain
   nameserver   = var.nameserver
   sshkeys      = var.sshkeys
+ ciuser        = data.sops_file.cloudinit_secrets.data["cloudinit_username"]
+  cipassword   = data.sops_file.cloudinit_secrets.data["cloudinit_password"]
   bootdisk = "scsi0"
 
-   disk {    
+   disk {
     type = "scsi"
     size = "20G"
     ssd = 1
-    storage = "local-zfs"    
+    storage = "local-zfs"
     iothread = 1
   }
   
@@ -66,17 +72,21 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
   os_type     = "cloud-init"
   agent       = 1
   memory      = var.num_k3s_nodes_mem 
-  cores       = 4
-
-  ipconfig0 = "ip=192.168.10.9${count.index + 1}/24,gw=192.168.10.1"
-  sshkeys   =  var.sshkeys
+  cores       = 8
+  vmid        = 310 + count.index
+  ipconfig0 = "ip=192.168.10.9${1 + count.index}/24,gw=192.168.10.1"
+  searchdomain = var.search_domain
+  nameserver   = var.nameserver
+  sshkeys      = var.sshkeys
+  ciuser       = data.sops_file.cloudinit_secrets.data["cloudinit_username"]
+  cipassword   = data.sops_file.cloudinit_secrets.data["cloudinit_password"]
   bootdisk = "scsi0"
 
   disk {    
     type = "scsi"
-    size = "20G"
+    size = "30G"
     ssd = 1
-    storage = "local-zfs"    
+    storage = "local-zfs"
     iothread = 1
   }
   network {  
@@ -96,7 +106,7 @@ resource "local_file" "k3s_file" {
     for instance in proxmox_vm_qemu.proxmox_vm_workers:
     instance.name => instance.default_ipv4_address
     }),
-    ansible_ssh_private_key_file = var.pvt_key
+    ansible_ssh_private_key_file = file("~/.ssh/id_ecdsa")
     })
     filename = "../../ansible/inventory/hosts.yml"
 }

@@ -1,0 +1,125 @@
+---
+- hosts:
+    - master
+    - worker
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      ansible.builtin.pause:
+        seconds: 5
+  tasks:
+    - name: Locale
+      block:
+        - name: Locale | Set timezone
+          community.general.timezone:
+            name: "{{ timezone | default('Etc/UTC') }}"
+    - name: Networking
+      block:
+        - name: Networking | Set hostname to inventory hostname
+          ansible.builtin.hostname:
+            name: "{{ inventory_hostname }}"
+        - name: Networking | Update /etc/hosts to include inventory hostname
+          ansible.builtin.blockinfile:
+            path: /etc/hosts
+            block: |
+              127.0.1.1   {{ inventory_hostname }}
+    - name: Packages
+      block:
+        - name: Packages | Install required packages
+          ansible.builtin.apt:
+            name: "{{ packages | default([]) }}"
+            state: present
+            update_cache: true
+        - name: Packages | Remove leaf packages
+          ansible.builtin.apt:
+            autoremove: true
+        - name: Packages | Clean packages
+          ansible.builtin.apt:
+            clean: true
+        - name: Packages | Enable automatic downloads of updates
+          ansible.builtin.blockinfile:
+            path: /etc/apt/apt.conf.d/20auto-upgrades
+            mode: 0644
+            create: true
+            block: |
+              APT::Periodic::Update-Package-Lists "1";
+              APT::Periodic::Download-Upgradeable-Packages "1";
+              APT::Periodic::AutocleanInterval "7";
+              APT::Periodic::Unattended-Upgrade "1";
+        - name: Packages | unattended-upgrades config
+          ansible.builtin.blockinfile:
+            path: /etc/apt/apt.conf.d/50unattended-upgrades
+            mode: 0644
+            create: true
+            block: |
+              Unattended-Upgrade::Automatic-Reboot "false";
+              Unattended-Upgrade::Remove-Unused-Dependencies "true";
+              Unattended-Upgrade::Allowed-Origins {
+                  "${distro_id} stable";
+                  "${distro_id} ${distro_codename}-security";
+                  "${distro_id} ${distro_codename}-updates";
+              };
+    - name: User Configuration
+      block:
+        - name: User Configuration | Add additional SSH public keys
+          ansible.posix.authorized_key:
+            user: "{{ ansible_user }}"
+            key: "{{ item }}"
+          loop: "{{ public_ssh_keys | default([]) }}"
+    - name: System Configuration (2)
+      block:
+        - name: System Configuration (2) | Enable kernel modules now
+          community.general.modprobe:
+            name: "{{ item }}"
+            state: present
+          loop: [br_netfilter, overlay, rbd]
+        - name: System Configuration (2) | Enable kernel modules on boot
+          ansible.builtin.copy:
+            mode: 0644
+            content: "{{ item }}"
+            dest: "/etc/modules-load.d/{{ item }}.conf"
+          loop: [br_netfilter, overlay, rbd]
+        - name: System Configuration (2) | Set sysctls
+          ansible.posix.sysctl:
+            name: "{{ item.key }}"
+            value: "{{ item.value }}"
+            sysctl_file: /etc/sysctl.d/99-kubernetes.conf
+            reload: true
+          with_dict: "{{ sysctl_config }}"
+          vars:
+            sysctl_config:
+              net.ipv4.ip_forward: 1
+              net.ipv4.conf.all.forwarding: 1
+              net.ipv4.conf.all.rp_filter: 0
+              net.ipv4.conf.default.rp_filter: 0
+              net.ipv6.conf.all.forwarding: 1
+              net.bridge.bridge-nf-call-iptables: 1
+              net.bridge.bridge-nf-call-ip6tables: 1
+              fs.inotify.max_user_watches: 524288
+              fs.inotify.max_user_instances: 512
+        - name: System Configuration (3) | Update max_user_watches
+          ansible.posix.sysctl:
+            name: fs.inotify.max_user_watches
+            value: "65536"
+            state: present
+            sysctl_file: /etc/sysctl.d/98-kubernetes-fs.conf
+        - name: Disable swap at runtime
+          ansible.builtin.command: swapoff -a
+          when: ansible_swaptotal_mb > 0
+
+        - name: Disable swap on boot
+          ansible.posix.mount:
+            name: "{{ item }}"
+            fstype: swap
+            state: absent
+          loop:
+            - swap
+            - none
+        
+
+  handlers:
+    - name: Reboot
+      ansible.builtin.reboot:
+        msg: Rebooting nodes

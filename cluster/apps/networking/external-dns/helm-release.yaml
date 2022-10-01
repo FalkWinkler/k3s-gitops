@@ -5,38 +5,48 @@ metadata:
   name: external-dns
   namespace: networking
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: external-dns
-      version: 6.1.6
+      version: 1.11.0
       sourceRef:
         kind: HelmRepository
-        name: bitnami-charts
+        name: external-dns
         namespace: flux-system
-      interval: 5m
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   values:
-    nameOverride: external-dns
-    # interval: "5m"
+    interval: 5m
     logLevel: debug
-    sources:
-    - ingress
-    provider: rfc2136
-    rfc2136:
-      host: "${INTERNAL_DNS_IP}"
-      port: 53
-      zone: k3s.home.lan
-      tsigAxfr : ""      
+    provider: cloudflare
+    env:
+      - name: CF_API_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-cloud-credentials
+            key: email
+      - name: CF_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-cloud-credentials
+            key: api-key
+    extraArgs:
+      - --cloudflare-proxied
+      - --annotation-filter=external-dns/is-public in (true)
     policy: sync
-    txtPrefix: "external-dns-"
-    txt-owner-id: k3s
+    sources:
+      - ingress
+    txtPrefix: "k8s."
+    txtOwnerId: "default"
     domainFilters:
-    - "${DOMAIN_INTERNAL}"
-    crd:
-      create: false
-      apiversion: externaldns.k8s.io/v1alpha1
-      kind: DNSEndpoint   
+      - "${SECRET_DOMAIN}"
     resources:
       requests:
         memory: 100Mi
