@@ -112,15 +112,15 @@ spec:
         retention: 2d
         enableAdminAPI: true
         walCompression: true
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              selector:
-                matchLabels:
-                  app.kubernetes.io/name: prometheus-stack
-              resources:
-                requests:
-                  storage: 50Gi
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       selector:
+        #         matchLabels:
+        #           app.kubernetes.io/name: prometheus-stack
+        #       resources:
+        #         requests:
+        #           storage: 50Gi
         thanos:
           image: quay.io/thanos/thanos:v0.28.0
           # renovate: datasource=docker depName=quay.io/thanos/thanos
