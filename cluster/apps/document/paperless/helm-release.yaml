@@ -37,16 +37,19 @@ spec:
     fullnameOverride: paperless
     env:
       COMPOSE_PROJECT_NAME: paperless
-      USERMAP_UID: 1500 #User document
+      USERMAP_UID: 1500 # User document
       USERMAP_GID: 1500 # Group documents
-      PAPERLESS_CONSUMPTION_DIR: "/consume/scanner"
-      PAPERLESS_OCR_LANGUAGE: eng+deu
+      PAPERLESS_CONSUMPTION_DIR: "/consume"
+      PAPERLESS_OCR_LANGUAGES: eng deu
+      PAPERLESS_OCR_LANGUAGE: deu
       PAPERLESS_TIME_ZONE: Europe/Berlin
       PAPERLESS_FILENAME_FORMAT: '{document_type}/{correspondent}/{created_year}'
       PAPERLESS_FILENAME_DATE_ORDER: YMD
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
       PAPERLESS_CONSUMER_RECURSIVE: "true"
-      PAPERLESS_CONSUMER_POLLING: 10
+      # PAPERLESS_CONSUMER_POLLING: 10
+      PAPERLESS_OCR_MODE: redo
+      PAPERLESS_OCR_CLEAN: clean
       PAPERLESS_PORT: 8000
       PAPERLESS_ADMIN_USER: admin
       PAPERLESS_ADMIN_PASSWORD:
@@ -59,7 +62,7 @@ spec:
       PAPERLESS_THREADS_PER_WORKER: 4
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
-      #PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      # PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
     resources:
       requests:
         cpu: 1
