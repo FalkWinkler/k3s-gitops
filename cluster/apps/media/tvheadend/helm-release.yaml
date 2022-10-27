@@ -1,0 +1,85 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app tvheadend
+  namespace: media
+spec:
+  releaseName: *app
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controller:
+      replicas: 1
+    global:
+      nameOverride: *app
+    image:
+      repository: linuxserver/tvheadend
+      tag: 5.2.0
+    nameOverride: tvheadend
+    fullnameOverride: tvheadend
+    hostNetwork: true
+    env:
+     TZ: "Europe/Berlin" 
+    service:
+      main:
+        ports:
+          http:
+            port: &port 9981
+          htsp:
+            port: 9982
+        type: LoadBalancer
+        loadBalancerIP: "${LB_PAPERLESS_IP}"
+        externalTrafficPolicy: Local
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "tv.${DOMAIN_INTERNAL}"
+        hosts:
+        - host: "tv.${DOMAIN_INTERNAL}"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+                port: *port
+    persistence:
+      # -- Configure persistence for data.
+      # @default -- See values.yaml
+      config:
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        mountPath: /config
+        path: /mnt/Volume1/k3s/tvheadend/config
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
+      # -- Configure persistence for media.
+      # @default -- See values.yaml
+      recordings:
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        mountPath: /recordings
+        path: /mnt/Volume1/recordings
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock      
