@@ -39,8 +39,11 @@ spec:
       main:
         ports:
           http:
+            enabled: true
             port: &port 9981
           htsp:
+            enabled: true
+            protocol: TCP
             port: 9982
         type: LoadBalancer
         externalIPs: ["${LB_TVHEADEND_IP}"] 
