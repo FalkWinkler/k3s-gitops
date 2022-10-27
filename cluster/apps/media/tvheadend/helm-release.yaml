@@ -28,8 +28,8 @@ spec:
     global:
       nameOverride: *app
     image:
-      repository: linuxserver/tvheadend
-      tag: 5.2.0
+      repository: lscr.io/linuxserver/tvheadend
+      tag: amd64-version-604d81a2
     nameOverride: tvheadend
     fullnameOverride: tvheadend
     hostNetwork: true
