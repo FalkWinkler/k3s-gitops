@@ -29,6 +29,6 @@ spec:
         - name: default
           protocol: layer2
           addresses:
-          - "${METALLB_LB_RANGE}"
-          - "${METALLB_LB_CLIENT_RANGE}"
-          autoAssign: false
+            - "${METALLB_LB_RANGE}"
+            - "${METALLB_LB_CLIENT_RANGE}"
+          
