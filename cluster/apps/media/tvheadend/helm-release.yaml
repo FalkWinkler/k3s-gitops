@@ -69,7 +69,6 @@ spec:
         path: /mnt/Volume1/k3s/tvheadend/config
         accessMode: ReadWriteOnce
         mountOptions:
-          - nfsvers=3
           - nolock
       # -- Configure persistence for media.
       # @default -- See values.yaml
@@ -80,6 +79,5 @@ spec:
         mountPath: /recordings
         path: /mnt/Volume1/recordings
         accessMode: ReadWriteOnce
-        mountOptions:
-          - nfsvers=3
+        mountOptions:      
           - nolock      
