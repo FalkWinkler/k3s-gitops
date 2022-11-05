@@ -32,7 +32,7 @@ spec:
       tag: amd64-version-604d81a2
     nameOverride: tvheadend
     fullnameOverride: tvheadend
-    #hostNetwork: true
+    hostNetwork: true
     env:
      TZ: "Europe/Berlin" 
     service:
