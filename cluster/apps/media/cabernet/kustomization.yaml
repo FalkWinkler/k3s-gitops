@@ -4,6 +4,7 @@ resources:
   - helm-release.yaml
 configMapGenerator:
   - name: cabernet
+    namespace: media
     files:
       - config/config.ini
 generatorOptions:
