@@ -51,4 +51,12 @@ spec:
           - path: /
             pathType: Prefix
             service:
-                port: *port    
+                port: *port
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: *app
+        subPath: /app/data/config.ini
+        mountPath: /config/config.ini
+        readOnly: false

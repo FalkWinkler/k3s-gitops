@@ -4,3 +4,10 @@ resources:
   - namespace.yaml
   - tvheadend
   - cabernet
+configMapGenerator:
+  - name: cabernet
+    files:
+      - config/config.ini
+generatorOptions:
+  disableNameSuffixHash: true
+
