@@ -57,6 +57,6 @@ spec:
         enabled: true
         type: configMap
         name: *app
-        subPath: /app/data/config.ini
+        subPath: config.ini
         mountPath: /config/config.ini
         readOnly: false
