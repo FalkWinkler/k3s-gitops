@@ -16,3 +16,4 @@ resources:
   - apache-tika.yaml
   - prometheus-community-charts.yaml
   - grafana-charts.yaml
+  - dysnix-charts.yaml
