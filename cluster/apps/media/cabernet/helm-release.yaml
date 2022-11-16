@@ -59,4 +59,5 @@ spec:
         name: *app
         subPath: config.ini
         mountPath: /app/data/config.ini
+        accessMode: ReadWriteOnce
         readOnly: false
