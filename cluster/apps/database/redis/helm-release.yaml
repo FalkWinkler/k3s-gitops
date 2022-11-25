@@ -22,13 +22,15 @@ spec:
     remediation:
       retries: 5
   values:
+    global:
+      imageRegistry: public.ecr.aws
     nameOverride: *app
     controller:
       strategy: RollingUpdate
     architecture: standalone
     auth:
       enabled: false
-      #sentinel: false
+      sentinel: false
       # existingSecret: *app
     # sentinel:
     #   enabled: true
@@ -36,7 +38,7 @@ spec:
     #   getMasterTimeout: 10
     #   startupProbe:
     #     failureThreshold: 2
-    # metrics:
-    #   enabled: true
-    #   serviceMonitor:
-    #     enabled: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
