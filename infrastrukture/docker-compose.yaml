@@ -27,7 +27,7 @@ services:
   # Bind (DNS Server)
   # ------------------------------------------------------------
   bind:
-    image: cytopia/bind:0.30
+    image: cytopia/bind:0.35
     hostname: bind
     restart: on-failure:5       
     ports:
