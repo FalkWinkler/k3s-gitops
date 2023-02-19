@@ -1,0 +1,56 @@
+{
+	"name": "Azure Ansible (Community)",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"runArgs": ["--init"],
+	"remoteEnv": {
+		"PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
+	},
+	"mounts": [
+		// [Optional] Anisble Collections: Uncomment if you want to mount your local .ansible/collections folder.
+		//"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ansible/collections,target=/root/.ansible/collections,type=bind,consistency=cached",
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops,target=/home/vscode/.config/sops,type=bind,consistency=cached"
+	],
+	"overrideCommand": false,
+	"postStartCommand": "sudo chmod 666 /var/run/docker.sock && git config --global --add safe.directory ${containerWorkspaceFolder}",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"redhat.ansible",
+				"redhat.vscode-yaml",
+				"tamasfe.even-better-toml",
+				"esbenp.prettier-vscode",
+				"bierner.github-markdown-preview",
+				"eamodio.gitlens",
+				"usernamehw.errorlens",
+				"mitchdenny.ecdc",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"oderwat.indent-rainbow",
+				"signageos.signageos-vscode-sops"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "ansible --version",
+
+	// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"features": {
+		"ghcr.io/mpriscella/features/sops:1": {},
+		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {},
+		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {},
+		"ghcr.io/devcontainers-contrib/features/terraform-ls-asdf:2": {},
+		"ghcr.io/jsburckhardt/devcontainer-features/flux:1": {},
+		"ghcr.io/eitsupi/devcontainer-features/go-task:latest": {}
+	}
+}

@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app cabernet
+  namespace: media
+spec:
+  releaseName: *app
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controller:
+      replicas: 1
+    global:
+      nameOverride: *app
+    image:
+      repository: ghcr.io/cabernetwork/cabernet
+      tag: latest
+    nameOverride: cabernet
+    fullnameOverride: cabernet
+    service:
+      main:
+        primary: true
+        ports:
+          http:
+            enabled: true
+            port: &port 6077
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "cabernet.${DOMAIN_INTERNAL}"
+        hosts:
+        - host: "cabernet.${DOMAIN_INTERNAL}"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+                port: *port
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: *app
+        subPath: config.ini
+        mountPath: /app/data/config.ini
+        accessMode: ReadWriteOnce
+        readOnly: false
