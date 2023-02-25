@@ -5,6 +5,7 @@ COPY library-scripts/*.sh /tmp/library-scripts/
 
 ARG KUBECTX_VERSION=0.9.4
 ARG K9S_VERSION=0.26.7
+ARG GITOPS_VERSION=0.17.0
 
 # [Option] Install zsh
 ARG INSTALL_ZSH="false"
@@ -32,12 +33,14 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
         sshpass \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
-  # kubectx
+# kubectx
 RUN curl -fsSL "https://github.com/ahmetb/kubectx/releases/download/v${KUBECTX_VERSION}/kubectx_v${KUBECTX_VERSION}_linux_x86_64.tar.gz" | tar -xz -C /usr/local/bin kubectx \
     # kubens
     && curl -fsSL "https://github.com/ahmetb/kubectx/releases/download/v${KUBECTX_VERSION}/kubens_v${KUBECTX_VERSION}_linux_x86_64.tar.gz" | tar -xz -C /usr/local/bin kubens \
-     # k9s
-    && curl -fsSL "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_x86_64.tar.gz" | tar -xz -C /usr/local/bin k9s
+    # k9s
+    && curl -fsSL "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_x86_64.tar.gz" | tar -xz -C /usr/local/bin k9s \
+    # gitops
+    && curl -fsSL "https://github.com/weaveworks/weave-gitops/releases/download/v${GITOPS_VERSION}/gitops-linux-x86_64.tar.gz" | tar xz -C /usr/local/bin gitops
 
 # Install Ansible
 RUN pip3 install ansible[azure]

@@ -32,7 +32,8 @@
 				"mitchdenny.ecdc",
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"oderwat.indent-rainbow",
-				"signageos.signageos-vscode-sops"
+				"signageos.signageos-vscode-sops",
+				"weaveworks.vscode-gitops-tools"
 			]
 		}
 	},
@@ -51,6 +52,11 @@
 		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {},
 		"ghcr.io/devcontainers-contrib/features/terraform-ls-asdf:2": {},
 		"ghcr.io/jsburckhardt/devcontainer-features/flux:1": {},
-		"ghcr.io/eitsupi/devcontainer-features/go-task:latest": {}
+		"ghcr.io/eitsupi/devcontainer-features/go-task:latest": {},
+		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {
+			"jqVersion": "none",
+			"yqVersion": "4",
+			"gojqVersion": "none"
+		}
 	}
 }
