@@ -11,10 +11,11 @@
 		// [Optional] Anisble Collections: Uncomment if you want to mount your local .ansible/collections folder.
 		//"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ansible/collections,target=/root/.ansible/collections,type=bind,consistency=cached",
 		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops,target=/home/vscode/.config/sops,type=bind,consistency=cached"
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops,target=/home/vscode/.config/sops,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
 	],
 	"overrideCommand": false,
-	"postStartCommand": "sudo chmod 666 /var/run/docker.sock && git config --global --add safe.directory ${containerWorkspaceFolder}",
+	"postStartCommand": "sudo chmod 666 /var/run/docker.sock && git config --global --add safe.directory ${containerWorkspaceFolder} && export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt && source ~/.bashrc",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -33,7 +34,9 @@
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"oderwat.indent-rainbow",
 				"signageos.signageos-vscode-sops",
-				"weaveworks.vscode-gitops-tools"
+				"weaveworks.vscode-gitops-tools",
+				"hashicorp.terraform",
+				"mikestead.dotenv"
 			]
 		}
 	},
