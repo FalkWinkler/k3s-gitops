@@ -5,8 +5,8 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
-  TIMEZONE: "Etc/UTC"
-  KUBE_VIP_ADDR: ""
+  TIMEZONE: "Europ/Berlin"
+  KUBE_VIP_ADDR: "192.168.10.81"
   METALLB_LB_RANGE: "192.168.10.200-192.168.10.230"
   METALLB_K8S_GATEWAY_ADDR: "192.168.10.220"
   METALLB_INGRESS_ADDR: "192.168.10.200"
