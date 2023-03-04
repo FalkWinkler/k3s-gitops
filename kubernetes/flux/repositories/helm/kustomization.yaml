@@ -15,7 +15,6 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./apache-tika.yaml
-  - ./dragonfly.yaml
   - ./grafana-charts.yaml
   - ./prometheus-community-charts.yaml
 
