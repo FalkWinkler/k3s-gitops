@@ -5,3 +5,4 @@ namespace: database
 resources:
   - namespace.yaml
   - redis
+  - ./dragonfly/ks.yaml
