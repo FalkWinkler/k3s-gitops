@@ -39,8 +39,9 @@ spec:
     domainFilters:
     - "${DOMAIN_INTERNAL}"
     txtOwnerId: default
-
+    extraArgs:
+      - --rfc2136-insecure
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-internl-secret
+      secret.reloader.stakater.com/reload: external-dns-internal-secret
