@@ -11,7 +11,7 @@ spec:
       chart: dragonfly
       version: 0.15.0
       sourceRef:
-        kind: HelmRepository
+        kind: OCIRepository
         name: dragonfly
         namespace: flux-system
   maxHistory: 3
