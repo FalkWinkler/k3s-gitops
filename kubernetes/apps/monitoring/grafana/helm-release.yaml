@@ -75,7 +75,7 @@ spec:
           #   type: loki
           #   access: proxy
           #   url: http://loki-gateway.monitoring.svc.cluster.local:80
-          
+
     dashboards:
       default:
         truenas:
@@ -85,7 +85,7 @@ spec:
         calico-felix:
           gnetId: 12175
           revision: 5
-          datasource: Prometheus 
+          datasource: Prometheus
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
           datasource: Prometheus
@@ -119,6 +119,7 @@ spec:
         nginx.ingress.kubernetes.io/session-cookie-name: "grafana"
         nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
         nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+        external-dns.alpha.kubernetes.io/hostname: "grafana.${DOMAIN_INTERNAL}"
       hosts:
         - &host "grafana.${DOMAIN_INTERNAL}"
       # tls:
