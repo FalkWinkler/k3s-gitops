@@ -17,4 +17,5 @@ resources:
   - ./apache-tika.yaml
   - ./grafana-charts.yaml
   - ./prometheus-community-charts.yaml
+  - ./dragonfly.yaml
 
