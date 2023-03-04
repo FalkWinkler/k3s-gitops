@@ -1,11 +1,12 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
+kind: HelmRepository
 metadata:
   name: dragonfly
   namespace: flux-system
 spec:
   interval: 1h
+  type: oci
   url: oci://ghcr.io/dragonflydb/dragonfly/helm/dragonfly
   ref:
     tag: v0.15.0
