@@ -8,7 +8,7 @@ spec:
   interval: 1h
   url: https://github.com/dragonflydb/dragonfly
   ref:
-    tag: v0.0.23
+    tag: v0.15.0
   ignore: |
     # exclude all
     /*
