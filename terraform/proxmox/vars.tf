@@ -21,7 +21,7 @@ variable "proxmox-host" {
 variable "nameserver" {
   type = string
   description = "die Ip Adresse des Nameserver"
-  default ="192.168.10.7"
+  default ="192.168.10.1"
 }
 
 
