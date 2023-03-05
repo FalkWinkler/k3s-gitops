@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: ./contrib/charts/dragonfly
-      version: v0.15.0
+      version: 0.15.0
       sourceRef:
         kind: GitRepository
         name: dragonfly
