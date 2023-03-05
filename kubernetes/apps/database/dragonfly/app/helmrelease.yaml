@@ -8,10 +8,10 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: dragonfly
+      chart: ./contrib/charts/dragonfly
       version: 0.15.0
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: dragonfly
         namespace: flux-system
   maxHistory: 3
