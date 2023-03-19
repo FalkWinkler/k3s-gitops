@@ -1,0 +1,84 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app home-assistant
+  namespace: home-automation
+spec:
+  releaseName: *app
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controller:
+      replicas: 1
+    global:
+      nameOverride: *app
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2023.3.5
+    nameOverride: home-assistant
+    fullnameOverride: home-assistant
+    hostNetwork: true
+    env:
+      TZ: "Europe/Berlin"
+    service:
+      main:
+        primary: true
+        ports:
+          http:
+            enabled: true
+            port: &port 8123
+        type: LoadBalancer
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: ${LB_HOMEASSISTANT_IP}
+        externalTrafficPolicy: Local
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "home-assistant.${DOMAIN_INTERNAL}"
+        hosts:
+        - host: "home-assistant.${DOMAIN_INTERNAL}"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+                port: *port
+    persistence:
+      # -- Configure persistence for data.
+      # @default -- See values.yaml
+      config:
+        enabled: true
+        type: nfs
+        server: 192.168.10.10
+        mountPath: /config
+        path: /mnt/Volume1/k3s/homeassitant/config
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nolock
+      # -- Configure persistence for media.
+      # @default -- See values.yaml
+      # recordings:
+      #   enabled: true
+      #   type: nfs
+      #   server: 192.168.10.10
+      #   mountPath: /recordings
+      #   path: /mnt/Volume1/recordings
+      #   accessMode: ReadWriteOnce
+      #   mountOptions:
+      #     - nolock
