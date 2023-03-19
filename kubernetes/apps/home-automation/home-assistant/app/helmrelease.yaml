@@ -59,18 +59,18 @@ spec:
             pathType: Prefix
             service:
                 port: *port
-    persistence:
-      # -- Configure persistence for data.
-      # @default -- See values.yaml
-      config:
-        enabled: true
-        type: nfs
-        server: 192.168.10.10
-        mountPath: /config
-        path: /mnt/Volume1/k3s/homeassitant/config
-        accessMode: ReadWriteOnce
-        mountOptions:
-          - nolock
+    # persistence:
+    #   # -- Configure persistence for data.
+    #   # @default -- See values.yaml
+    #   config:
+    #     enabled: true
+    #     type: nfs
+    #     server: 192.168.10.10
+    #     mountPath: /config
+    #     path: /mnt/Volume1/k3s/homeassitant/config
+    #     accessMode: ReadWriteOnce
+    #     mountOptions:
+    #       - nolock
       # -- Configure persistence for media.
       # @default -- See values.yaml
       # recordings:
