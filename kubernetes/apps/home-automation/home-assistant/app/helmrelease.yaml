@@ -40,12 +40,12 @@ spec:
         primary: true
         ports:
           http:
-            enabled: true
-            port: &port 8123
+            port: 8123
         type: LoadBalancer
         annotations:
           metallb.universe.tf/loadBalancerIPs: ${LB_HOMEASSISTANT_IP}
         externalTrafficPolicy: Local
+
     ingress:
       main:
         enabled: true
@@ -56,8 +56,12 @@ spec:
         - host: "home-assistant.${DOMAIN_INTERNAL}"
           paths:
           - path: /
-            service:
-              port: *port
+    resources:
+      requests:
+        cpu: 126m
+        memory: 411M
+      limits:
+        memory: 4417M
     # persistence:
     #   # -- Configure persistence for data.
     #   # @default -- See values.yaml
