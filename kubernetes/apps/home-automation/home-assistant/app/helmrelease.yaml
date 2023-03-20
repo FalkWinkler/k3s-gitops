@@ -43,8 +43,8 @@ spec:
             port: &port 8123
         loadBalancerIP: "${LB_HOMEASSISTANT_IP}"
         type: LoadBalancer
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: ${LB_HOMEASSISTANT_IP}
+        # annotations:
+        #   metallb.universe.tf/loadBalancerIPs: ${LB_HOMEASSISTANT_IP}
         externalTrafficPolicy: Local
 
     ingress:
