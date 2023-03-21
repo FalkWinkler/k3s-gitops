@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kubernetes-dashboard
-      version: 6.0.0
+      version: 6.0.6
       sourceRef:
         kind: HelmRepository
         name: kubernetes-dashboard
@@ -39,9 +39,8 @@ spec:
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
         hajimari.io/icon: mdi:kubernetes
-        external-dns.alpha.kubernetes.io/hostname: "kubernetes.${DOMAIN_INTERNAL}"
       hosts:
-        - &host "kubernetes.${DOMAIN_INTERNAL}"
+        - &host "kubernetes.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
