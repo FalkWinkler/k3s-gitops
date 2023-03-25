@@ -33,9 +33,9 @@ spec:
       - dns01:
           cloudflare:
             email: "${SECRET_CLOUDFLARE_EMAIL}"
-            apiKeySecretRef:
-              name: cert-manager-secret
-              key: api-key
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
         selector:
           dnsZones:
             - "${SECRET_DOMAIN}"
