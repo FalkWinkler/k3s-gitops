@@ -3,7 +3,7 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	"runArgs": ["--init","--env-file",".devcontainer/devcontainer.env"],
+	"runArgs": ["--init"],
 	"remoteEnv": {
 		"PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
 	},
@@ -15,7 +15,7 @@
 		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
 	],
 	"overrideCommand": false,
-	"postStartCommand": "sudo chmod 666 /var/run/docker.sock && git config --global --add safe.directory ${containerWorkspaceFolder} && export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt && source ~/.bashrc",
+	"postStartCommand": "sudo chmod 666 /var/run/docker.sock && git config --global --add safe.directory ${containerWorkspaceFolder}" ,
 
 	// Configure tool-specific properties.
 	"customizations": {
