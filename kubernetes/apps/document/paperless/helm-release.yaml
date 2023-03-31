@@ -67,10 +67,10 @@ spec:
       PAPERLESS_URL: dokumente.${SECRET_DOMAIN}
     resources:
       requests:
-        cpu: 1
-        memory: 2Gi
+        cpu: 25m
+        memory: 3Gi
       limits:
-        memory: 4Gi
+        memory: 7Gi
     service:
       main:
         ports:
