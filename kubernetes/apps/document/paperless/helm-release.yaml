@@ -53,10 +53,10 @@ spec:
       PAPERLESS_PORT: 8000
       PAPERLESS_ADMIN_USER: admin
       PAPERLESS_ADMIN_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: paperless-secrets
-            key: PAPERLESS_ADMIN_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: paperless-secrets
+          key: PAPERLESS_ADMIN_PASSWORD
       PAPERLESS_REDIS: redis://dragonfly.database.svc.cluster.local:6379
       PAPERLESS_TASK_WORKERS: 2
       PAPERLESS_TIKA_ENABLED: 1
