@@ -78,11 +78,11 @@ spec:
         annotations:
           hajimari.io/icon: mdi:barcode-scan
         hosts:
-        - host: &host "dokumente.${SECRET_DOMAIN}"
-          paths:
-          - path: /
-            pathType: Prefix
-          tls:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
           - hosts:
               - *host
     persistence:
