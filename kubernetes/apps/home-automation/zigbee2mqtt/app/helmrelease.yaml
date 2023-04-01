@@ -78,8 +78,8 @@ spec:
         accessMode: ReadWriteOnce
         mountOptions:
           - nolock
-    nodeSelector:
-      feature.node.kubernetes.io/custom-zigbee: "true"
+    # nodeSelector:
+    #   feature.node.kubernetes.io/custom-zigbee: "true"
     resources:
       requests:
         memory: 100Mi

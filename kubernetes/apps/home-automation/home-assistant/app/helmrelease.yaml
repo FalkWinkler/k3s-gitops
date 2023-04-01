@@ -76,8 +76,8 @@ spec:
      # fsGroupChangePolicy: "OnRootMismatch"
     securityContext:
       privileged: true
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
+    # podAnnotations:
+    #   secret.reloader.stakater.com/reload: *app
       requests:
         cpu: 10m
         memory: 100Mi
