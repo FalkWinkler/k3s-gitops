@@ -50,7 +50,7 @@ spec:
       PAPERLESS_CONSUMER_POLLING: 60
       PAPERLESS_OCR_MODE: redo
       PAPERLESS_OCR_CLEAN: clean
-      PAPERLESS_PORT: 8000
+      PAPERLESS_PORT: 8006
       PAPERLESS_ADMIN_USER: admin
       PAPERLESS_ADMIN_PASSWORD:
       valueFrom:
@@ -62,12 +62,12 @@ spec:
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       # PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
-      PAPERLESS_URL: https://paperless.${SECRET_DOMAIN}
+      PAPERLESS_URL: https://dokumente.${SECRET_DOMAIN}
     service:
       main:
         ports:
           http:
-            port: 8000
+            port: 8006
         type: LoadBalancer
         loadBalancerIP: "${LB_PAPERLESS_IP}"
         externalTrafficPolicy: Local
@@ -78,7 +78,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:barcode-scan
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "dokumente.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
