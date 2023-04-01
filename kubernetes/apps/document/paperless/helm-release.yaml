@@ -35,8 +35,8 @@ spec:
       tag: 1.13.0
     env:
       COMPOSE_PROJECT_NAME: paperless
-      USERMAP_UID: 1500 # User document
-      USERMAP_GID: 1500 # Group documents
+      # USERMAP_UID: 1500 # User document
+      # USERMAP_GID: 1500 # Group documents
       # PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: "true"
       PAPERLESS_OCR_LANGUAGES: eng deu
@@ -63,12 +63,9 @@ spec:
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       # PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
       PAPERLESS_URL: dokumente.${SECRET_DOMAIN}
-    resources:
-      requests:
-        cpu: 25m
-        memory: 3Gi
-      limits:
-        memory: 7Gi
+    envFrom:
+      - secretRef:
+          name: *app
     service:
       main:
         ports:
@@ -92,43 +89,33 @@ spec:
           - hosts:
               - *host
     persistence:
-      # -- Configure persistence for data.
-      # @default -- See values.yaml
       data:
         enabled: true
         type: nfs
-        server: 192.168.10.10
-        mountPath: /usr/src/paperless/data
+        server: "${LOCAL_LAN_TRUENAS}"
         path: /mnt/Volume1/document/data
-        accessMode: ReadWriteOnce
-        mountOptions:
-          - nfsvers=3
-          - nolock
-      # -- Configure persistence for media.
-      # @default -- See values.yaml
       media:
         enabled: true
-        type: nfs
-        server: 192.168.10.10
         mountPath: /usr/src/paperless/media
+        type: nfs
+        server: "${LOCAL_LAN_TRUENAS}"
         path: /mnt/Volume1/document/media
-        accessMode: ReadWriteOnce
-        mountOptions:
-          - nfsvers=3
-          - nolock
-      # -- Configure volume to monitor for new documents.
-      # @default -- See values.yaml
       consume:
         enabled: true
-        type: nfs
-        server: 192.168.10.10
         mountPath: /usr/src/paperless/consume
+        type: nfs
+        server: "${LOCAL_LAN_TRUENAS}"
         path: /mnt/Volume1/document/consume
-        accessMode: ReadWriteMany
       export:
         enabled: true
-        type: nfs
-        server: 192.168.10.10
         mountPath: /usr/src/paperless/export
+        type: nfs
+        server: "${LOCAL_LAN_TRUENAS}"
         path: /mnt/Volume1/document/export
-        accessMode: ReadWriteMany
+    resources:
+      requests:
+        cpu: 25m
+        memory: 3Gi
+      limits:
+        memory: 7Gi
+
