@@ -35,8 +35,8 @@ spec:
       tag: 1.13.0
     env:
       COMPOSE_PROJECT_NAME: paperless
-      # USERMAP_UID: 1500 # User document
-      # USERMAP_GID: 1500 # Group documents
+      USERMAP_UID: 1500 # User document
+      USERMAP_GID: 1500 # Group documents
       # PAPERLESS_CONSUMPTION_DIR: "/consume"
       PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: "true"
       PAPERLESS_OCR_LANGUAGES: eng deu
@@ -62,7 +62,7 @@ spec:
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
       # PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
-      PAPERLESS_URL: dokumente.${SECRET_DOMAIN}
+      PAPERLESS_URL: https://dokumente.${SECRET_DOMAIN}
     service:
       main:
         ports:
