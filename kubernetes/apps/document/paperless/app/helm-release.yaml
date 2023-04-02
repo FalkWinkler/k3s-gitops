@@ -65,9 +65,9 @@ spec:
         ports:
           http:
             port: 8000
-        # type: LoadBalancer
-        # loadBalancerIP: "${LB_PAPERLESS_IP}"
-        # externalTrafficPolicy: Local
+        type: LoadBalancer
+        loadBalancerIP: "${LB_PAPERLESS_IP}"
+        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true
