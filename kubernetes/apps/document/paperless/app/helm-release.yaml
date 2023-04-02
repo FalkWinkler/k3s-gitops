@@ -88,25 +88,25 @@ spec:
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/data
-        path: /mnt/Volume1/document/data
+        path: /mnt/SSD1/document/data
       media:
         enabled: true
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/media
-        path: /mnt/Volume1/document/media
+        path: /mnt/SSD1/document/media
       consume:
         enabled: true
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/consume
-        path: /mnt/Volume1/document/consume
+        path: /mnt/SSD1/document/consume
       export:
         enabled: true
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/export
-        path: /mnt/Volume1/document/export
+        path: /mnt/SSD1/document/export
     resources:
       requests:
         cpu: 25m
