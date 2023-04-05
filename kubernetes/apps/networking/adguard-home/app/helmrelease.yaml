@@ -34,13 +34,13 @@ spec:
       TZ: ${TIMEZONE}
     service:
       dns-tcp:
-          type: LoadBalancer
-          externalTrafficPolicy: Local
-          loadBalancerIP: ${LB_ADGUARD_IP}
-          annotations:
-              metallb.universe.tf/allow-shared-ip: adguard-home-svc
-              hajimari.io/icon: shield-link-variant
-              hajimari.io/appName: Adguard Home
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        loadBalancerIP: ${LB_ADGUARD_IP}
+        annotations:
+            metallb.universe.tf/allow-shared-ip: adguard-home-svc
+            hajimari.io/icon: shield-link-variant
+            hajimari.io/appName: Adguard Home
       dns-udp:
         type: LoadBalancer
         externalTrafficPolicy: Local
