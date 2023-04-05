@@ -42,8 +42,8 @@ spec:
         enabled: true
         type: LoadBalancer
         externalTrafficPolicy: Local
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: "${LB_ADGUARD_IP}"
+        # annotations:
+        #   metallb.universe.tf/loadBalancerIPs: "${LB_ADGUARD_IP}"
         ports:
           dns-tcp:
             enabled: true
@@ -71,6 +71,7 @@ spec:
         tls:
           - hosts:
               - *host
+
     persistence:
       config:
         enabled: true
