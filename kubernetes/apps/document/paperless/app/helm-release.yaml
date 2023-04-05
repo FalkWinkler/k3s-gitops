@@ -41,7 +41,7 @@ spec:
       PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: "true"
       PAPERLESS_OCR_LANGUAGES: eng deu
       PAPERLESS_OCR_LANGUAGE: deu
-      PAPERLESS_TIME_ZONE: Europe/Berlin
+      PAPERLESS_TIME_ZONE: ${TIMEZONE}
       PAPERLESS_FILENAME_FORMAT: '{correspondent}/{document_type}/{created_year}-{created_month}-{created_day}_{title}_{asn}'
       PAPERLESS_FILENAME_DATE_ORDER: YMD
       PAPERLESS_CONSUMER_DELETE_DUPLICATES: "true"
