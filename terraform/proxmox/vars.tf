@@ -62,9 +62,7 @@ variable "server_node" {
 variable "sshkeys" {
   description = "ssh keys to drop onto each vm"
   type = string
-  default = <<EOF
-  ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAayW2DEKQSF8A5SfdbuepRrSWKPP/g9rX3yLwxEHuNL falk@falk-pc
-  EOF
+  default =""
 }
 variable "ssh_user" {
   description = "user to put ssh keys under"

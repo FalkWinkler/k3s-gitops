@@ -44,7 +44,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
   searchdomain = var.search_domain
   nameserver   = var.nameserver
-  sshkeys      = var.sshkeys
+  sshkeys      = file("~/.ssh/id_ed25519.pub")
   ciuser        = data.sops_file.cloudinit_secrets.data["cloudinit_username"]
   cipassword   = data.sops_file.cloudinit_secrets.data["cloudinit_password"]
   bootdisk = "scsi0"
@@ -78,7 +78,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
   ipconfig0 = "ip=192.168.10.9${1 + count.index}/24,gw=192.168.10.1"
   searchdomain = var.search_domain
   nameserver   = var.nameserver
-  sshkeys      = var.sshkeys
+  sshkeys      = file("~/.ssh/id_ed25519.pub")
   ciuser       = data.sops_file.cloudinit_secrets.data["cloudinit_username"]
   cipassword   = data.sops_file.cloudinit_secrets.data["cloudinit_password"]
   bootdisk      = "scsi0"
@@ -106,7 +106,7 @@ resource "local_file" "k3s_file" {
     for instance in proxmox_vm_qemu.proxmox_vm_workers:
     instance.name => instance.default_ipv4_address
     }),
-    ansible_ssh_private_key_file = file("~/.ssh/id_ed25519")
+    ansible_ssh_private_key_file = "~/.ssh/id_ed25519"
     })
     filename = "../../ansible/inventory/hosts.yml"
 }
