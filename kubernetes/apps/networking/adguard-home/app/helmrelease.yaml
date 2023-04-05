@@ -27,9 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    interval: 2m
-    # logLevel: debug
-    provider: cloudflare
     env:
       TZ: ${TIMEZONE}
     service:
@@ -41,13 +38,6 @@ spec:
             port: 53
             protocol: TCP
             targetPort: 53
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        loadBalancerIP: ${LB_ADGUARD_IP}
-        annotations:
-            metallb.universe.tf/allow-shared-ip: adguard-home-svc
-            hajimari.io/icon: shield-link-variant
-            hajimari.io/appName: Adguard Home
       dns-udp:
         enabled: true
         ports:
@@ -56,17 +46,13 @@ spec:
             port: 53
             protocol: UDP
             targetPort: 53
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        loadBalancerIP: ${LB_ADGUARD_IP}
-        annotations:
-            metallb.universe.tf/allow-shared-ip: adguard-home-svc
     ingress:
       main:
         enabled: true
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-production
           hajimari.io/icon: adguard-home
+          hajimari.io/appName: Adguard Home
           external-dns.alpha.kubernetes.io/hostname: dns01.${SECRET_DOMAIN}.
           external-dns.alpha.kubernetes.io/target: prx02.${SECRET_DOMAIN}.
         hosts:
