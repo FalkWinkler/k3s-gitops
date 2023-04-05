@@ -34,6 +34,13 @@ spec:
       TZ: ${TIMEZONE}
     service:
       dns-tcp:
+        enabled: true
+        ports:
+          dns-udp:
+            enabled: true
+            port: 53
+            protocol: TCP
+            targetPort: 53
         type: LoadBalancer
         externalTrafficPolicy: Local
         loadBalancerIP: ${LB_ADGUARD_IP}
@@ -42,6 +49,13 @@ spec:
             hajimari.io/icon: shield-link-variant
             hajimari.io/appName: Adguard Home
       dns-udp:
+        enabled: true
+        ports:
+          dns-udp:
+            enabled: true
+            port: 53
+            protocol: UDP
+            targetPort: 53
         type: LoadBalancer
         externalTrafficPolicy: Local
         loadBalancerIP: ${LB_ADGUARD_IP}
