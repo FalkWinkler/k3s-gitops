@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: adguard/adguardhome
+      tag: v0.107.26
     env:
       TZ: ${TIMEZONE}
     service:
