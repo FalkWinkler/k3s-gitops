@@ -30,22 +30,14 @@ spec:
     env:
       TZ: ${TIMEZONE}
     service:
-      dns-tcp:
-        enabled: true
+      main:
         ports:
-          dns-udp:
-            enabled: true
-            port: 53
-            protocol: TCP
-            targetPort: 53
-      dns-udp:
+          http:
+            port: 3000
+      dns:
         enabled: true
-        ports:
-          dns-udp:
-            enabled: true
-            port: 53
-            protocol: UDP
-            targetPort: 53
+        annotations:
+          metallb.universe.tf/loadBalancerIPs-ip: ${LB_ADGUARD_IP}
     ingress:
       main:
         enabled: true
