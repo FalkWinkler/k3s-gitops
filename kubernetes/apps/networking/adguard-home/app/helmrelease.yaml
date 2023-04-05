@@ -98,9 +98,3 @@ spec:
         accessMode: ReadWriteMany
         size: 1Gi
         retain: true
-
-
-    serviceMonitor:
-      enabled: true
-    podAnnotations:
-      secret.reloader.stakater.com/reload: adguard-home-secret
