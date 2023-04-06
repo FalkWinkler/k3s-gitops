@@ -16,3 +16,4 @@ resources:
   - ./weave-gitops.yaml
   - ./apache-tika.yaml
   - ./node-feature-discovery.yaml
+  - ./emxq.yaml
