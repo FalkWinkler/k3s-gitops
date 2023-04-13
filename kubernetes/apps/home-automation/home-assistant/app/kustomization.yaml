@@ -10,6 +10,6 @@ resources:
   #- ./token.sops.yaml
   - ./podmonitor.yaml
   #- ./volume.yaml
-# patchesStrategicMerge:
-#   - ./patches/addons.yaml
+patchesStrategicMerge:
+  - ./patches/addons.yaml
  # - ./patches/postgres.yaml
