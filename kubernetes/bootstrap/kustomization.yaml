@@ -12,5 +12,4 @@ patches:
         name: not-used
     target:
       group: networking.k8s.io
-      version: v1
       kind: NetworkPolicy
