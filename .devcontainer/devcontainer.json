@@ -51,7 +51,10 @@
 	"remoteUser": "vscode",
 	"features": {
 		"ghcr.io/mpriscella/features/sops:1": {},
-		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {},
+		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+			"minikube": "none"
+		},
+		"ghcr.io/devcontainers-contrib/features/kubectx-kubens:1": {},
 		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {},
 		"ghcr.io/devcontainers-contrib/features/terraform-ls-asdf:2": {},
 		"ghcr.io/jsburckhardt/devcontainer-features/flux:1": {},
