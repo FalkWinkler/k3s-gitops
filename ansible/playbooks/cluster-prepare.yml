@@ -46,12 +46,6 @@
         - name: Packages | Remove leaf packages
           ansible.builtin.apt:
             autoremove: true
-        - name: Packages | RasPi packages
-          ansible.builtin.apt:
-            name: ["linux-modules-extra-raspi"]
-            install_recommends: false
-          notify: Reboot
-          when: "'raspi' in ansible_kernel"
       when: ansible_facts['distribution'] == 'Ubuntu'
     - name: User Configuration
       block:
@@ -86,13 +80,13 @@
           community.general.modprobe:
             name: "{{ item }}"
             state: present
-          loop: [br_netfilter, ip_vs, ip_vs_rr, overlay, rbd]
+          loop: [br_netfilter, overlay, rbd]
         - name: System Configuration (2) | Enable kernel modules on boot
           ansible.builtin.copy:
             mode: 0644
             content: "{{ item }}"
             dest: "/etc/modules-load.d/{{ item }}.conf"
-          loop: [br_netfilter, ip_vs, ip_vs_rr, overlay, rbd]
+          loop: [br_netfilter, overlay, rbd]
         - name: System Configuration (2) | Set sysctls
           ansible.posix.sysctl:
             name: "{{ item.key }}"
@@ -139,4 +133,3 @@
     - name: Reboot
       ansible.builtin.reboot:
         msg: Rebooting nodes
-        reboot_timeout: 3600
