@@ -1,6 +1,5 @@
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
+apiVersion: kustomize.toolkit.fluxcd.io/v1
 metadata:
   name: cluster-apps-local-path-provisioner
   namespace: flux-system
