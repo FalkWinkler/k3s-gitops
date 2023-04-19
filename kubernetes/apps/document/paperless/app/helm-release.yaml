@@ -89,28 +89,40 @@ spec:
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/data
         path: /mnt/Volume1/document/data
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
       media:
         enabled: true
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/media
         path: /mnt/Volume1/document/media
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
       consume:
         enabled: true
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/consume
         path: /mnt/Volume1/document/consume
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
       export:
         enabled: true
         type: nfs
         server: "${LOCAL_LAN_TRUENAS}"
         mountPath: /usr/src/paperless/export
         path: /mnt/Volume1/document/export
-        accessMode: ReadWriteMany
+        accessMode: ReadWriteOnce
+        mountOptions:
+          - nfsvers=3
+          - nolock
     resources:
       requests:
         cpu: 25m
