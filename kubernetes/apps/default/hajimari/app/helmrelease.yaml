@@ -40,6 +40,12 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - document
+          - monitoring
+          - networking
+          - database
+          - home-automation
+          - security
     ingress:
       main:
         enabled: true
@@ -49,7 +55,7 @@ spec:
             10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "hajimari.${SECRET_DOMAIN}"
+          - host: &host "apps.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
