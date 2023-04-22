@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    env:
+      WEAVE_GITOPS_AUTH_ENABLED: false
     adminUser:
       create: true
       username: admin
