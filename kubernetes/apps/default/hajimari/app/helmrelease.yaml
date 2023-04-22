@@ -40,12 +40,6 @@ spec:
       namespaceSelector:
         matchNames:
           - default
-          - document
-          - monitoring
-          - networking
-          - database
-          - home-automation
-          - security
     ingress:
       main:
         enabled: true
