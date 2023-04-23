@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: dragonfly
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://github.com/dragonflydb/dragonfly
+  ref:
+    tag: v1.0.0
+  ignore: |
+    # exclude all
+    /*
+    # include kubernetes directory
+    !/contrib/charts/dragonfly
+
