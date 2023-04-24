@@ -23,3 +23,5 @@ data:
   LB_HOMEASSISTANT_IP: 192.168.10.225
   LB_EMQX_IP: 192.168.10.226
   LB_ADGUARD_IP: 192.168.10.101
+  POSTGRES_HOST: "postgres-rw.database.svc.cluster.local."
+  POSTGRES_PORT: "5432"

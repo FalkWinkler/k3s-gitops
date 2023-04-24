@@ -17,3 +17,4 @@ resources:
   - ./apache-tika.yaml
   - ./node-feature-discovery.yaml
   - ./emxq.yaml
+  - ./cloudnative-pg.yaml
