@@ -6,10 +6,10 @@ namespace: home-automation
 resources:
   #- backups
   - ./helmrelease.yaml
-  #- ./secret.sops.yaml
+  - ./secret.sops.yaml
   #- ./token.sops.yaml
   - ./podmonitor.yaml
   #- ./volume.yaml
 patchesStrategicMerge:
   - ./patches/addons.yaml
- # - ./patches/postgres.yaml
+  - ./patches/postgres.yaml
