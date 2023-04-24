@@ -32,15 +32,17 @@ spec:
       tag: 2023.4.6
     env:
       TZ: "${TIMEZONE}"
-     # POSTGRES_HOST: ${POSTGRES_HOST}
-     # POSTGRES_DB: home_assistant
-    # envFrom:
-    #   - secretRef:
-    #       name: *app
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_DB: home_assistant
+    envFrom:
+      - secretRef:
+          name: *app
     service:
       main:
+        annotations:
+          metallb.universe.tf/loadBalancerIPs: "${LB_HOMEASSISTANT_IP}"
         type: LoadBalancer
-        loadBalancerIP: ${LB_HOMEASSISTANT_IP}
+        #loadBalancerIP: ${LB_HOMEASSISTANT_IP}
         externalTrafficPolicy: Local
         ports:
           http:
