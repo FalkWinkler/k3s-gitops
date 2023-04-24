@@ -32,7 +32,7 @@ spec:
   dependsOn:
     - name: cluster-apps-cloudnative-pg-app
     - name: cluster-apps-kyverno
-  path: ./kubernetes/apps/datasbase/cloudnative-pg/cluster
+  path: ./kubernetes/apps/database/cloudnative-pg/cluster
   prune: true
   sourceRef:
     kind: GitRepository
