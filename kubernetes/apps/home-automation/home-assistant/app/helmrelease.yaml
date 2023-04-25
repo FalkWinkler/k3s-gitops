@@ -39,10 +39,10 @@ spec:
           name: *app
     service:
       main:
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: "${LB_HOMEASSISTANT_IP}"
+        #annotations:
+        #  metallb.universe.tf/loadBalancerIPs: "${LB_HOMEASSISTANT_IP}"
         type: LoadBalancer
-        #loadBalancerIP: ${LB_HOMEASSISTANT_IP}
+        loadBalancerIP: ${LB_HOMEASSISTANT_IP}
         externalTrafficPolicy: Local
         ports:
           http:
