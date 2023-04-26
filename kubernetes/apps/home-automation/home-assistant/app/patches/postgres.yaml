@@ -18,6 +18,7 @@ spec:
           - name: POSTGRES_SUPER_PASS
             valueFrom:
               secretKeyRef:
+                namespace: database
                 name: postgres-superuser
                 key: password
         envFrom:
