@@ -49,6 +49,10 @@ spec:
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --requeue-dependency=5s
+    - patch: |
+        - op: replace
+          path: /spec/template/spec/containers/0/image
+          value: ghcr.io/fluxcd/helm-controller:v0.32.2
       target:
         kind: Deployment
         name: (kustomize-controller|helm-controller|source-controller)
