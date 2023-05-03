@@ -9,11 +9,11 @@ spec:
   chart:
     spec:
       # renovate: registryUrl=https://charts.rook.io/release
-      chart: rook-ceph-cluster
-      version: v1.10.8
+      chart: rook-ceph
+      version: v1.11.5
       sourceRef:
         kind: HelmRepository
-        name: rook-ceph-charts
+        name: rook-ceph
         namespace: flux-system
   dependsOn:
     - name: rook-ceph
@@ -38,8 +38,6 @@ spec:
       dashboard:
         ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          external-dns/is-public: "false"
           hajimari.io/enable: "true"
           hajimari.io/icon: content-save
           hajimari.io/appName: "rook-ceph"
