@@ -139,10 +139,10 @@ spec:
               operator: Exists
 
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: true
-      name: csi-rbdplugin-snapclass
-      annotations:
-        k10.kasten.io/is-snapshot-class: "true"
+      enabled: false
+      # name: csi-rbdplugin-snapclass
+      # annotations:
+      #   k10.kasten.io/is-snapshot-class: "true"
 
     cephBlockPools:
       - name: ceph-blockpool
