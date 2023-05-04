@@ -2,14 +2,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: rook-ceph
+  name: rook-ceph-cluster
   namespace: rook-ceph
 spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://charts.rook.io/release
-      chart: rook-ceph
+      chart: rook-ceph-cluster
       version: v1.11.5
       sourceRef:
         kind: HelmRepository
