@@ -16,3 +16,4 @@ resources:
   - ./weave-gitops.yaml
   - ./rook-ceph.yaml
   - ./piraeus.yaml
+  - ./kyverno.yaml
