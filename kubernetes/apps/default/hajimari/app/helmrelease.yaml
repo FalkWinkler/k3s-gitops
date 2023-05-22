@@ -40,6 +40,12 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - kube-system
+          - media
+          - monitoring
+          - security
+          - rook-ceph
+          - flux-system
     ingress:
       main:
         enabled: true
