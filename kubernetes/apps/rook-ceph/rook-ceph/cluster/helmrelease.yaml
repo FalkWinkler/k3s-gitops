@@ -40,6 +40,10 @@ spec:
     cephClusterSpec:
       crashCollector:
         disable: false
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
 
       healthCheck:
         daemonHealth:
