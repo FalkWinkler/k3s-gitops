@@ -8,7 +8,7 @@ spec:
   interval: 10m
   url: oci://ghcr.io/fluxcd/flux-manifests
   ref:
-    tag: v2.0.0-rc.1
+    tag: v2.0.0-rc.3
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -93,15 +93,6 @@ spec:
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --oom-watch-interval=500ms
-      target:
-        kind: Deployment
-        name: helm-controller
-    # https://github.com/fluxcd/flux2/issues/3829
-    # https://github.com/samip5/k8s-cluster/blob/c942c40c4e23f0e4d1fd8885849664e96594e2d2/cluster/flux/config/flux.yaml#L54#L60
-    - patch: |
-        - op: replace
-          path: /spec/template/spec/containers/0/image
-          value: ghcr.io/fluxcd/helm-controller:v0.32.2
       target:
         kind: Deployment
         name: helm-controller
