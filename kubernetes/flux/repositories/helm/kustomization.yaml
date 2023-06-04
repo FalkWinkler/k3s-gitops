@@ -19,4 +19,4 @@ resources:
   - ./weave-gitops.yaml
   - ./piraeus.yaml
   - ./kyverno.yaml
-  - ./mayastor.yaml
+  # - ./mayastor.yaml
