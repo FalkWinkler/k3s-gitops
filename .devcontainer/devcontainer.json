@@ -5,14 +5,14 @@
 	},
 	"runArgs": ["--init"],
 	"remoteEnv": {
-		"PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
+		"PATH": "${containerEnv:PATH}:/root/.local/bin"
 	},
 	"mounts": [
 		// [Optional] Anisble Collections: Uncomment if you want to mount your local .ansible/collections folder.
 		//"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ansible/collections,target=/root/.ansible/collections,type=bind,consistency=cached",
 		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops,target=/home/vscode/.config/sops,type=bind,consistency=cached",
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/sops,target=/root/.config/sops,type=bind,consistency=cached",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/root/.ssh,type=bind,consistency=cached"
 	],
 	"overrideCommand": false,
 	"postStartCommand": "sudo chmod 666 /var/run/docker.sock && git config --global --add safe.directory ${containerWorkspaceFolder}" ,
@@ -48,15 +48,18 @@
 	// "postCreateCommand": "ansible --version",
 
 	// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
+	"remoteUser": "root",
 	"features": {
 		"ghcr.io/mpriscella/features/sops:1": {},
 		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
 			"minikube": "none"
 		},
 		"ghcr.io/devcontainers-contrib/features/kubectx-kubens:1": {},
-		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {},
-		"ghcr.io/devcontainers-contrib/features/terraform-ls-asdf:2": {},
+				"terraform": {
+					"version": "latest",
+					"tflint": "latest",
+					"terragrunt": "latest"
+				},
 		"ghcr.io/jsburckhardt/devcontainer-features/flux:1": {},
 		"ghcr.io/eitsupi/devcontainer-features/go-task:latest": {},
 		"ghcr.io/eitsupi/devcontainer-features/jq-likes:1": {

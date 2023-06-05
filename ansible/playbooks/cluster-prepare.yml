@@ -15,6 +15,7 @@
         - name: Locale | Set timezone
           community.general.timezone:
             name: "{{ timezone | default('Etc/UTC') }}"
+
     - name: Networking
       block:
         - name: Networking | Set hostname to inventory hostname
@@ -25,6 +26,7 @@
             path: /etc/hosts
             block: |
               127.0.1.1   {{ inventory_hostname }}
+
     - name: Packages | Fedora
       block:
         - name: Packages | Install required packages
@@ -36,6 +38,7 @@
           ansible.builtin.dnf:
             autoremove: true
       when: ansible_facts['distribution'] == 'Fedora'
+
     - name: Packages | Ubuntu
       block:
         - name: Packages | Install required packages
@@ -46,7 +49,25 @@
         - name: Packages | Remove leaf packages
           ansible.builtin.apt:
             autoremove: true
+        - name: Packages | RasPi packages
+          ansible.builtin.apt:
+            name: ["linux-modules-extra-raspi"]
+            install_recommends: false
+          notify: Reboot
+          when: "'raspi' in ansible_kernel"
       when: ansible_facts['distribution'] == 'Ubuntu'
+
+    - name: Packages | Cilium CLI
+      ansible.builtin.include_role:
+        name: githubixx.cilium_cli
+        public: true
+      vars:
+        cilium_cli_arch: "{{ 'amd64' if ansible_architecture == 'x86_64' else 'arm64' }}"
+        cilium_cli_tmp_directory: /tmp
+      when:
+        - k3s_control_node is defined
+        - k3s_control_node
+
     - name: User Configuration
       block:
         - name: User Configuration | Add additional SSH public keys
@@ -54,6 +75,7 @@
             user: "{{ ansible_user }}"
             key: "{{ item }}"
           loop: "{{ public_ssh_keys | default([]) }}"
+
     - name: System Configuration (1)
       block:
         - name: System Configuration (1) | Disable firewalld | Fedora
@@ -74,19 +96,20 @@
           ansible.builtin.systemd:
             service: fstrim.timer
             enabled: true
+
     - name: System Configuration (2)
       block:
         - name: System Configuration (2) | Enable kernel modules now
           community.general.modprobe:
             name: "{{ item }}"
             state: present
-          loop: [br_netfilter, overlay, rbd]
+          loop: [br_netfilter, ip_vs, ip_vs_rr, overlay, rbd]
         - name: System Configuration (2) | Enable kernel modules on boot
           ansible.builtin.copy:
             mode: 0644
             content: "{{ item }}"
             dest: "/etc/modules-load.d/{{ item }}.conf"
-          loop: [br_netfilter, overlay, rbd]
+          loop: [br_netfilter, ip_vs, ip_vs_rr, overlay, rbd]
         - name: System Configuration (2) | Set sysctls
           ansible.posix.sysctl:
             name: "{{ item.key }}"
@@ -133,3 +156,4 @@
     - name: Reboot
       ansible.builtin.reboot:
         msg: Rebooting nodes
+        reboot_timeout: 3600

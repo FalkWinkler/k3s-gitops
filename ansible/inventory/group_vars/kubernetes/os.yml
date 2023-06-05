@@ -1,9 +1,6 @@
 ---
-# (string) Timezone for the servers
-# timezone: "America/New_York"
 
-# (list) Additional ssh public keys to add to the nodes
-# ssh_authorized_keys:
+# ssh_authorized_keys: []
 
 fedora:
   packages:
@@ -19,7 +16,6 @@ fedora:
     - python3-kubernetes
     - python3-libselinux
     - python3-pyyaml
-    - linux-modules-extra-{{ansible_kernel}}
 
 ubuntu:
   packages:
@@ -33,4 +29,3 @@ ubuntu:
     - socat
     - python3-kubernetes
     - python3-yaml
-    - linux-modules-extra-{{ansible_kernel}}

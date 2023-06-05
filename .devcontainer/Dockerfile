@@ -6,6 +6,7 @@ COPY library-scripts/*.sh /tmp/library-scripts/
 ARG KUBECTX_VERSION=0.9.4
 ARG K9S_VERSION=0.26.7
 ARG GITOPS_VERSION=0.19.0
+ARG CILIUM_CLI_VERSION=v0.14.5
 
 # [Option] Install zsh
 ARG INSTALL_ZSH="false"
@@ -38,6 +39,8 @@ RUN curl -fsSL "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION
     # gitops
     && curl -fsSL "https://github.com/weaveworks/weave-gitops/releases/download/v${GITOPS_VERSION}/gitops-linux-x86_64.tar.gz" | tar xz -C /usr/local/bin gitops
 
+# install cilium
+RUN curl -fsSL https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-amd64.tar.gz | tar -xz -C /usr/local/bin cilium
 
 # Install Ansible
 RUN pip3 install ansible[azure]

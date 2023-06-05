@@ -9,7 +9,3 @@ creation_rules:
     key_groups:
       - age:
           - age12tjmxahz7dw8cravyesrycrazrzqkff03qk8hqnsrnsu5k3frdqskv4kcd
-  - path_regex: terraform/.*\.sops\.ya?ml
-    key_groups:
-      - age:
-          - age12tjmxahz7dw8cravyesrycrazrzqkff03qk8hqnsrnsu5k3frdqskv4kcd
