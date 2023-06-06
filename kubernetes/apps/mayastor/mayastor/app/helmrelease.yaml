@@ -47,6 +47,6 @@ spec:
       enabled: false
     etcd:
       persistence:
-        storageClassName: local-path
+        storageClass: local-path
 
 
