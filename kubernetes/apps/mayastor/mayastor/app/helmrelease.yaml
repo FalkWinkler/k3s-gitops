@@ -39,3 +39,10 @@ spec:
       # metrics refresh time
       # WARNING: Lowering pollingInterval value will affect performance adversely
       pollingInterval: "5m"
+    loki-stack:
+      enabled: false
+    promtail:
+      enabled: false
+    ha:
+      enabled: false
+
