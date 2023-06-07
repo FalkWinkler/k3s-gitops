@@ -2,8 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: mayastor
+  name: rook-ceph
   namespace: flux-system
 spec:
-  interval: 1h
-  url: https://openebs.github.io/mayastor-extensions/
+  interval: 30m
+  url: https://charts.rook.io/release
+  timeout: 3m
