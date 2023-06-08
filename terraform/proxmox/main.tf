@@ -3,7 +3,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "telmate/proxmox"
-      version = "2.9.11"
+      version = "2.8.0"
     }
      sops = {
       source = "carlpett/sops"
@@ -21,8 +21,8 @@ provider "proxmox" {
   pm_user         = "terraform-prov@pve"
   pm_password     = var.password
   pm_tls_insecure = true
-  pm_parallel     = 10
-  pm_debug        = true
+  pm_parallel     = 1
+  # pm_debug        = true
   pm_api_token_id = "terraform-prov@pve!mytoken"
   pm_api_token_secret = "0bab4ffc-d570-4d0d-83e9-75f5b480e5d2"
 }
@@ -37,7 +37,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
   os_type     = "cloud-init"
   agent       = 1
   memory      = var.num_k3s_masters_mem
-  cores       = 4
+  cores       = 2
   vmid        = 300 + count.index
 
   ipconfig0 = "ip=192.168.10.8${1 + count.index}/24,gw=192.168.10.1"
@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_master" {
 
   disk {
     type = "scsi"
-    size = "32G"
+    size = "12G"
     ssd = 1
     storage = "local-zfs"
   }
@@ -73,7 +73,7 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
   os_type     = "cloud-init"
   agent       = 1
   memory      = var.num_k3s_nodes_mem
-  cores       = 8
+  cores       = 4
   vmid        = 310 + count.index
   ipconfig0 = "ip=192.168.10.9${1 + count.index}/24,gw=192.168.10.1"
   searchdomain = var.search_domain
@@ -85,9 +85,15 @@ resource "proxmox_vm_qemu" "proxmox_vm_workers" {
 
   disk {
     type = "scsi"
-    size = "32G"
+    size = "20G"
     ssd = 1
     storage = "local-zfs"
+  }
+   disk {
+    type = "scsi"
+    size = "120G"
+    ssd = 1
+    storage = "SAMSUNG_SSD"
   }
   network {
     model = "virtio"

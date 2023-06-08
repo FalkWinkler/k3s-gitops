@@ -36,19 +36,19 @@ variable "pvt_key" {
 }
 
 variable "num_k3s_masters" {
- default = 1
+ default = 3
 }
 
 variable "num_k3s_masters_mem" {
- default = "4096"
+ default = "2048"
 }
 
 variable "num_k3s_nodes" {
- default = 2
+ default = 3
 }
 
 variable "num_k3s_nodes_mem" {
- default = "12288"
+ default = "8192"
 }
 
 variable "tamplate_vm_name" {
