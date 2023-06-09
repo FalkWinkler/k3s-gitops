@@ -41,6 +41,13 @@ RUN curl -fsSL "https://github.com/derailed/k9s/releases/download/v${K9S_VERSION
 
 # install cilium
 RUN curl -fsSL https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-amd64.tar.gz | tar -xz -C /usr/local/bin cilium
+# krew plugin
+RUN curl -fsSL -o /tmp/krew.tar.gz "https://github.com/kubernetes-sigs/krew/releases/latest/download/krew-linux_amd64.tar.gz" \
+    && tar zxvf /tmp/krew.tar.gz -C /tmp \
+    && mv /tmp/krew-linux_amd64 /usr/local/bin/krew
+
+# install mayastor
+RUN curl -fsSL https://github.com/openebs/mayastor-control-plane/releases/download/v2.2.0/kubectl-mayastor-x86_64-linux-musl  --output  /usr/local/bin/kubectl-mayastor
 
 # Install Ansible
 RUN pip3 install ansible[azure]
@@ -62,6 +69,11 @@ RUN if [ "${INSTALL_AZURE_CLI}" = "true" ]; then bash /tmp/library-scripts/azcli
         echo '#!/bin/bash\n"$@"' > /usr/local/share/docker-init.sh && chmod +x /usr/local/share/docker-init.sh; \
     fi \
     && rm -rf /var/lib/apt/lists/*
+
+# Install krew plugin
+RUN krew install krew \
+    && krew install ns \
+    && krew install ctx
 
 ENTRYPOINT [ "/usr/local/share/docker-init.sh" ]
 CMD [ "sleep", "infinity" ]
