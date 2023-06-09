@@ -2,20 +2,6 @@
 
 # ssh_authorized_keys: []
 
-fedora:
-  packages:
-    - dnf-plugin-system-upgrade
-    - dnf-utils
-    - hdparm
-    - htop
-    - ipvsadm
-    - lm_sensors
-    - nano
-    - socat
-    - python3-kubernetes
-    - python3-libselinux
-    - python3-pyyaml
-
 ubuntu:
   packages:
     - hdparm
@@ -24,7 +10,9 @@ ubuntu:
     - lm-sensors
     - nano
     - nfs-common
+    - nvme-cli
     - socat
     - python3-kubernetes
     - python3-yaml
     - lvm2
+    - linux-modules-extra-{{ansible_kernel}}
