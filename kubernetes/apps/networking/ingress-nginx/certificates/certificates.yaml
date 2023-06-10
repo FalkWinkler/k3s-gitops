@@ -28,4 +28,3 @@ spec:
   dnsNames:
     - "${SECRET_DOMAIN}"
     - "*.${SECRET_DOMAIN}"
-    - "login.${SECRET_DOMAIN}"
