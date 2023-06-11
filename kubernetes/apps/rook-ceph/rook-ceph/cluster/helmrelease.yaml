@@ -34,7 +34,7 @@ spec:
               - *host
 
     monitoring:
-      enabled: true
+      enabled: false
       createPrometheusRules: true
 
     cephClusterSpec:
@@ -50,27 +50,27 @@ spec:
           mon:
             disabled: false
             interval: 60s
-        livenessProbe:
-          mon:
-            probe:
-              timeoutSeconds: 10
-          mgr:
-            probe:
-              timeoutSeconds: 10
-          osd:
-            probe:
-              timeoutSeconds: 5
+        # livenessProbe:
+        #   mon:
+        #     probe:
+        #       timeoutSeconds: 10
+        #   mgr:
+        #     probe:
+        #       timeoutSeconds: 10
+        #   osd:
+        #     probe:
+        #       timeoutSeconds: 5
 
-        startupProbe:
-          mon:
-            probe:
-              timeoutSeconds: 10
-          mgr:
-            probe:
-              timeoutSeconds: 10
-          osd:
-            probe:
-              timeoutSeconds: 5
+        # startupProbe:
+        #   mon:
+        #     probe:
+        #       timeoutSeconds: 10
+        #   mgr:
+        #     probe:
+        #       timeoutSeconds: 10
+        #   osd:
+        #     probe:
+        #       timeoutSeconds: 5
 
       mgr:
         count: 2
@@ -81,15 +81,21 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k3s-worker-0"
+          - name: "192.168.10.91"
             devices:
               - name: "sdb"
-          - name: "k3s-worker-1"
+                config:
+                  osdsPerDevice: "1"
+          - name: "192.168.10.92"
             devices:
               - name: "sdb"
-          - name: "k3s-worker-2"
+                config:
+                  osdsPerDevice: "1"
+          - name: "192.168.10.93"
             devices:
               - name: "sdb"
+                config:
+                  osdsPerDevice: "1"
 
       resources:
         mgr:
