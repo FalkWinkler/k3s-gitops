@@ -43,6 +43,7 @@ spec:
           - monitoring
           - kube-system
           - flux-system
+          - rook-ceph
 
     ingress:
       main:
