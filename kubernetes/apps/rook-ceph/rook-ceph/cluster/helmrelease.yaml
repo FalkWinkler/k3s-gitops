@@ -84,18 +84,12 @@ spec:
           - name: "192.168.10.91"
             devices:
               - name: "sdb"
-                config:
-                  osdsPerDevice: "1"
           - name: "192.168.10.92"
             devices:
               - name: "sdb"
-                config:
-                  osdsPerDevice: "1"
           - name: "192.168.10.93"
             devices:
               - name: "sdb"
-                config:
-                  osdsPerDevice: "1"
 
       resources:
         mgr:
