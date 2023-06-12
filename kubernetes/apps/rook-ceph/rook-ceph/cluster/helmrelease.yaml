@@ -149,9 +149,9 @@ spec:
             - effect: NoExecute
               operator: Exists
 
-    cephBlockPoolsVolumeSnapshotClass:
-      enabled: true
-      name: csi-rbdplugin-snapclass
-      annotations:
-        k10.kasten.io/is-snapshot-class: "true"
-        velero.io/csi-volumesnapshot-class: "true"
+    # cephBlockPoolsVolumeSnapshotClass:
+    #   enabled: true
+    #   name: csi-rbdplugin-snapclass
+    #   annotations:
+    #     k10.kasten.io/is-snapshot-class: "true"
+    #     velero.io/csi-volumesnapshot-class: "true"
