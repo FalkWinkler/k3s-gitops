@@ -45,36 +45,6 @@ spec:
         urlPrefix: /
         ssl: false
 
-      healthCheck:
-        daemonHealth:
-          mon:
-            disabled: false
-            interval: 60s
-        # livenessProbe:
-        #   mon:
-        #     probe:
-        #       timeoutSeconds: 10
-        #   mgr:
-        #     probe:
-        #       timeoutSeconds: 10
-        #   osd:
-        #     probe:
-        #       timeoutSeconds: 5
-
-        # startupProbe:
-        #   mon:
-        #     probe:
-        #       timeoutSeconds: 10
-        #   mgr:
-        #     probe:
-        #       timeoutSeconds: 10
-        #   osd:
-        #     probe:
-        #       timeoutSeconds: 5
-
-      mgr:
-        count: 2
-
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -90,7 +60,6 @@ spec:
           - name: "k3s-worker-2"
             devices:
               - name: "sdb"
-
       resources:
         mgr:
           limits:
@@ -140,17 +109,8 @@ spec:
           requests:
             cpu: "500m"
             memory: "100Mi"
-
-      placement:
-        all:
-          tolerations:
-            - effect: NoSchedule
-              operator: Exists
-            - effect: NoExecute
-              operator: Exists
-
     cephBlockPoolsVolumeSnapshotClass:
-      enabled: false
+      enabled: true
       name: csi-rbdplugin-snapclass
       annotations:
         k10.kasten.io/is-snapshot-class: "true"
