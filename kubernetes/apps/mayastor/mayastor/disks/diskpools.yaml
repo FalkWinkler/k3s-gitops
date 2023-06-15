@@ -5,7 +5,7 @@ metadata:
   name: pool-on-node-1
   namespace: mayastor
 spec:
-  node: k3s-master-0
+  node: k3s-worker-0
   disks: ["/dev/sdb"]
 ---
 apiVersion: "openebs.io/v1alpha1"
@@ -14,7 +14,7 @@ metadata:
   name: pool-on-node-2
   namespace: mayastor
 spec:
-  node: k3s-worker-0
+  node: k3s-worker-1
   disks: ["/dev/sdb"]
 ---
 apiVersion: "openebs.io/v1alpha1"
@@ -23,7 +23,7 @@ metadata:
   name: pool-on-node-3
   namespace: mayastor
 spec:
-  node: k3s-worker-1
+  node: k3s-worker-2
   disks: ["/dev/sdb"]
 
 
