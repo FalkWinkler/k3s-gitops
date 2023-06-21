@@ -46,8 +46,8 @@ RUN curl -fsSL -o /tmp/krew.tar.gz "https://github.com/kubernetes-sigs/krew/rele
     && tar zxvf /tmp/krew.tar.gz -C /tmp \
     && mv /tmp/krew-linux_amd64 /usr/local/bin/krew
 
-# install mayastor
-RUN curl -fsSL https://github.com/openebs/mayastor-control-plane/releases/download/v2.2.0/kubectl-mayastor-x86_64-linux-musl  --output  /usr/local/bin/kubectl-mayastor
+# install kubestr
+RUN curl -fsSL https://github.com/kastenhq/kubestr/releases/download/v0.4.37/kubestr_0.4.37_Linux_amd64.tar.gz  | tar -xz -C /usr/local/bin kubestr
 
 # Install Ansible
 RUN pip3 install ansible[azure]
