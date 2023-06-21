@@ -33,8 +33,8 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "ingress.${SECRET_DOMAIN}"
-        loadBalancerIP: "${METALLB_INGRESS_ADDR}"
-        externalTrafficPolicy: Local
+          io.cilium/lb-ipam-ips: "${METALLB_INGRESS_ADDR}"
+        externalTrafficPolicy: Cluster
       publishService:
         enabled: true
       ingressClassResource:
