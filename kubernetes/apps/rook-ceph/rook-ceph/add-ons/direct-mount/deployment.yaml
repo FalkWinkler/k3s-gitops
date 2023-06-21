@@ -82,5 +82,5 @@ spec:
                   name: direct-mount-scripts
         - name: nas-backup
           nfs:
-            server: "${LOCAL_LAN_TRUENAS}"
+            server: "192.168.10.10"
             path: /mnt/Volume1/backup/Kubernetes
