@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     bgp:
-      enabled: false
+      enabled: true
       announce:
         loadbalancerIP: true
         podCIDR: false
