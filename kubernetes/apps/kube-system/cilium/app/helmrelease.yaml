@@ -29,13 +29,10 @@ spec:
     cni:
       exclusive: false
 
-    bgp:
-      enabled: false
-      announce:
-        loadbalancerIP: true
-        podCIDR: false
-
+    # -- This feature set enables virtual BGP routers to be created via
+    # CiliumBGPPeeringPolicy CRDs.
     bgpControlPlane:
+      # -- Enables the BGP control plane.
       enabled: true
 
     bpf:
