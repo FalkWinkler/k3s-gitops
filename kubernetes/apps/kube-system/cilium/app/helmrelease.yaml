@@ -26,10 +26,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    cni:
+      exclusive: false
+
     bgp:
       enabled: true
       announce:
         loadbalancerIP: true
+        podCIDR: false
+
+      bgpControlPlane:
+        enabled: true
 
     bpf:
       masquerade: true
@@ -52,6 +59,12 @@ spec:
           - http
         serviceMonitor:
           enabled: true
+        dashboards:
+          enabled: true
+          label: grafana_dashboard
+          namespace: monitoring
+          labelValue: "1"
+          annotations: {}
       relay:
         enabled: true
         rollOutPods: true

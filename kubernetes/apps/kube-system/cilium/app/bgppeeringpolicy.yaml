@@ -33,4 +33,4 @@ metadata:
   name: main-pool
 spec:
   cidrs:
-    - cidr: 10.45.0.1/24
+    - cidr: ${NETWORK_BGP_SVC_RANGE}
