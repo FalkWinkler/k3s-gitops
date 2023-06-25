@@ -35,8 +35,8 @@ spec:
         loadbalancerIP: true
         podCIDR: false
 
-      bgpControlPlane:
-        enabled: true
+    bgpControlPlane:
+      enabled: true
 
     bpf:
       masquerade: true
