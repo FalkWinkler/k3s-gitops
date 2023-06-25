@@ -30,7 +30,7 @@ spec:
       exclusive: false
 
     bgp:
-      enabled: true
+      enabled: false
       announce:
         loadbalancerIP: true
         podCIDR: false
