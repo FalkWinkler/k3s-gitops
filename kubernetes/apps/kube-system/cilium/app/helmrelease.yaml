@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: cilium
-      version: 1.13.4
+      version: v1.14.0-snapshot.2
       sourceRef:
         kind: HelmRepository
         name: cilium
@@ -28,6 +28,12 @@ spec:
   values:
     cni:
       exclusive: false
+
+    bgp:
+      enabled: false
+      announce:
+        loadbalancerIP: true
+        podCIDR: false
 
     # -- This feature set enables virtual BGP routers to be created via
     # CiliumBGPPeeringPolicy CRDs.
