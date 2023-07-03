@@ -29,7 +29,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: http://${LOCAL_LAN_TRUENAS}:9000
-      serverName: "postgres-v1"
+      serverName: "postgres-v2"
       s3Credentials:
         accessKeyId:
           name: postgres-minio
