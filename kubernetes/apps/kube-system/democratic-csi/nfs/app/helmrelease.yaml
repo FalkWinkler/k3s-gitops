@@ -48,11 +48,7 @@ spec:
           protocol: http
           host: ${LOCAL_LAN_TRUENAS}
           port: 80
-          apiKey:
-            valueFrom:
-              secretKeyRef:
-                name: csi-nfs-secret
-                key: api-key
+          apiKey: 1-xkQWlZJV0olW2YnStPEMHmsAli7QuhIzVMRhyhhe6TDjMuDLOfhecQkI7qywG1bd
           allowInsecure: true
           apiVersion: 2
         zfs:
