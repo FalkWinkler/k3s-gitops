@@ -48,6 +48,7 @@ spec:
           port: 80
           apiKey: 1-xkQWlZJV0olW2YnStPEMHmsAli7QuhIzVMRhyhhe6TDjMuDLOfhecQkI7qywG1bd
           allowInsecure: true
+          apiVersion: 2
         zfs:
           datasetParentName: Volume1/k3s/iscsi/v
           detachedSnapshotsDatasetParentName: Volume1/k3s/iscsi/s
