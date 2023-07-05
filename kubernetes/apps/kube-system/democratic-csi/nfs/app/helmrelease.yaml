@@ -48,7 +48,7 @@ spec:
           protocol: http
           host: ${LOCAL_LAN_TRUENAS}
           port: 80
-          apiKey: 1-xkQWlZJV0olW2YnStPEMHmsAli7QuhIzVMRhyhhe6TDjMuDLOfhecQkI7qywG1bd
+          apiKey: 1-as4zedTj2DPSNmoWrXmVSRtiYkbdSSLoxTtyyP4zDZW6BbWkPuPeWBBS9DPNDhlt
           allowInsecure: true
           apiVersion: 2
         zfs:
