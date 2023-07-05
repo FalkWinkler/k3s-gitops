@@ -1,0 +1,75 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: iscsi
+  namespace: kube-system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: democratic-csi
+      version: v1.8.3
+      sourceRef:
+        kind: HelmRepository
+        name: democratic-csi
+        namespace: flux-system
+      interval: 5m
+  values:
+    csiDriver:
+      name: "iscsi"
+    storageClasses:
+    - name: iscsi
+      defaultClass: false
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+      allowVolumeExpansion: true
+      parameters:
+        fsType: ext4
+        detachedVolumesFromSnapshots: "false"
+      mountOptions: []
+      secrets:
+        provisioner-secret:
+        controller-publish-secret:
+        node-stage-secret:
+        node-publish-secret:
+        controller-expand-secret:
+    volumeSnapshotClasses:
+    - name: iscsi
+      parameters:
+        detachedSnapshots: "true"
+    driver:
+      config:
+        driver: freenas-api-iscsi
+        instance_id:
+        httpConnection:
+          protocol: http
+          host: ${LOCAL_LAN_TRUENAS}
+          port: 80
+          apiKey: 1-xkQWlZJV0olW2YnStPEMHmsAli7QuhIzVMRhyhhe6TDjMuDLOfhecQkI7qywG1bd
+          allowInsecure: true
+        zfs:
+          datasetParentName: Volume1/k3s/iscsi/v
+          detachedSnapshotsDatasetParentName: Volume1/k3s/iscsi/s
+          datasetEnableQuotas: true
+          datasetEnableReservation: false
+          datasetPermissionsMode: "0777"
+          datasetPermissionsUser: 0
+          datasetPermissionsGroup: 0
+        iscsi:
+          targetPortal: "${LOCAL_LAN_TRUENAS}:3260"
+          targetPortals: []
+          interface:
+          namePrefix: csi-
+          nameSuffix: "-clustera"
+          targetGroups:
+            - targetGroupPortalGroup: 8
+              targetGroupInitiatorGroup: 14
+              targetGroupAuthType: None
+              targetGroupAuthGroup:
+          extentInsecureTpc: true
+          extentXenCompat: false
+          extentDisablePhysicalBlocksize: true
+          extentBlocksize: 512
+          extentRpm: "SSD"
+          extentAvailThreshold: 0
