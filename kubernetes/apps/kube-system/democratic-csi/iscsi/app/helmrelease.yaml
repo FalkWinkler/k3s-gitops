@@ -50,8 +50,8 @@ spec:
           allowInsecure: true
           apiVersion: 2
         zfs:
-          datasetParentName: mnt/Volume1/k3s/iscsi/v
-          detachedSnapshotsDatasetParentName: mnt/Volume1/k3s/iscsi/s
+          datasetParentName: Volume1/k3s/iscsi/v
+          detachedSnapshotsDatasetParentName: Volume1/k3s/iscsi/s
           datasetEnableQuotas: true
           datasetEnableReservation: false
           datasetPermissionsMode: "0777"
