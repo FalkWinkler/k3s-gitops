@@ -17,6 +17,9 @@ includes:
   cluster: .taskfiles/ClusterTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
+  rook:
+    taskfile: ".taskfiles/rook"
+    dir: .taskfiles/rook
 
 tasks:
 
@@ -60,3 +63,7 @@ tasks:
     desc: Configure repository from env settings
     cmds:
       - ./configure
+  default:
+    silent: true
+    cmds:
+      - task -l
