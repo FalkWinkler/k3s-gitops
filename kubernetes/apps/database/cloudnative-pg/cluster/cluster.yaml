@@ -18,7 +18,13 @@ spec:
       shared_buffers: "512MB"
   monitoring:
     enablePodMonitor: true
-  # bootstrap:
+    bootstrap:
+        initdb:
+          database: app
+          owner: app
+          secret:
+            name: app-secret
+
   #   recovery:
   #     source: postgres-backup
   # backup:
