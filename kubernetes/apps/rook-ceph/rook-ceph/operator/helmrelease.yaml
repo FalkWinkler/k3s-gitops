@@ -22,9 +22,9 @@ spec:
     monitoring:
       enabled: true
 
-    csi:
-      pluginTolerations:
-        - effect: "NoExecute"
-          operator: "Exists"
-        - effect: "NoSchedule"
-          operator: "Exists"
+    # csi:
+    #   pluginTolerations:
+    #     - effect: "NoExecute"
+    #       operator: "Exists"
+    #     - effect: "NoSchedule"
+    #       operator: "Exists"
