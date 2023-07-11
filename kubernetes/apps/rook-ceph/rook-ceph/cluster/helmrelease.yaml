@@ -63,13 +63,13 @@ spec:
         nodes:
           - name: "k3s-worker-0"
             devices:
-              - name: "sdb"
+              - name: "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1"
           - name: "k3s-worker-1"
             devices:
-              - name: "sdb"
+              - name: "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1"
           - name: "k3s-worker-2"
             devices:
-              - name: "sdb"
+              - name: "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1"
 
       resources:
         mgr:
