@@ -25,3 +25,4 @@ resources:
   - ./emxq.yaml
   - ./cloudnative-pg.yaml
   - ./democratic-csi.yaml
+  - ./csi-driver-nfs.yaml
